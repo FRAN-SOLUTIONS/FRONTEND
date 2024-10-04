@@ -93,9 +93,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc ia
 
  - Maria Helena Baldan Lemes | baldan.lemes@aluno.ifsp.edu.br | MARIAHELENAMARIA
 
- - Luiza Vieira Silva | EMAIL | GITHUB
+ - Luiza Vieira Silva | EMAIL | Luizavsilva
 
- - Hugo Feltran Wirth | EMAIL | GITHUB
+ - Hugo Feltran Wirth | EMAIL | HugoFeltran
 
 ## Status do projeto
 
