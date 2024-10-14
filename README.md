@@ -46,7 +46,7 @@ Abra um novo terminal e digite os seguintes comandos:
   npm config set https-proxy  meu.endereco.proxy:8080
 ```
 
-Note que "meu.endereco.proxy" é o link que aparece no aplicativo Redes configurada no computador da instituição e que "8080" é a porta lógica.
+Note que "meu.endereco.proxy" é o link que aparece no aplicativo Redes configurado no computador da instituição e que "8080" é a porta lógica.
 
 Se o link não tiver, adicione "http://".
 
@@ -116,47 +116,3 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc ia
 ## Telas
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc iaculis sollicitudin. Duis sit amet orci justo. Curabitur vitae arcu malesuada, malesuada nisl ac, luctus leo. Aliquam et urna justo. Cras vel sapien libero. Praesent ac nisi id elit congue vehicula. Vivamus sed arcu ac urna interdum iaculis. Nullam vehicula nibh nisi, vitae tempor enim rhoncus id. Maecenas at libero quam. Phasellus elementum massa nec tincidunt fringilla. 
-
-------------------------------------------------------------------------------------
-
-# FRONTEND
-
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
