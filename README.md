@@ -143,7 +143,11 @@ _Não será permitido criar pastas dentro de ```\views``` para alocá-los, todos
 
 ### App.vue
 
-O arquivo ```App.vue``` é o componente raiz de uma aplicação Vue. Ele serve como ponto de entrada para a estrutura da interface do usuário, onde todos os outros componentes são aninhados. Nele vdefine-se a estrutura geral do layout, como cabeçalhos, rodapés e áreas principais de conteúdo, integra-sr funcionalidades globais e importa-se estilos globais. O App.vue é fundamental para organizar e compor a interface da sua aplicação Vue, atuando como um contêiner para os demais componentes.
+O arquivo ```App.vue``` é o componente raiz de uma aplicação Vue. Ele serve como ponto de entrada para a estrutura da interface do usuário, onde todos os outros componentes são aninhados. Nele define-se a estrutura geral do layout, integra-se funcionalidades globais e importa-se estilos globais. O App.vue é fundamental para organizar e compor a interface da sua aplicação Vue, atuando como um contêiner para os demais componentes.
+
+**ATENÇÃO!**
+
+**Todos os elementos HTML e componentes que forem colocados no ```App.vue``` sempre aparecerão na tela pois este é o componente raiz. Utilize dos elementos e componentes-views da maneira mais separada possível e chame-os com o ```<Router-Link```. Evite ao máximo colocar elementos diretamente neste arquivo.**
 
 ### Main.js
 
