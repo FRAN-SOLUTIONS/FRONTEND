@@ -52,17 +52,24 @@ Se o link não tiver, adicione "http://".
 
 ### Etapas
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc iaculis sollicitudin. Duis sit amet orci justo. Curabitur vitae arcu malesuada, malesuada nisl ac, luctus leo. Aliquam et urna justo. Cras vel sapien libero. Praesent ac nisi id elit congue vehicula. Vivamus sed arcu ac urna interdum iaculis. Nullam vehicula nibh nisi, vitae tempor enim rhoncus id. Maecenas at libero quam. Phasellus elementum massa nec tincidunt fringilla. 
+- Clone o repositório
 
-```bash
-  npm install
-```
+  Em um diretório vazio do seu computador, abra o terminal de comando e digite:
+  ```bash
+    git clone https://github.com/FRAN-SOLUTIONS/FRONTEND.git
+  ```
+- Entre na pasta do projeto:
+  ```bash
+    cd FRONTEND
+  ```
+- Por fim, instale todas as dependências do projeto, como axios e bootstrap:
+  ```bash
+    npm install
+  ```
 
 ## Instruções de uso
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc iaculis sollicitudin. Duis sit amet orci justo. Curabitur vitae arcu malesuada, malesuada nisl ac, luctus leo. Aliquam et urna justo. Cras vel sapien libero. Praesent ac nisi id elit congue vehicula. Vivamus sed arcu ac urna interdum iaculis. Nullam vehicula nibh nisi, vitae tempor enim rhoncus id. Maecenas at libero quam. Phasellus elementum massa nec tincidunt fringilla. 
-
-## Contribuição
 
 ### Guia de contribuição
 
@@ -81,7 +88,7 @@ Se você tiver dúvidas, encontrar problemas ou precisar de ajuda com este proje
 
  - Email: igor.sampaio@ifsp.edu.br
 
- - GitHub: 
+ - GitHub: [Prof-Igor](https://github.com/Prof-Igor)
 
 ## Roteiro
 
@@ -91,15 +98,15 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc ia
 
 ## Autores e agradecimentos
 
- - Maria Helena Baldan Lemes | baldan.lemes@aluno.ifsp.edu.br | MARIAHELENAMARIA
+ - Maria Helena Baldan Lemes | baldan.lemes@aluno.ifsp.edu.br | [MARIAHELENAMARIA](https://github.com/MARIAHELENAMARIA)
 
- - Luiza Vieira Silva | EMAIL | Luizavsilva
+ - Luiza Vieira Silva | EMAIL | [Luizavsilva](https://github.com/Luizavsilva)
 
- - Hugo Feltran Wirth | EMAIL | HugoFeltran
+ - Hugo Feltran Wirth | EMAIL | [HugoFeltran](https://github.com/HugoFeltran)
 
 ## Status do projeto
 
-Em andamento (work in progress):
+Em andamento:
  - Início em 18/07/2024.
 
 ## Licença
