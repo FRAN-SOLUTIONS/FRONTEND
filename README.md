@@ -97,7 +97,11 @@ Antes, seu padrão era:
     import HeaderComponente from '@/components/HeaderComp.vue';
 
     export default {
-        name: '--nomeDoComponente'
+        name: '--nomeDoComponente',
+        components: {
+            HeaderComponente,
+            FooterComponente
+        }
     };
 </script>
 
