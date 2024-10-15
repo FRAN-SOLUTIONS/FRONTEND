@@ -1,5 +1,6 @@
 <script setup>
 import {RouterView } from 'vue-router'
+import '../node_modules/bootstrap/dist/css/bootstrap.css';
 </script>
 
 <template>
