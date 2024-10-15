@@ -78,6 +78,57 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc ia
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc iaculis sollicitudin. Duis sit amet orci justo. Curabitur vitae arcu malesuada, malesuada nisl ac, luctus leo. Aliquam et urna justo. Cras vel sapien libero. Praesent ac nisi id elit congue vehicula. Vivamus sed arcu ac urna interdum iaculis. Nullam vehicula nibh nisi, vitae tempor enim rhoncus id. Maecenas at libero quam. Phasellus elementum massa nec tincidunt fringilla. 
 
+### Padrão dos Componentes
+
+Os componentes de projetos Vue3 tem um padrão de escrita diferente do usado anteriormente.
+
+Antes, seu padrão era:
+```bash
+<template>
+    <div>
+        <HeaderComponente />
+        <h1>Eu sou um componente</h1>
+        <FooterComponente />
+    </div>
+</template>
+
+<script>
+    import FooterComponente from '@/components/FooterComp.vue';
+    import HeaderComponente from '@/components/HeaderComp.vue';
+
+    export default {
+        name: '--nomeDoComponente'
+    };
+</script>
+
+<style>
+</style>
+```
+
+Agora o padrão é:
+```bash
+<script setup>
+import FooterComponente from '@/components/FooterComp.vue';
+import HeaderComponente from '@/components/HeaderComp.vue';
+</script>
+
+<template>
+     <div>
+        <HeaderComponente />
+        <h1>Eu sou um componente</h1>
+        <FooterComponente />
+    </div>
+</template>
+
+<style scoped>
+</style>
+```
+
+Usa-se o ```<script setup>``` para simplificar a criação de componentes. Com essa abordagem, não é mais necessário declarar o ```export default``` manualmente. Seu uso é uma nova convenção do Vue 3 que facilita o desenvolvimento.
+
+Quando se usa o bloco ```<script setup>```, o Vue automaticamente trata todo o conteúdo dentro desse bloco como parte do componente exportado. Isso elimina a necessidade de escrever o ```export default```, deixando o código mais limpo e fácil de entender. Tudo o que é declarado dentro dele, como variáveis, imports, etc., ficará disponível diretamente no template.
+
+
 ## Guia das pastas do projeto
 
 Dentro da pasta ```\src``` é onde serão feitas as alterações do projeto. Nela estão os seguintes diretórios e arquivos:
