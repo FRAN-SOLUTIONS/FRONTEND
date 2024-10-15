@@ -69,6 +69,15 @@ Se o link não tiver, adicione "http://".
 
 # Instruções de uso
 
+## Guia de contribuição
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc iaculis sollicitudin. Duis sit amet orci justo. Curabitur vitae arcu malesuada, malesuada nisl ac, luctus leo. Aliquam et urna justo. Cras vel sapien libero. Praesent ac nisi id elit congue vehicula. Vivamus sed arcu ac urna interdum iaculis. Nullam vehicula nibh nisi, vitae tempor enim rhoncus id. Maecenas at libero quam. Phasellus elementum massa nec tincidunt fringilla. 
+
+### GitFlow
+//Como fazer os commits
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc iaculis sollicitudin. Duis sit amet orci justo. Curabitur vitae arcu malesuada, malesuada nisl ac, luctus leo. Aliquam et urna justo. Cras vel sapien libero. Praesent ac nisi id elit congue vehicula. Vivamus sed arcu ac urna interdum iaculis. Nullam vehicula nibh nisi, vitae tempor enim rhoncus id. Maecenas at libero quam. Phasellus elementum massa nec tincidunt fringilla. 
+
 ## Guia das pastas do projeto
 
 Dentro da pasta ```\src``` é onde serão feitas as alterações do projeto. Nela estão os seguintes diretórios e arquivos:
@@ -76,12 +85,13 @@ Dentro da pasta ```\src``` é onde serão feitas as alterações do projeto. Nel
 - assets;
 - components;
 - router;
+- services;
 - stores;
 - views;
 - App.vue;
 - main.js.
 
-![image](https://github.com/user-attachments/assets/85f8fd67-9b87-45df-9b1d-00ba38b3c041)
+![image](https://github.com/user-attachments/assets/0615fea4-da5c-45f1-8888-245647d0d35f)
 
 Vamos percorrer cada uma dessas pastas para entender o que contém cada uma delas e como utilizá-las.
 
@@ -123,6 +133,12 @@ A pasta ```\router``` contém um único arquivo chamado  ```index.js``` que é u
 
 _Não será permitido criar outras pastas e arquivos dentro de ```\router```._
 
+### Services
+
+A pasta ```\services``` contém um único arquivo chamado  ```api.js``` que é um arquivo JavaScript para definição da URL base do nosso projeto Vue.js para as requisições do frontend com a biblioteca Axios.
+
+_Não será permitido criar outras pastas dentro de ```\services```._
+
 ### Stores
 
 A pasta ```\stores``` contém um único arquivo chamado  ```counter.js``` que define uma store utilizando a biblioteca Pinia (gerenciamento de estado recomendado para projetos Vue 3), nele, a store mantém um estado reativo. Ao exportar essa store, ela se torna acessível em outros componentes do aplicativo, facilitando o compartilhamento e a centralização do estado do contador em toda a aplicação.
@@ -153,14 +169,9 @@ O arquivo ```App.vue``` é o componente raiz de uma aplicação Vue. Ele serve c
 
 O arquivo ```main.js``` é o ponto de entrada da aplicação Vue, onde a instância da aplicação é criada, configurada e inicializada no componente raiz ```App.vue```. O código também configura o gerenciamento de estado com a Pinia, adiciona o roteamento com o Vue Router e por fim, monta a aplicação no elemento HTML com o ID ```#app``` no ```index.html```.
 
-## Guia de contribuição
+# Roteiro
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc iaculis sollicitudin. Duis sit amet orci justo. Curabitur vitae arcu malesuada, malesuada nisl ac, luctus leo. Aliquam et urna justo. Cras vel sapien libero. Praesent ac nisi id elit congue vehicula. Vivamus sed arcu ac urna interdum iaculis. Nullam vehicula nibh nisi, vitae tempor enim rhoncus id. Maecenas at libero quam. Phasellus elementum massa nec tincidunt fringilla. 
-
-### GitFlow
-//Como fazer os commits
-
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc iaculis sollicitudin. Duis sit amet orci justo. Curabitur vitae arcu malesuada, malesuada nisl ac, luctus leo. Aliquam et urna justo. Cras vel sapien libero. Praesent ac nisi id elit congue vehicula. Vivamus sed arcu ac urna interdum iaculis. Nullam vehicula nibh nisi, vitae tempor enim rhoncus id. Maecenas at libero quam. Phasellus elementum massa nec tincidunt fringilla. 
+//Para alterações futuras desejadas no projeto
 
 # Suporte
 
@@ -172,17 +183,13 @@ Se você tiver dúvidas, encontrar problemas ou precisar de ajuda com este proje
 
  - GitHub: [Prof-Igor](https://github.com/Prof-Igor)
 
-# Roteiro
-
-//Para alterações futuras desejadas no projeto
-
 # Autores e agradecimentos
 
  - Maria Helena Baldan Lemes | baldan.lemes@aluno.ifsp.edu.br | [MARIAHELENAMARIA](https://github.com/MARIAHELENAMARIA)
 
- - Luiza Vieira Silva | EMAIL | [Luizavsilva](https://github.com/Luizavsilva)
+ - Luiza Vieira Silva | lvieirasilva9@gmail.com | [Luizavsilva](https://github.com/Luizavsilva)
 
- - Hugo Feltran Wirth | EMAIL | [HugoFeltran](https://github.com/HugoFeltran)
+ - Hugo Feltran Wirth | hugo.feltranwirth@gmail.com | [HugoFeltran](https://github.com/HugoFeltran)
 
 # Status do projeto
 
@@ -191,8 +198,8 @@ Em andamento:
 
 # Licença
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc iaculis sollicitudin. Duis sit amet orci justo. Curabitur vitae arcu malesuada, malesuada nisl ac, luctus leo. Aliquam et urna justo. Cras vel sapien libero. Praesent ac nisi id elit congue vehicula. Vivamus sed arcu ac urna interdum iaculis. Nullam vehicula nibh nisi, vitae tempor enim rhoncus id. Maecenas at libero quam. Phasellus elementum massa nec tincidunt fringilla. 
+//Para a licença de uso do projeto
 
 # Telas
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc iaculis sollicitudin. Duis sit amet orci justo. Curabitur vitae arcu malesuada, malesuada nisl ac, luctus leo. Aliquam et urna justo. Cras vel sapien libero. Praesent ac nisi id elit congue vehicula. Vivamus sed arcu ac urna interdum iaculis. Nullam vehicula nibh nisi, vitae tempor enim rhoncus id. Maecenas at libero quam. Phasellus elementum massa nec tincidunt fringilla. 
+//Para demonstração das telas do sistema.
