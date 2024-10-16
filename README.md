@@ -69,14 +69,100 @@ Se o link não tiver, adicione "http://".
 
 # Instruções de uso
 
-## Guia de contribuição
+- Abra a pasta do projeto clonado no seu editor de código (recomenda-se o VS Code).
+- Abra um novo terminal de comando.
+- Para rodar o servidor digite no terminal:
+  
+  ```bash
+    npm run dev
+  ```
+- ```Ctrl + "click"``` no link gerado para acessar no navegador;
+- Para parar o servidor, no terminal, digite ```Ctrl + C``` e depois ```S + enter```.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc iaculis sollicitudin. Duis sit amet orci justo. Curabitur vitae arcu malesuada, malesuada nisl ac, luctus leo. Aliquam et urna justo. Cras vel sapien libero. Praesent ac nisi id elit congue vehicula. Vivamus sed arcu ac urna interdum iaculis. Nullam vehicula nibh nisi, vitae tempor enim rhoncus id. Maecenas at libero quam. Phasellus elementum massa nec tincidunt fringilla. 
+## GitFlow
 
-### GitFlow
-//Como fazer os commits
+### Das branches
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam sed eros in nunc iaculis sollicitudin. Duis sit amet orci justo. Curabitur vitae arcu malesuada, malesuada nisl ac, luctus leo. Aliquam et urna justo. Cras vel sapien libero. Praesent ac nisi id elit congue vehicula. Vivamus sed arcu ac urna interdum iaculis. Nullam vehicula nibh nisi, vitae tempor enim rhoncus id. Maecenas at libero quam. Phasellus elementum massa nec tincidunt fringilla. 
+**Tipos de Branches**
+
+- *Main:* contém a versão mais estável ao longo do desenvolvimento. **ATENÇÃO! Nenhuma alteração direta deve ser feita nesta branch.**
+- *Develop:* destinada ao desenvolvimento contínuo, linha do tempo principal das funcionalidades que ainda estão em fase de implementação.
+- *Feature:* Cada nova funcionalidade ou melhoria deve ter sua própria branch. Padrão de nome: feature/nome-da-funcionalidade
+- *Bugfix:* Usada para corrigir bugs encontrados. Padrão de nome: bugfix/descricao-do-bug.
+
+Exemplos:
+
+```bash
+  develop/conexao-backend
+```
+
+```bash
+  develop/identidade-visual
+```
+
+```bash
+  feature/listar-alunos
+```
+
+```bash
+  feature/responsividade
+```
+
+```bash
+  bugfix/roteamento
+```
+
+```bash
+  bugfix/erro-busca-relatorios
+```
+
+### Dos commits
+
+O título deve ser curto e descritivo seguindo a seguinte formatação:
+
+_**palavra indicando o tipo da alteração + substantivo referido a ação feita + elemento + arquivo onde foi realizado.**_
+
+Das palavras reservadas:
+
+- *style:* para mudanças estéticas e formatações, sem alteração de lógica;
+- *fix:* para correção de bugs;
+- *feat:* para adição de nova funcionalidade;
+- *refactor:* alterações no código que não afetam o comportamento externo;
+- *chore:* alterações não relacionadas ao código da aplicação, como atualização de dependências.
+
+Dos substantivos:
+
+- criação;
+- mudança;
+- correção;
+- exclusão;
+- instalação.
+
+Exemplos:
+
+```bash 
+  fix: mudança no roteamento das páginas do orientador em index.js
+```
+
+```bash
+  feat: criação da request da lista de relatórios do aluno em OrientadorConsulta.vue
+```
+
+```bash
+  refactor: correção do texto da HomePage.vue
+```
+
+```bash
+  style: mudança de estilo em RedefinirSenha.vue
+```
+
+```bash
+  chore: instalação do Axios no projeto
+```
+
+Tal formatação na escrita dos títulos podem sofrer alterações em casos de exceções. Espera-se compreensão e bom senso do programador para tal. Que o texto não fuja muito da lógica apresentada. 
+
+A descrição é opcional e livre para o programagor se achar necessário, limitando-se a 72 caracteres por linha para manter a legibilidade no terminal.
 
 ### Padrão dos Componentes
 
@@ -131,7 +217,6 @@ import HeaderComponente from '@/components/HeaderComp.vue';
 Usa-se o ```<script setup>``` para simplificar a criação de componentes. Com essa abordagem, não é mais necessário declarar o ```export default``` manualmente. Seu uso é uma nova convenção do Vue 3 que facilita o desenvolvimento.
 
 Quando se usa o bloco ```<script setup>```, o Vue automaticamente trata todo o conteúdo dentro desse bloco como parte do componente exportado. Isso elimina a necessidade de escrever o ```export default```, deixando o código mais limpo e fácil de entender. Tudo o que é declarado dentro dele, como variáveis, imports, etc., ficará disponível diretamente no template.
-
 
 ## Guia das pastas do projeto
 
