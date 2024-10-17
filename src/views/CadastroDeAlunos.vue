@@ -1,6 +1,6 @@
 <script setup>
 //import FooterComp from '@/components/FooterComp.vue';
-//import HeaderComp from '@/components/HeaderComp.vue';
+import HeaderComp from '@/components/HeaderComp.vue';
 
 /* document.getElementById('cadastroForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Evita o envio do formulário
@@ -53,20 +53,10 @@ function handleSubmit(event) {
   }
   alert('Formulário enviado com sucesso!');
 }
-
 </script>
 
 <template>
-    <header class="bg-custom text-white py-3 d-flex align-items-center justify-content-between">
-        <div class="d-flex align-items-center">
-            <img src="../assets/images/F.png" alt="Logo" class="header-logo">
-            <h1 class="ml-3">FRANSOLUTIONS</h1>
-        </div>
-        <div>
-            <a href="#" class="btn btn-success mr-2" style="background-color: #01400B; border-color: #EAEBEE;">Página Inicial</a>
-            <a href="#" class="btn btn-success" style="background-color: #01400B; border-color: #EAEBEE;">Login</a>
-        </div>
-    </header>
+    <HeaderComp />
 
     <div class="container">
         <p class="lead text-center mt-4 custom-lead">Primeira vez aqui? Cadastre-se:</p>
