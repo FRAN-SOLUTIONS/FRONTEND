@@ -9,10 +9,11 @@ import '../assets/css/global.css'
 
     <main>
         <div class="container">
+            <p class="lead mt-4 custom-lead">Login</p>
             <form class="formulario form-container">
 
-                <h1 class="tituloFormulario" style="background-color: #fff;">Login</h1>
-                <br>
+                <!-- <h1 class="tituloFormulario" style="background-color: #fff;">Login</h1>
+                <br> -->
                 <label>Prontuário:</label>
                 <input type="text" class="form-control">
 
@@ -22,9 +23,9 @@ import '../assets/css/global.css'
                 <label>Senha:</label>
                 <input type="password" class="form-control">
 
+                <br>
                 <button type="submit" class="enviar">Enviar</button>
 
-                <br>
                 <router-link to="/redefinirSenha" class="text-center mt-3 link">Redefinir minha senha.</router-link>
             </form>
         </div>
@@ -59,9 +60,12 @@ import '../assets/css/global.css'
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.tituloFormulario{
+.custom-lead {
+    font-size: 1.5rem; /* Aumenta o tamanho da fonte */
+    color: #01400B; /* Define a cor */
     text-align: center;
 }
+
 
 label{
     align-self: flex-start;
@@ -82,8 +86,6 @@ input[type="text"], input[type="email"], input[type="password"] {
     background-color: #ccc; /* Cor de fundo das caixas de formulário */
     padding: 20px;
 }
-
-
 
 input {
     width: 100%;
