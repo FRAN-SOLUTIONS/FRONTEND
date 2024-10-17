@@ -28,7 +28,6 @@ function goToSignUp() {
 
 <style scoped>
 /*background-color: #F2F2F2;*/
-
 .header-logo {
     height: 80px;
     margin-right: 20px;
