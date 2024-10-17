@@ -1,88 +1,114 @@
 <script setup>
 import FooterComp from '@/components/FooterComp.vue';
 import HeaderComp from '@/components/HeaderComp.vue';
+import '../assets/css/global.css'
 </script>
-
 
 <template>
     <HeaderComp />
-    <main class="containerDaPagina">
-        <div class="conteudoDaPagina">
-            <h1>Esta é a página de login.</h1>
 
-            <div class="divDoFormulario">
-                <form class="formulario">
+    <main>
+        <div class="container">
+            <p class="lead mt-4 custom-lead">Login</p>
+            <form class="formulario form-container">
 
-                    <h1 class="tituloFormulario">Login</h1>
-                    <br>
-                    <label>Prontuário:</label>
-                    <input type="text" >
+                <!-- <h1 class="tituloFormulario" style="background-color: #fff;">Login</h1>
+                <br> -->
+                <label>Prontuário:</label>
+                <input type="text" class="form-control">
 
-                    <label>E-mail:</label>
-                    <input type="email">
+                <label>E-mail:</label>
+                <input type="email" class="form-control">
 
-                    <label>Senha:</label>
-                    <input type="password">
+                <label>Senha:</label>
+                <input type="password" class="form-control">
 
-                    <button type="submit" class="enviar">Enviar</button>
+                <br>
+                <button type="submit" class="enviar">Enviar</button>
 
-                    <br>
-                    <router-link to="/redefinirSenha">Redefinir minha senha.</router-link>
-                </form>
-            </div>
+                <router-link to="/redefinirSenha" class="text-center mt-3 link">Redefinir minha senha.</router-link>
+            </form>
         </div>
     </main>
+
     <FooterComp />
 </template>
 
 <style scoped>
-.divDoFormulario{
-    margin: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+.container {
+    max-width: 500px; /* Aumenta a largura máxima do contêiner */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .formulario{
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    background-color: #fff; /* Cor de fundo do formulário */
-    padding: 20px;
     margin: 10px;
-    border-radius: 15px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.tituloFormulario{
+.custom-lead {
+    font-size: 1.5rem; /* Aumenta o tamanho da fonte */
+    color: #01400B; /* Define a cor */
     text-align: center;
 }
 
+
 label{
     align-self: flex-start;
+    background-color: #fff;
+}
+
+.link{
+    background-color: #fff;
 }
 
 input[type="text"], input[type="email"], input[type="password"] {
-    border: 1px solid #ccc;
-    border-radius: 8px;
     margin-bottom: 10px;
     height: 25px;
     display: block;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #ccc; /* Cor de fundo das caixas de formulário */
+    padding: 20px;
 }
 
-.enviar{
-    align-items: center;
+input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #EAEBEE; /* Cor de fundo das caixas de formulário */
+}
+
+button {
+    display: block;
+    width: 50%; /* Diminui o tamanho do botão */
+    padding: 10px;
+    background-color: #01400B; /* Cor do botão */
+    color: #fff;
+    border: none;
+    border-radius: 8px; /* Bordas arredondadas */
     cursor: pointer;
-    border-radius: 8px;
-    background-color: #33b83a;
-    height: 30px;
-    width: 90px;
+    text-align: center;
+    margin: 0 auto; /* Centraliza o botão */
 }
 
-.enviar:hover {
-    background-color: rgb(0, 255, 0);
-    border: 1px solid rgb(0, 255, 0);
-    box-shadow: 0 0 10px rgb(0, 255, 0);
+button:hover {
+    background-color: #012d08; /* Cor do botão ao passar o mouse */
 }
 </style>
