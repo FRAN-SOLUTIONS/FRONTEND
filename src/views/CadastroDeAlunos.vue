@@ -1,5 +1,4 @@
 <script setup>
-//import FooterComp from '@/components/FooterComp.vue';
 import FooterComp from '@/components/FooterComp.vue';
 import HeaderComp from '@/components/HeaderComp.vue';
 
@@ -57,6 +56,7 @@ function handleSubmit(event) {
 </script>
 
 <template>
+    
     <HeaderComp />
 
     <div class="container">
