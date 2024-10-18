@@ -56,62 +56,57 @@ function handleSubmit(event) {
 </script>
 
 <template>
-    
+
     <HeaderComp />
 
-    <div class="container">
-        <p class="lead text-center mt-4 custom-lead">Primeira vez aqui? Cadastre-se:</p>
+    <main>
+        <h2 class="text-center mt-4">Primeira vez aqui? Cadastre-se:</h2>
+        
         <div class="form-container">
             <form id="cadastroForm" @submit="handleSubmit">
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <label for="nome-completo">Nome Completo:</label>
-                        <!-- <input type="text" class="form-control" id="nome-completo" name="nome-completo" required> -->
-                        <input v-model="nomeCompleto" id="nome-completo"  class="form-control" type="text" placeholder="Nome Completo" required />
+                        <input v-model="nomeCompleto" id="nome-completo"  class="form-control" type="text"  required />
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="prontuario">Prontuário:</label>
-                        <!-- <input type="text" class="form-control" id="prontuario" name="prontuario" required> -->
-                        <input v-model="prontuario" id="prontuario" class="form-control" type="text" placeholder="Prontuário" required />
+                        <input v-model="prontuario" id="prontuario" class="form-control" type="text" required />
                     </div>
                     <div class="form-group col-md-6">
                         <label for="telefone">Telefone (opcional):</label>
-                        <!-- <input type="tel" class="form-control" id="telefone" name="telefone"> -->
                         <input v-model="telefone" id="telefone" class="form-control" type="tel" />
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="email">Email:</label>
-                    <!-- <input type="email" class="form-control" id="email" name="email" required> -->
-                    <input v-model="email" id="email" class="form-control" type="email" placeholder="Email" required />
+                    <input v-model="email" id="email" class="form-control" type="email" required />
                 </div>
                 <div class="form-group">
                     <label for="curso">Curso:</label>
-                    <!-- <input type="text" class="form-control" id="curso" name="curso" required> -->
-                    <input v-model="curso" id="curso" class="form-control" type="text" placeholder="Curso" required />
+                    <input v-model="curso" id="curso" class="form-control" type="text" required />
                 </div>
                 <div class="form-group">
                     <label for="senha">Senha:</label>
-                    <!-- <input type="password" class="form-control" id="senha" name="senha" required> -->
-                    <input v-model="senha" id="senha" class="form-control" type="password" placeholder="Senha" required />
+                    <input v-model="senha" id="senha" class="form-control" type="password" required />
                 </div>
                 <div class="form-group">
                     <label for="confirmar-senha">Confirmar Senha:</label>
-                    <!-- <input type="password" class="form-control" id="confirmar-senha" name="confirmar-senha" required> -->
-                    <input v-model="confirmarSenha" id="confirmar-senha" class="form-control" type="password" placeholder="Confirmar Senha" required />
+                    <input v-model="confirmarSenha" id="confirmar-senha" class="form-control" type="password" required />
                 </div>
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="termos" name="termos" required>
-                    <label class="form-check-label" for="termos">Eu concordo que li os termos de uso</label>
+                <!-- <div class="form-check"> -->
+                <div style="text-align: center; justify-content: center; margin-bottom: 10px;">
+                    <input type="checkbox" class="form-check-input" id="termos" name="termos" required style="margin-right: 10px;">
+                    <label for="termos">Eu concordo que li os <a href="#">termos de uso</a>.</label>
                 </div>
                 <!-- <button type="submit" class="btn-custom">Criar Conta</button> -->
                 <button type="submit" class="btn-custom">Criar Conta</button>
             </form>            
-            <p class="text-center mt-3">Já tem uma conta? <a href="#">Faça login</a></p>
+            <p class="text-center mt-3">Já tem uma conta? <router-link to="login">Faça login</router-link></p>
         </div>
-    </div>
+    </main>
     
     <FooterComp />
 </template>
@@ -122,9 +117,8 @@ function handleSubmit(event) {
     height: 100px; /* Ajuste a altura conforme necessário */
 }
 
-.custom-lead {
-    font-size: 1.5rem; /* Aumenta o tamanho da fonte */
-    color: #188C29; /* Define a cor */
+h2{
+    color: #01400B; /* Define a cor */
 }
 
 header {
@@ -143,7 +137,7 @@ header h1 {
     line-height: 100px; /* Alinha o texto verticalmente */
 }
 
-.container {
+main {
     max-width: 700px; /* Aumenta a largura máxima do contêiner */
     margin: 0 auto;
     padding: 20px;
@@ -178,14 +172,6 @@ header h1 {
     margin-bottom: 15px;
 }
 
-.form-check-input {
-    margin-left: -1.25rem; /* Ajusta a posição do checkbox */
-}
-
-.form-check-label {
-    margin-left: 10px; /* Adiciona espaço entre o checkbox e o texto */
-}
-
 .btn-custom {
     display: block;
     width: 50%; /* Diminui o tamanho do botão */
@@ -201,11 +187,6 @@ header h1 {
 
 .btn-custom:hover {
     background-color: #012d08; /* Cor do botão ao passar o mouse */
-}
-
-.custom-lead {
-    font-size: 1.5rem; /* Aumenta o tamanho da fonte */
-    color: #01400B; /* Define a cor */
 }
 
 .form-group input {
