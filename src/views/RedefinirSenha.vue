@@ -47,7 +47,8 @@ function resetPassword() {
     <HeaderComp />
 
     <main>
-        <h2 v-show="esconder">Preencha os campos a seguir para redefinir sua senha:</h2>
+        <h2 class="text-center mt-4">Preencha os campos a seguir para redefinir sua senha:</h2>
+        
         <div class="form-container">
             <form>
                 <div v-if="step === 1">
@@ -73,7 +74,7 @@ function resetPassword() {
                     <h2>Faça login para entrar</h2>
 
                     <div class="form-group">
-                        <router-link to="login"><button class="btn-custom">Login</button></router-link>
+                        <router-link to="login" style="text-decoration: none;"><button class="btn-custom">Login</button></router-link>
                     </div>
                 </div>
             </form>
@@ -87,10 +88,14 @@ function resetPassword() {
 h2{
     color: #01400B; /* Define a cor */
     text-align: center;
-    margin: 30px auto;
-    margin-bottom: 0;
+    margin-top: 1.5rem !important;
 }
 
+main{
+    max-width: 100%; /* Aumenta a largura máxima do contêiner */
+    margin: 0 auto;
+    padding: 20px;
+}
 
 .form-container {
     background-color: #fff;
