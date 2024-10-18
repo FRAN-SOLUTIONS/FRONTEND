@@ -104,7 +104,7 @@ function handleSubmit(event) {
                 <!-- <button type="submit" class="btn-custom">Criar Conta</button> -->
                 <button type="submit" class="btn-custom">Criar Conta</button>
             </form>            
-            <p class="text-center mt-3">Já tem uma conta? <router-link to="login">Faça login</router-link></p>
+            <p class="text-center mt-3">Já tem uma conta? <router-link to="login">Faça login.</router-link></p>
         </div>
     </main>
     
@@ -112,29 +112,8 @@ function handleSubmit(event) {
 </template>
 
 <style scoped>
-.bg-custom {
-    background-color: #01400B;
-    height: 100px; /* Ajuste a altura conforme necessário */
-}
-
 h2{
     color: #01400B; /* Define a cor */
-}
-
-header {
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-}
-
-.header-logo {
-    height: 80px; /* Ajuste a altura da imagem conforme necessário */
-    margin-right: 20px;
-}
-
-header h1 {
-    margin: 0;
-    line-height: 100px; /* Alinha o texto verticalmente */
 }
 
 main {
@@ -189,14 +168,6 @@ main {
     background-color: #012d08; /* Cor do botão ao passar o mouse */
 }
 
-.form-group input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #EAEBEE; /* Cor de fundo das caixas de formulário */
-}
-
 .text-center {
     text-align: center;
 }
@@ -211,14 +182,6 @@ main {
 
 .mt-5 {
     margin-top: 3rem;
-}
-
-/* Estilo atualizado para o footer */
-footer {
-    background-color: #01400B; /* Cor verde escolhida */
-    color: #ffffff; /* Cor do texto */
-    text-align: center;
-    padding: 1rem 0;
 }
 
 /* Responsividade */
