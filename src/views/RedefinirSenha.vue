@@ -5,9 +5,11 @@ import FooterComp from '@/components/FooterComp.vue'
 import validator from 'validator' // Importa a biblioteca validator
 import '../assets/css/global.css'
 
+import { useRouter } from 'vue-router' // Importa o router
+const router = useRouter() // Inicializa o router
+
 // Variáveis reativas
 const step = ref(1) // Controla qual etapa está ativa
-const page = ref(1)
 
 const enderecoEmail = ref('')
 const novaSenha = ref('')
@@ -36,7 +38,7 @@ function resetPassword() {
 
   alert('Senha redefinida com sucesso!')
   // Lógica adicional para enviar a nova senha ao servidor
-  page.value = 2
+  router.push({ name: 'LoginPage' })
 }
 </script>
 
@@ -44,39 +46,28 @@ function resetPassword() {
   <HeaderComp />
 
   <main>
-    <div v-if="page === 1">
-      <h2 class="text-center mt-4">Preencha os campos a seguir para redefinir sua senha:</h2>
+    <h2 class="text-center mt-4">Preencha os campos a seguir para redefinir sua senha:</h2>
 
-      <div class="form-container">
-        <form>
-          <div v-if="step === 1">
-            <div class="form-group">
-              <label for="email" class="form-label">Email:</label>
-              <input type="email" v-model="enderecoEmail" class="form-control" required />
+    <div class="form-container">
+      <form>
+        <div v-if="step === 1">
+          <div class="form-group">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" v-model="enderecoEmail" class="form-control" required />
 
-              <button @click="sendEmail" class="btn-custom">Enviar</button>
-            </div>
+            <button @click="sendEmail" class="btn-custom">Enviar</button>
           </div>
-          <div v-else-if="step === 2">
-            <div class="form-group">
-              <label for="nova-Senha" class="form-label">Nova Senha:</label>
-              <input type="password" v-model="novaSenha" class="form-control" required />
+        </div>
+        <div v-else-if="step === 2">
+          <div class="form-group">
+            <label for="nova-Senha" class="form-label">Nova Senha:</label>
+            <input type="password" v-model="novaSenha" class="form-control" required />
 
-              <label for="confirma-senha" class="form-label">Confirme a Nova Senha:</label>
-              <input type="password" v-model="confirmaSenha" class="form-control" required />
+            <label for="confirma-senha" class="form-label">Confirme a Nova Senha:</label>
+            <input type="password" v-model="confirmaSenha" class="form-control" required />
 
-              <button @click.prevent="resetPassword" class="btn-custom">Redefinir</button>
-            </div>
+            <button @click.prevent="resetPassword" class="btn-custom">Redefinir</button>
           </div>
-        </form>
-      </div>
-    </div>
-    <div v-else-if="page === 2">
-      <h2>Faça login para entrar</h2>
-
-      <form class="form-container">
-        <div class="form-group">
-          <router-link to="login" style="text-decoration: none"><button class="btn-custom">Login</button></router-link>
         </div>
       </form>
     </div>

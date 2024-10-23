@@ -35,10 +35,12 @@ function validarUsuário() {
     return
   }
 
-  // Lógica do backend
-  alert('Login bem-sucedido!')
-
+  //alert('Login bem-sucedido!')
+  
+  // Lógica do backend para saber quem logou
   router.push({ name: 'HomeAluno' })
+  //router.push({ name: 'HomeOrientador' })
+  //router.push({ name: 'HomeCoordenador' })
 }
 </script>
 

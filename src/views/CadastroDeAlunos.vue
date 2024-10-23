@@ -2,28 +2,6 @@
 import FooterComp from '@/components/FooterComp.vue';
 import HeaderComp from '@/components/HeaderComp.vue';
 
-/* document.getElementById('cadastroForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita o envio do formulário
-    let nomeCompleto = document.getElementById('nome-completo').value;
-    let prontuario = document.getElementById('prontuario').value;
-    let email = document.getElementById('email').value;
-    let curso = document.getElementById('curso').value;
-    let senha = document.getElementById('senha').value;
-    let confirmarSenha = document.getElementById('confirmar-senha').value;
-
-    // Validações
-    if (nomeCompleto === '' || prontuario === '' || email === '' || curso === '' || senha === '' || confirmarSenha === '') {
-        alert('Por favor, preencha todos os campos obrigatórios.');
-        return;
-    }
-    if (senha !== confirmarSenha) {
-        alert('As senhas não coincidem.');
-        return;
-    }
-
-    alert('Formulário enviado com sucesso!');
-}); */
-
 import { ref } from 'vue';
 
 const nomeCompleto = ref('');
@@ -54,7 +32,7 @@ function handleSubmit(event) {
         return;
     }
     //logica do backend
-    alert('Formulário enviado com sucesso!');
+    //alert('Formulário enviado com sucesso!');
     step.value = 2;
 }
 </script>
