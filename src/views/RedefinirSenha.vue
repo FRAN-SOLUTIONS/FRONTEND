@@ -45,21 +45,14 @@ function resetPassword() {
 
   <main>
     <div v-if="page === 1">
-      <h2 class="text-center mt-4">
-        Preencha os campos a seguir para redefinir sua senha:
-      </h2>
+      <h2 class="text-center mt-4">Preencha os campos a seguir para redefinir sua senha:</h2>
 
       <div class="form-container">
         <form>
           <div v-if="step === 1">
             <div class="form-group">
               <label for="email" class="form-label">Email:</label>
-              <input
-                type="email"
-                v-model="enderecoEmail"
-                class="form-control"
-                required
-              />
+              <input type="email" v-model="enderecoEmail" class="form-control" required />
 
               <button @click="sendEmail" class="btn-custom">Enviar</button>
             </div>
@@ -67,26 +60,12 @@ function resetPassword() {
           <div v-else-if="step === 2">
             <div class="form-group">
               <label for="nova-Senha" class="form-label">Nova Senha:</label>
-              <input
-                type="password"
-                v-model="novaSenha"
-                class="form-control"
-                required
-              />
+              <input type="password" v-model="novaSenha" class="form-control" required />
 
-              <label for="confirma-senha" class="form-label"
-                >Confirme a Nova Senha:</label
-              >
-              <input
-                type="password"
-                v-model="confirmaSenha"
-                class="form-control"
-                required
-              />
+              <label for="confirma-senha" class="form-label">Confirme a Nova Senha:</label>
+              <input type="password" v-model="confirmaSenha" class="form-control" required />
 
-              <button @click.prevent="resetPassword" class="btn-custom">
-                Redefinir
-              </button>
+              <button @click.prevent="resetPassword" class="btn-custom">Redefinir</button>
             </div>
           </div>
         </form>
@@ -97,9 +76,7 @@ function resetPassword() {
 
       <form class="form-container">
         <div class="form-group">
-          <router-link to="login" style="text-decoration: none"
-            ><button class="btn-custom">Login</button></router-link
-          >
+          <router-link to="login" style="text-decoration: none"><button class="btn-custom">Login</button></router-link>
         </div>
       </form>
     </div>

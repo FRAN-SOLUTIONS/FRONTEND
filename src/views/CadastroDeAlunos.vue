@@ -53,6 +53,7 @@ function handleSubmit(event) {
         alert('As senhas não coincidem.');
         return;
     }
+    //logica do backend
     alert('Formulário enviado com sucesso!');
     step.value = 2;
 }
