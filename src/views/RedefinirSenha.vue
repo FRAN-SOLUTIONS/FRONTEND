@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import HeaderComp from '@/components/HeaderComp.vue';
 import FooterComp from '@/components/FooterComp.vue';
-import LoginPage from './LoginPage.vue';
 import validator from 'validator';  // Importa a biblioteca validator
 import '../assets/css/global.css'
 
@@ -11,7 +10,6 @@ const step = ref(1); // Controla qual etapa está ativa
 const enderecoEmail = ref('');
 const novaSenha = ref('');
 const confirmaSenha= ref('');
-const esconder = ref(true); // Controla a visibilidade do título
 
 // Função para enviar o email e passar para a próxima etapa
 function sendEmail() {
