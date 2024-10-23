@@ -5,12 +5,19 @@ import '../assets/css/global.css'
 
 import { ref } from 'vue'
 
+import { useRouter } from 'vue-router' // Importa o router
+const router = useRouter() // Inicializa o router
+
 const prontuario = ref('')
 const senha = ref('')
 
 function validarProntuario(prontuario) {
   const regex = /^[A-Za-z]{2}\d{7}$/ // Dois primeiros caracteres letras, seguidos de sete números
   return regex.test(prontuario)
+}
+
+function validarSenha(senha) {
+  return senha.length >= 6 // A senha deve ter pelo menos 6 caracteres
 }
 
 function validarUsuário() {
@@ -23,10 +30,15 @@ function validarUsuário() {
   } else if (!senha.value) {
     alert('Por favor, digite sua senha.')
     return
+  } else if (!validarSenha(senha.value)) {
+    alert('A senha deve ter pelo menos 6 caracteres.')
+    return
   }
 
   // Lógica do backend
   alert('Login bem-sucedido!')
+
+  router.push({ name: 'HomeAluno' })
 }
 </script>
 
@@ -41,7 +53,13 @@ function validarUsuário() {
         <div class="form-row">
           <div class="form-group">
             <label for="prontuario">Prontuário:</label>
-            <input v-model="prontuario" id="prontuario" class="form-control" type="text" required />
+            <input
+              v-model="prontuario"
+              id="prontuario"
+              class="form-control"
+              type="text"
+              required
+            />
           </div>
 
           <div class="form-group">
@@ -49,17 +67,11 @@ function validarUsuário() {
             <input v-model="senha" id="senha" class="form-control" type="password" required />
           </div>
         </div>
-        <router-link to="homeAluno" style="text-decoration: none;">
-          <button type="submit" class="btn-custom" @click.prevent="validarUsuário" >Entrar</button>
-        </router-link>
+        <button type="submit" class="btn-custom" @click.prevent="validarUsuário">Entrar</button>
       </form>
-      <p class="text-center mt-3">
-        Esqueceu a senha?
-        <router-link to="redefinirSenha">Redefinir minha senha.</router-link>
-      </p>
+      <p class="text-center mt-3">Esqueceu a senha?<router-link to="redefinirSenha">Redefinir minha senha.</router-link></p>
     </div>
   </main>
-
   <FooterComp />
 </template>
 
