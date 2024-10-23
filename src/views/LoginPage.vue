@@ -8,7 +8,7 @@ import '../assets/css/global.css'
     <HeaderComp />
 
     <main>
-        <h2 class="text-center mt-4">Primeira vez aqui? Cadastre-se:</h2>
+        <h2 class="text-center mt-4">Faça login para entrar</h2>
         
         <div class="form-container">
             <form id="cadastroForm">

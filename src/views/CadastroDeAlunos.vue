@@ -34,24 +34,27 @@ const curso = ref('');
 const senha = ref('');
 const confirmarSenha = ref('');
 
+const step = ref(1);
+
 function handleSubmit(event) {
-  event.preventDefault();
-  if (
-    !nomeCompleto.value ||
-    !prontuario.value ||
-    !email.value ||
-    !curso.value ||
-    !senha.value ||
-    !confirmarSenha.value
-  ) {
-    alert('Por favor, preencha todos os campos obrigatórios.');
-    return;
-  }
-  if (senha.value !== confirmarSenha.value) {
-    alert('As senhas não coincidem.');
-    return;
-  }
-  alert('Formulário enviado com sucesso!');
+    event.preventDefault();
+    if (
+        !nomeCompleto.value ||
+        !prontuario.value ||
+        !email.value ||
+        !curso.value ||
+        !senha.value ||
+        !confirmarSenha.value
+    ) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
+        return;
+    }
+    if (senha.value !== confirmarSenha.value) {
+        alert('As senhas não coincidem.');
+        return;
+    }
+    alert('Formulário enviado com sucesso!');
+    step.value = 2;
 }
 </script>
 
@@ -60,51 +63,63 @@ function handleSubmit(event) {
     <HeaderComp />
 
     <main>
-        <h2 class="text-center mt-4">Primeira vez aqui? Cadastre-se:</h2>
-        
-        <div class="form-container">
-            <form id="cadastroForm" @submit="handleSubmit">
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <label for="nome-completo">Nome Completo:</label>
-                        <input v-model="nomeCompleto" id="nome-completo"  class="form-control" type="text"  required />
+        <div v-if="step === 1">
+            <h2 class="text-center mt-4">Primeira vez aqui? Cadastre-se:</h2>
+            
+            <div class="form-container">
+                <form id="cadastroForm" @submit="handleSubmit">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="nome-completo">Nome Completo:</label>
+                            <input v-model="nomeCompleto" id="nome-completo"  class="form-control" type="text"  required />
+                        </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="prontuario">Prontuário:</label>
-                        <input v-model="prontuario" id="prontuario" class="form-control" type="text" required />
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="prontuario">Prontuário:</label>
+                            <input v-model="prontuario" id="prontuario" class="form-control" type="text" required />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="telefone">Telefone (opcional):</label>
+                            <input v-model="telefone" id="telefone" class="form-control" type="tel" />
+                        </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="telefone">Telefone (opcional):</label>
-                        <input v-model="telefone" id="telefone" class="form-control" type="tel" />
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input v-model="email" id="email" class="form-control" type="email" required />
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="curso">Curso:</label>
+                        <input v-model="curso" id="curso" class="form-control" type="text" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="senha">Senha:</label>
+                        <input v-model="senha" id="senha" class="form-control" type="password" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmar-senha">Confirmar Senha:</label>
+                        <input v-model="confirmarSenha" id="confirmar-senha" class="form-control" type="password" required />
+                    </div>
+                    <!-- <div class="form-check"> -->
+                    <div style="text-align: center; justify-content: center; margin-bottom: 10px;">
+                        <input type="checkbox" class="form-check-input" id="termos" name="termos" required style="margin-right: 10px;">
+                        <label for="termos">Eu concordo que li os <a href="#">termos de uso</a>.</label>
+                    </div>
+                    <!-- <button type="submit" class="btn-custom">Criar Conta</button> -->
+                    <button type="submit" class="btn-custom">Criar Conta</button>
+
+                </form>            
+                <p class="text-center mt-3">Já tem uma conta? <router-link to="login">Faça login.</router-link></p>
+            </div>
+        </div>
+        <div v-else>
+            <h2>Faça login para entrar</h2>
+
+            <form class="form-container">
                 <div class="form-group">
-                    <label for="email">Email:</label>
-                    <input v-model="email" id="email" class="form-control" type="email" required />
+                    <router-link to="login" style="text-decoration: none;"><button class="btn-custom">Login</button></router-link>
                 </div>
-                <div class="form-group">
-                    <label for="curso">Curso:</label>
-                    <input v-model="curso" id="curso" class="form-control" type="text" required />
-                </div>
-                <div class="form-group">
-                    <label for="senha">Senha:</label>
-                    <input v-model="senha" id="senha" class="form-control" type="password" required />
-                </div>
-                <div class="form-group">
-                    <label for="confirmar-senha">Confirmar Senha:</label>
-                    <input v-model="confirmarSenha" id="confirmar-senha" class="form-control" type="password" required />
-                </div>
-                <!-- <div class="form-check"> -->
-                <div style="text-align: center; justify-content: center; margin-bottom: 10px;">
-                    <input type="checkbox" class="form-check-input" id="termos" name="termos" required style="margin-right: 10px;">
-                    <label for="termos">Eu concordo que li os <a href="#">termos de uso</a>.</label>
-                </div>
-                <!-- <button type="submit" class="btn-custom">Criar Conta</button> -->
-                <button type="submit" class="btn-custom">Criar Conta</button>
-            </form>            
-            <p class="text-center mt-3">Já tem uma conta? <router-link to="login">Faça login.</router-link></p>
+            </form>
         </div>
     </main>
     
@@ -112,8 +127,10 @@ function handleSubmit(event) {
 </template>
 
 <style scoped>
-h2{
-    color: #01400B; /* Define a cor */
+h2 {
+  color: #01400b; /* Define a cor */
+  text-align: center;
+  margin-top: 1.5rem !important;
 }
 
 main {
