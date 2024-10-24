@@ -1,9 +1,10 @@
 <script setup>
 import FooterComp from '@/components/FooterComp.vue';
 import HeaderComp from '@/components/HeaderComp.vue';
+import axios from 'axios';
 import { ref } from 'vue'; // Importa 'ref' para criar variáveis reativas
 
-// Definindo estados reativos
+/* criação de orientadores no front
 const orientadores = ref([]);
 const nome = ref('');
 const prontuario = ref('');
@@ -32,6 +33,26 @@ function addOrientador() {
 function removeOrientador(index) {
   orientadores.value.splice(index, 1); // Remove o orientador pelo índice.
 }
+*/
+
+async function handleSubmit(event) {
+    event.preventDefault();
+    try {
+        const orientador = {
+            nome: nome.value,
+            prontuario: prontuario.value,
+            email: email.value,
+            password: senha.value,
+        };
+        const response = await axios.post('http://localhost:8082/FRAN/orientadores/signup', orientador);
+        console.log(response)
+    } catch (error) {
+        // Exibe erro se houver falha no cadastro
+        console.log('Erro ao cadastrar orientador: ' + (error.response?.data || error.message));
+    }
+
+}
+
 </script>
 
 <template>
@@ -42,21 +63,23 @@ function removeOrientador(index) {
             
             <div>
                 <div class="divDoFormulario">
-                    <div class="formulario">
+                    <form class="formulario" @submit="handleSubmit">
                         <hr /> 
                         
                         <h1 class="tituloFormulario">Cadastrar novo orientador de estágio</h1>
                         <br>
                         
-                        <input placeholder="Nome" type="text" v-model="nome">
-                        <input placeholder="Prontuário" type="text" v-model="prontuario">
-                        <input placeholder="Email" type="email" v-model="email">
+                        <input placeholder="Nome" type="text" v-model="nome" id="nome">
+                        <input placeholder="Prontuário" type="text" v-model="prontuario" id="prontuario">
+                        <input placeholder="Email" type="email" v-model="email" id="email">
+                        <input placeholder="senha" type="senha" v-model="senha" id="senha">
                 
                         <button @click="addOrientador" type="submit" class="enviar">Cadastrar</button>
-                    </div>
+                    </form>
                     <br>
                 </div>
-                <div class="divDaLista">
+                <!--
+                 <div class="divDaLista">
                     <div class="lista" v-for="(orientador, index) in orientadores" :key="index">
                         <span class="orientador__nome">Nome: <strong>{{ orientador.nome }}</strong></span>
                         <p>{{ orientador.prontuario }}</p>
@@ -66,9 +89,8 @@ function removeOrientador(index) {
                             <a href="#" @click.prevent="removeOrientador(index)">Excluir</a>
                         </div>
                     </div>
-                </div>     
-            </div>
-            
+                    -->
+                </div>      
         </div>
     </main>
     <FooterComp />

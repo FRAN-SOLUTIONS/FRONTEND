@@ -4,23 +4,25 @@ import HeaderComp from '@/components/HeaderComp.vue'
 import '../assets/css/global.css'
 
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
 
-import { useRouter } from 'vue-router' // Importa o router
-const router = useRouter() // Inicializa o router
+const router = useRouter()
 
 const prontuario = ref('')
 const senha = ref('')
 
 function validarProntuario(prontuario) {
-  const regex = /^[A-Za-z]{2}\d{7}$/ // Dois primeiros caracteres letras, seguidos de sete números
+  const regex = /^[A-Za-z]{2}\d{7}$/
   return regex.test(prontuario)
 }
 
 function validarSenha(senha) {
-  return senha.length >= 6 // A senha deve ter pelo menos 6 caracteres
+  return senha.length >= 6
 }
 
-function validarUsuário() {
+async function handleSubmit() {
+  // Validação dos campos antes do envio
   if (!prontuario.value) {
     alert('Por favor, preencha o prontuário.')
     return
@@ -35,12 +37,17 @@ function validarUsuário() {
     return
   }
 
-  //alert('Login bem-sucedido!')
-  
-  // Lógica do backend para saber quem logou
-  router.push({ name: 'HomeAluno' })
-  //router.push({ name: 'HomeOrientador' })
-  //router.push({ name: 'HomeCoordenador' })
+  try {
+    const orientador = {
+      prontuario: prontuario.value,
+      password: senha.value
+    }
+    const response = await axios.post('http://localhost:8082/FRAN/orientadores/login', orientador)
+      router.push({ name: 'HomeCoordenador' })
+      console.log(response.data)
+  } catch (error) {
+    console.log('Erro ao fazer login: ' + (error.response?.data || error.message))
+  }
 }
 </script>
 
@@ -51,7 +58,7 @@ function validarUsuário() {
     <h2 class="text-center mt-4">Faça login para entrar</h2>
 
     <div class="form-container">
-      <form id="cadastroForm">
+      <form @submit.prevent="handleSubmit">
         <div class="form-row">
           <div class="form-group">
             <label for="prontuario">Prontuário:</label>
@@ -69,21 +76,22 @@ function validarUsuário() {
             <input v-model="senha" id="senha" class="form-control" type="password" required />
           </div>
         </div>
-        <button type="submit" class="btn-custom" @click.prevent="validarUsuário">Entrar</button>
+        <button type="submit" class="btn-custom">Entrar</button>
       </form>
       <p class="text-center mt-3">Esqueceu a senha?<router-link to="redefinirSenha">Redefinir minha senha.</router-link></p>
     </div>
   </main>
+
   <FooterComp />
 </template>
 
 <style scoped>
 h2 {
-  color: #01400b; /* Define a cor */
+  color: #01400b;
 }
 
 main {
-  max-width: 500px; /* Aumenta a largura máxima do contêiner */
+  max-width: 500px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -109,21 +117,21 @@ main {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: #eaebee; /* Cor de fundo das caixas de formulário */
+  background-color: #eaebee;
 }
 
 .btn-custom {
   display: block;
-  width: 50%; /* Diminui o tamanho do botão */
+  width: 50%;
   padding: 10px;
-  background-color: #01400b; /* Cor do botão */
+  background-color: #01400b;
   color: #fff;
-  border-radius: 8px; /* Bordas arredondadas */
+  border-radius: 8px;
   cursor: pointer;
   margin: 30px auto;
 }
 
 .btn-custom:hover {
-  background-color: #012d08; /* Cor do botão ao passar o mouse */
+  background-color: #012d08;
 }
 </style>
