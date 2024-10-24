@@ -3,6 +3,7 @@ import FooterComp from '@/components/FooterComp.vue';
 import HeaderComp from '@/components/HeaderComp.vue';
 import axios from 'axios';
 import { ref } from 'vue'; // Importa 'ref' para criar variáveis reativas
+import '@/assets/css/global.css'
 
 /* criação de orientadores no front
 const orientadores = ref([]);
@@ -57,8 +58,8 @@ async function handleSubmit(event) {
 
 <template>
     <HeaderComp />
-    <main class="containerDaPagina">
-        <div class="conteudoDaPagina">
+    <main class="conteudo">
+        <div>
             <h1>Esta é a página de cadastro dos orientadores.</h1>
             
             <div>

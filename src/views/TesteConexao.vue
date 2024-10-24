@@ -36,7 +36,7 @@ function cadastrar() {
 <template>
     <div>
         <HeaderComp />
-        <main>
+        <main class="conteudo">
             <div style="border: 1px solid black; padding: 20px; margin: 20px;">
                 <form @submit.prevent="cadastrar">
                     <h2>Cadastrar Alunos</h2>

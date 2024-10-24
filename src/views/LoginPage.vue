@@ -1,7 +1,7 @@
 <script setup>
 import FooterComp from '@/components/FooterComp.vue'
 import HeaderComp from '@/components/HeaderComp.vue'
-import '../assets/css/global.css'
+import '@/assets/css/global.css'
 
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -54,7 +54,7 @@ async function handleSubmit() {
 <template>
   <HeaderComp />
 
-  <main>
+  <main class="conteudo">
     <h2 class="text-center mt-4">Faça login para entrar</h2>
 
     <div class="form-container">
