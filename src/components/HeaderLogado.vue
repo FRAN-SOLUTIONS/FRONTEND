@@ -27,10 +27,10 @@ function fecharNav() {
             
             <aside id="menuOculto" class="menuOculto">
                 <a href="" class="btnFechar" @click="fecharNav()">&times;</a>
-                <a href="#">Sobre</a>
-                <a href="#">Cursos</a>
-                <a href="#">Endereços</a>
-                <a href="#">Contatos</a>
+                <a href="#">Perfil</a>
+                <a href="#">Alunos</a>
+                <a href="#">Configurações</a>
+                <a href="#">Sair</a>
             </aside>
         </div>
     </header>
