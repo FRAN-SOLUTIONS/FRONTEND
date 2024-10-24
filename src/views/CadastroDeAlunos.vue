@@ -54,10 +54,7 @@ async function handleSubmit(event) {
         // Exibe erro se houver falha no cadastro
         console.log('Erro ao cadastrar aluno: ' + (error.response?.data || error.message));
     }
-
 }
-
-
 </script>
 
 <template>
