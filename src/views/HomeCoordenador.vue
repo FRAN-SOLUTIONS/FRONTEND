@@ -5,8 +5,8 @@
 
 <template>
     <HeaderComp />
-    <main class="containerDaPagina">
-        <div class="conteudoDaPagina">
+    <main class="conteudo">
+        <div>
             <h1>Esta é a página inicial do coordenador de estagios.</h1>
         </div>
     </main>

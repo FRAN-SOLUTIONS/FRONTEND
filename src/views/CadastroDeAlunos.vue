@@ -64,7 +64,7 @@ async function handleSubmit(event) {
 
     <HeaderComp />
 
-    <main>
+    <main class="conteudo">
         <div v-if="step === 1">
             <h2 class="text-center mt-4">Primeira vez aqui? Cadastre-se:</h2>
             

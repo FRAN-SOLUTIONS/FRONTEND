@@ -6,7 +6,7 @@
 <template>
     <div>
         <HeaderComp />
-        <main class="containerDaPagina bg-body-tertiary">
+        <main class="conteudo bg-body-tertiary">
             <div class="conteudoDaPagina ">
                 <h4 class="text-success-emphasis"><strong>Seja bem-vindo à nossa inovadora aplicação web, projetada especialmente para facilitar a coordenação dos processos de estágio entre orientadores e alunos. Com um ambiente intuitivo e funcional, nossa plataforma tem como objetivo otimizar a gestão de estágios, proporcionando uma experiência mais fluida e eficaz para todos os envolvidos.</strong></h4>
 
