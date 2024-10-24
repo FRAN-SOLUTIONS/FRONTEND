@@ -357,6 +357,8 @@ Se você tiver dúvidas, encontrar problemas ou precisar de ajuda com este proje
 
  - Hugo Feltran Wirth | hugo.feltranwirth@gmail.com | [HugoFeltran](https://github.com/HugoFeltran)
 
+ - Igor de Almeida Aguiar | aguiarigor365@gmail.com | [AguiarIgor](https://github.com/AguiarIgor)
+
 # Status do projeto
 
 Em andamento:
