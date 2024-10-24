@@ -4,28 +4,6 @@ import FooterComp from '@/components/FooterComp.vue';
 import HeaderComp from '@/components/HeaderComp.vue';
 import axios from 'axios';
 
-/* document.getElementById('cadastroForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Evita o envio do formulário
-    let nomeCompleto = document.getElementById('nome-completo').value;
-    let prontuario = document.getElementById('prontuario').value;
-    let email = document.getElementById('email').value;
-    let curso = document.getElementById('curso').value;
-    let senha = document.getElementById('senha').value;
-    let confirmarSenha = document.getElementById('confirmar-senha').value;
-
-    // Validações
-    if (nomeCompleto === '' || prontuario === '' || email === '' || curso === '' || senha === '' || confirmarSenha === '') {
-        alert('Por favor, preencha todos os campos obrigatórios.');
-        return;
-    }
-    if (senha !== confirmarSenha) {
-        alert('As senhas não coincidem.');
-        return;
-    }
-
-    alert('Formulário enviado com sucesso!');
-}); */
-
 import { ref } from 'vue';
 
 const nome = ref('');
@@ -55,7 +33,9 @@ async function handleSubmit(event) {
         alert('As senhas não coincidem.');
         return;
     }
-    //alert('Formulário enviado com sucesso!');
+
+    //logica do backend
+    //alert('Cadastro raliizado com sucesso!');
     step.value = 2;
 
     try {
