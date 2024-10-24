@@ -2,6 +2,7 @@
 import FooterComp from '@/components/FooterComp.vue';
 import HeaderComp from '@/components/HeaderComp.vue';
 import { ref } from 'vue'; // Importa 'ref' para criar variáveis reativas
+import '@/assets/css/global.css'
 
 // Definindo estados reativos
 const orientadores = ref([]);
@@ -36,8 +37,8 @@ function removeOrientador(index) {
 
 <template>
     <HeaderComp />
-    <main class="containerDaPagina">
-        <div class="conteudoDaPagina">
+    <main class="conteudo">
+        <div>
             <h1>Esta é a página de cadastro dos orientadores.</h1>
             
             <div>

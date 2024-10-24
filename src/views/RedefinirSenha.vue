@@ -1,9 +1,9 @@
 <script setup>
+import '@/assets/css/global.css'
 import { ref } from 'vue'
 import HeaderComp from '@/components/HeaderComp.vue'
 import FooterComp from '@/components/FooterComp.vue'
 import validator from 'validator' // Importa a biblioteca validator
-import '../assets/css/global.css'
 
 import { useRouter } from 'vue-router' // Importa o router
 const router = useRouter() // Inicializa o router
@@ -45,15 +45,22 @@ function resetPassword() {
 <template>
   <HeaderComp />
 
-  <main>
-    <h2 class="text-center mt-4">Preencha os campos a seguir para redefinir sua senha:</h2>
+  <main class="conteudo">
+    <h2 class="text-center mt-4">
+      Preencha os campos a seguir para redefinir sua senha:
+    </h2>
 
     <div class="form-container">
       <form>
         <div v-if="step === 1">
           <div class="form-group">
             <label for="email" class="form-label">Email:</label>
-            <input type="email" v-model="enderecoEmail" class="form-control" required />
+            <input
+              type="email"
+              v-model="enderecoEmail"
+              class="form-control"
+              required
+            />
 
             <button @click="sendEmail" class="btn-custom">Enviar</button>
           </div>
@@ -61,12 +68,26 @@ function resetPassword() {
         <div v-else-if="step === 2">
           <div class="form-group">
             <label for="nova-Senha" class="form-label">Nova Senha:</label>
-            <input type="password" v-model="novaSenha" class="form-control" required />
+            <input
+              type="password"
+              v-model="novaSenha"
+              class="form-control"
+              required
+            />
 
-            <label for="confirma-senha" class="form-label">Confirme a Nova Senha:</label>
-            <input type="password" v-model="confirmaSenha" class="form-control" required />
+            <label for="confirma-senha" class="form-label"
+              >Confirme a Nova Senha:</label
+            >
+            <input
+              type="password"
+              v-model="confirmaSenha"
+              class="form-control"
+              required
+            />
 
-            <button @click.prevent="resetPassword" class="btn-custom">Redefinir</button>
+            <button @click.prevent="resetPassword" class="btn-custom">
+              Redefinir
+            </button>
           </div>
         </div>
       </form>
