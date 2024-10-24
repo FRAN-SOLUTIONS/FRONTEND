@@ -1,10 +1,12 @@
+<!-- eslint-disable no-unused-vars -->
 <script setup>
 import FooterComp from '@/components/FooterComp.vue';
 import HeaderComp from '@/components/HeaderComp.vue';
+import axios from 'axios';
 
 import { ref } from 'vue';
 
-const nomeCompleto = ref('');
+const nome = ref('');
 const prontuario = ref('');
 const telefone = ref(''); 
 const email = ref('');
@@ -14,10 +16,10 @@ const confirmarSenha = ref('');
 
 const step = ref(1);
 
-function handleSubmit(event) {
+async function handleSubmit(event) {
     event.preventDefault();
     if (
-        !nomeCompleto.value ||
+        !nome.value ||
         !prontuario.value ||
         !email.value ||
         !curso.value ||
@@ -31,10 +33,31 @@ function handleSubmit(event) {
         alert('As senhas não coincidem.');
         return;
     }
+
     //logica do backend
-    //alert('Formulário enviado com sucesso!');
+    //alert('Cadastro raliizado com sucesso!');
     step.value = 2;
+
+    try {
+        const aluno = {
+            nome: nome.value,
+            prontuario: prontuario.value,
+            telefone: telefone.value,
+            email: email.value,
+            curso: curso.value,
+            senha: senha.value,
+        };
+        const response = await axios.post('http://localhost:8082/FRAN/alunos/signup', aluno);
+        console.log(response)
+        step.value = 2;
+    } catch (error) {
+        // Exibe erro se houver falha no cadastro
+        console.log('Erro ao cadastrar aluno: ' + (error.response?.data || error.message));
+    }
+
 }
+
+
 </script>
 
 <template>
@@ -50,7 +73,7 @@ function handleSubmit(event) {
                     <div class="form-row">
                         <div class="form-group col-md-12">
                             <label for="nome-completo">Nome Completo:</label>
-                            <input v-model="nomeCompleto" id="nome-completo"  class="form-control" type="text"  required />
+                            <input v-model="nome" id="nome"  class="form-control" type="text"  required />
                         </div>
                     </div>
                     <div class="form-row">
