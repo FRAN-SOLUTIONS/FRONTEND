@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import '@/assets/icons/icon-library'
 
+
 import App from './App.vue'
 import router from './router'
 
