@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 //Importando os componentes para criar suas rotas
-import HelloWorld from '@/views/HelloWorld.vue'
+//import HelloWorld from '@/views/HelloWorld.vue'
 import HomePage from '@/views/HomePage.vue'
 import CadastroDeAlunos from '@/views/CadastroDeAlunos.vue'
 import CadastroDeOrientadores from '@/views/CadastroDeOrientadores.vue'
@@ -17,13 +17,12 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'HomePage',
+      component: HomePage
     },
     {
       path: '/home',
-      name: 'HomePage',
-      component: HomePage
+      redirect: '/'
     },
     {
       path: '/cadastroAlunos',
