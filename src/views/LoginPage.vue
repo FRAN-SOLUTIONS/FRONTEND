@@ -43,7 +43,7 @@ async function handleSubmit() {
       password: senha.value
     }
     const response = await axios.post('http://localhost:8082/FRAN/orientadores/login', orientador)
-      router.push({ name: 'HomeCoordenador' })
+      router.push({ name: 'HomeOrientador'})
       console.log(response.data)
   } catch (error) {
     console.log('Erro ao fazer login: ' + (error.response?.data || error.message))
