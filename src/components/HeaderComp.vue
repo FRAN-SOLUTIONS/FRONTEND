@@ -1,16 +1,5 @@
 <script setup>
 import '../assets/css/global.css'
-//import { useRouter } from 'vue-router'
-
-//const router = useRouter()
-
-/* function goToLogin() {
-  router.push({ name: 'LoginPage' })
-}
-
-function goToSignUp() {
-  router.push({ name: 'CadastroDeAlunos' })
-} */
 </script>
 
 <template>

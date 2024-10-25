@@ -1,13 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 //Importando os componentes para criar suas rotas
-//import HelloWorld from '@/views/HelloWorld.vue'
 import HomePage from '@/views/HomePage.vue'
 import CadastroDeAlunos from '@/views/CadastroDeAlunos.vue'
 import CadastroDeOrientadores from '@/views/CadastroDeOrientadores.vue'
 import LoginPage from '@/views/LoginPage.vue'
 import RedefinirSenha from '@/views/RedefinirSenha.vue'
-import HomeAluno from '@/views/HomeAluno.vue'
 import HomeCoordenador from '@/views/HomeCoordenador.vue'
 import HomeOrientador from '@/views/HomeOrientador.vue'
 import TesteConexao from '@/views/TesteConexao.vue'
@@ -18,52 +16,47 @@ const router = createRouter({
     {
       path: '/',
       name: 'HomePage',
-      component: HomePage
+      component: HomePage,
     },
     {
       path: '/home',
-      redirect: '/'
+      redirect: '/',
     },
     {
       path: '/cadastroAlunos',
       name: 'CadastroDeAlunos',
-      component: CadastroDeAlunos
+      component: CadastroDeAlunos,
     },
     {
       path: '/cadastroOrientadores',
       name: 'CadastroDeOrientadores',
-      component: CadastroDeOrientadores
+      component: CadastroDeOrientadores,
     },
     {
       path: '/login',
       name: 'LoginPage',
-      component: LoginPage
+      component: LoginPage,
     },
     {
       path: '/redefinirSenha',
       name: 'RedefinirSenha',
-      component: RedefinirSenha
-    },
-    {
-      path: '/homeAluno',
-      name: 'HomeAluno',
-      component: HomeAluno
+      component: RedefinirSenha,
     },
     {
       path: '/homeOrientador',
       name: 'HomeOrientador',
-      component: HomeOrientador
+      component: HomeOrientador,
     },
     {
       path: '/homeCoordenador',
       name: 'HomeCoordenador',
-      component: HomeCoordenador
+      component: HomeCoordenador,
     },
     {
       path: '/teste',
       name: 'TesteConexao',
-      component: TesteConexao
-    }
+      component: TesteConexao,
+    },
   ],
 })
 

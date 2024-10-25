@@ -1,8 +1,8 @@
 <script setup>
 import FooterComp from '@/components/FooterComp.vue';
 import HeaderComp from '@/components/HeaderComp.vue';
-import axios from 'axios';
-import { ref } from 'vue'; // Importa 'ref' para criar variáveis reativas
+//import axios from 'axios';
+//import { ref } from 'vue'; // Importa 'ref' para criar variáveis reativas
 import '@/assets/css/global.css'
 
 /* criação de orientadores no front
@@ -36,7 +36,7 @@ function removeOrientador(index) {
 }
 */
 
-async function handleSubmit(event) {
+/* async function handleSubmit(event) {
     event.preventDefault();
     try {
         const orientador = {
@@ -52,8 +52,7 @@ async function handleSubmit(event) {
         console.log('Erro ao cadastrar orientador: ' + (error.response?.data || error.message));
     }
 
-}
-
+} */
 </script>
 
 <template>
@@ -62,7 +61,7 @@ async function handleSubmit(event) {
         <div>
             <h1>Esta é a página de cadastro dos orientadores.</h1>
             
-            <div>
+            <!-- <div>
                 <div class="divDoFormulario">
                     <form class="formulario" @submit="handleSubmit">
                         <hr /> 
@@ -78,7 +77,8 @@ async function handleSubmit(event) {
                         <button @click="addOrientador" type="submit" class="enviar">Cadastrar</button>
                     </form>
                     <br>
-                </div>
+                </div> -->
+
                 <!--
                  <div class="divDaLista">
                     <div class="lista" v-for="(orientador, index) in orientadores" :key="index">
@@ -91,7 +91,7 @@ async function handleSubmit(event) {
                         </div>
                     </div>
                     -->
-                </div>      
+                <!-- </div>      --> 
         </div>
     </main>
     <FooterComp />

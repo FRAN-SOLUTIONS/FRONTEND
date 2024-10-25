@@ -3,7 +3,7 @@ import '@/assets/css/global.css'
 import { ref } from 'vue'
 import HeaderComp from '@/components/HeaderComp.vue'
 import FooterComp from '@/components/FooterComp.vue'
-import validator from 'validator' // Importa a biblioteca validator
+import validator from 'validator'
 
 import { useRouter } from 'vue-router' // Importa o router
 const router = useRouter() // Inicializa o router
@@ -25,7 +25,8 @@ function sendEmail() {
     alert('Email válido')
     return
   }
-  // Aqui você pode adicionar a lógica para enviar o email ao servidor
+  // Lógica do backend mandar email
+
   step.value = 2 // Avança para a etapa de redefinição de senha
 }
 
@@ -37,7 +38,8 @@ function resetPassword() {
   }
 
   alert('Senha redefinida com sucesso!')
-  // Lógica adicional para enviar a nova senha ao servidor
+
+  // Lógica do backend para enviar a nova senha ao servidor
   router.push({ name: 'LoginPage' })
 }
 </script>
