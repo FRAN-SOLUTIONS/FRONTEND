@@ -31,25 +31,6 @@ Este é um sistema para automatizar processos repetitivos que os orientadores de
 
 Tenha instalado no seu computador a versão do [Node.js](https://nodejs.org/pt) 18.3 ou maior.
 
-## Instalação nos computadores do IFSP
-
-Antes de instalar o Vue.js e clonar o projeto no computador da escola, configure o proxy da rede.
-
-No menu iniciar, procure por "Redes" e abra o aplicativo. Irá ser mostrado dois links e duas portas lógicas, copie estas informações.
-
-Abra um novo terminal e digite os seguintes comandos:
-
-```bash
-  npm config set proxy  meu.endereco.proxy:8080
-```
-```bash
-  npm config set https-proxy  meu.endereco.proxy:8080
-```
-
-Note que "meu.endereco.proxy" é o link que aparece no aplicativo Redes configurado no computador da instituição e que "8080" é a porta lógica.
-
-Se o link não tiver, adicione "http://".
-
 ## Etapas
 
 - Clone o repositório
@@ -66,6 +47,35 @@ Se o link não tiver, adicione "http://".
   ```bash
     npm install
   ```
+
+## Nos computadores do IFSP
+
+O arquivo ```.npmrc``` já contém a configuração do proxy da rede do instituto. A princípio, este arquivo não deve causar problema nos computadores domésticos.
+
+Este projeto deve funcionar normalmente nos computadores da escola só por causa desse arquivo, basta rodar no terminal da pasta do projeto o comando:
+```bash
+  npm install
+```
+Caso não dê certo, configure o proxy manualmente seguindo o passo a passo abaixo:
+
+## Configuração do proxy da rede do IFSP
+
+Antes de mexer no projeto no computador da escola, configure o proxy da rede.
+
+No menu iniciar, procure por "Redes" e abra o aplicativo. Irá ser mostrado dois links e duas portas lógicas, copie estas informações.
+
+Abra um novo terminal e digite os seguintes comandos:
+
+```bash
+  npm config set proxy  meu.endereco.proxy:8080
+```
+```bash
+  npm config set https-proxy  meu.endereco.proxy:8080
+```
+
+Note que "meu.endereco.proxy" é o link que aparece no aplicativo Redes configurado no computador da instituição e que "8080" é a porta lógica.
+
+Se o link não tiver, adicione "http://".
 
 # Instruções de uso
 
@@ -164,6 +174,26 @@ Tal formatação na escrita dos títulos podem sofrer alterações em casos de e
 
 A descrição é opcional e livre para o programagor se achar necessário, limitando-se a 72 caracteres por linha para manter a legibilidade no terminal.
 
+### Dos merges
+
+O título deve seguir a seguinte formatação:
+
+_**Merge <compare-branch> into <base-branch> – breve descrição do que foi feito na branch.**_
+
+Exemplos:
+
+```bash 
+  Merge feature/login into develop/identidade-visual – Adicionar estilo com bootstrap
+```
+
+```bash 
+  Merge fix/header into develop/identidade-visual – Fazer cabecalho para usuario logado
+```
+
+```bash 
+  Merge develop/identidade-visual into main – Arrumar identidade visual da aplicação
+```
+
 ### Padrão dos Componentes
 
 Os componentes de projetos Vue3 tem um padrão de escrita diferente do usado anteriormente.
@@ -257,8 +287,6 @@ Nesta pasta contém os arquivos de componentes do Vuejs e a pasta ```\__tests__`
 
 Estes componentes ```.vue``` são criados para serem atribuidos aos elementos  de páginas HTML, como por exemplo, itens de listas, botões, cabeçalhos e rodaés.
 
-_Não será permitido criar pastas dentro de ```\components``` para alocá-los, todos os componetes devem estar soltos dentro deste diretório._
-
 **ATENÇÃO!**
 
 **Componentes Vue.js devem ser nomeados com letra maiúcula e devem possuir mais de uma palavra, como no exemplo: ```HelloWorld.vue```.**
@@ -290,8 +318,6 @@ _Não será permitido criar outras pastas e arquivos dentro de ```\stores```._
 Nesta pasta contém os arquivos de componentes do Vuejs.
 
 Estes componentes ```.vue``` são criados para serem atribuidos como páginas HTML, como por exemplo, a página inicial, página de cadastro, página de login, etc.
-
-_Não será permitido criar pastas dentro de ```\views``` para alocá-los, todos os componetes devem estar soltos dentro deste diretório._
 
 **ATENÇÃO!**
 
