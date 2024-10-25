@@ -1,5 +1,8 @@
 <script setup>
 import '@/assets/css/global.css'
+import { BAccordion, BAccordionItem } from 'bootstrap-vue-next'
+import '../../node_modules/bootstrap/dist/css/bootstrap.css'
+import '../../node_modules/bootstrap-vue-next/dist/bootstrap-vue-next.css'
 
 function abrirMenu() {
   document.getElementById('menuOculto').style.width = '300px'
@@ -12,8 +15,8 @@ function fecharMenu() {
 }
 
 function abrirNotificacao() {
-  document.getElementById('notificacaoOculta').style.width = '300px'
-  document.getElementById('principal').style.marginRight = '300px'
+  document.getElementById('notificacaoOculta').style.width = '25%'
+  document.getElementById('principal').style.marginRight = '25%'
 }
 
 function fecharNotificacao() {
@@ -53,7 +56,22 @@ function fecharNotificacao() {
       <aside id="notificacaoOculta" class="menuOculto">
         <a href="" class="btnFechar" @click="fecharNotificacao()">&times;</a>
 
-        <div class="container text-center">
+        <BAccordion free>
+          <BAccordionItem title="Accordion Item #1">
+            <strong class="d-block"
+              >This is the first item's accordion body.</strong
+            >
+            It is shown by default, until the collapse plugin adds the
+            appropriate classes that we use to style each element. These classes
+            control the overall appearance, as well as the showing and hiding
+            via CSS transitions. You can modify any of this with custom CSS or
+            overriding our default variables. It is also worth noting that just
+            about any HTML can go within the <code>.accordion-body</code>,
+            though the transition does limit overflow.
+          </BAccordionItem>
+        </BAccordion>
+
+        <!-- <div class="container text-center">
           <div class="row">
             <div class="col-auto cartao d-flex">
               <div class="d-flex align-items-center justify-content-center">
@@ -86,7 +104,7 @@ function fecharNotificacao() {
               type and scrambled it to make a type specimen book.
             </div>
           </div>
-        </div>
+        </div> -->
       </aside>
     </div>
   </header>
