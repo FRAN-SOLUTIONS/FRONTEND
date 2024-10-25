@@ -58,7 +58,7 @@ Este projeto deve funcionar normalmente nos computadores da escola só por causa
 ```
 Caso não dê certo, configure o proxy manualmente seguindo o passo a passo abaixo:
 
-## Configuração do proxy da rede do IFSP
+### Configuração do proxy da rede do IFSP
 
 Antes de mexer no projeto no computador da escola, configure o proxy da rede.
 
@@ -93,106 +93,21 @@ Se o link não tiver, adicione "http://".
 
 ### Das branches
 
-**Tipos de Branches**
+Neste projeto existe a branch ```main``` e a ```produção/desenvolvimento```.
 
-- *Main:* contém a versão mais estável ao longo do desenvolvimento. **ATENÇÃO! Nenhuma alteração direta deve ser feita nesta branch.**
-- *Develop:* destinada ao desenvolvimento contínuo, linha do tempo principal das funcionalidades que ainda estão em fase de implementação.
-- *Feature:* Cada nova funcionalidade ou melhoria deve ter sua própria branch. Padrão de nome: feature/nome-da-funcionalidade
-- *Bugfix:* Usada para corrigir bugs encontrados. Padrão de nome: bugfix/descricao-do-bug.
+Para garantir que todos tenham a versão mais atualizada do projeto, todos devem fazer seus commits na branch de ```produção/desenvolvimento```, sem criar novas branches. todos os clones devem ser feitos apartir da branch de ```produção/desenvolvimento```.
 
-Exemplos:
+A ```main``` deverá conter a versão mais estável do projeto. 
 
-```bash
-  develop/conexao-backend
-```
+_**NÃO PODERÃO SER FEITOS COMMITS DIRETAMENTE NA MAIN!**_
 
-```bash
-  develop/identidade-visual
-```
-
-```bash
-  feature/listar-alunos
-```
-
-```bash
-  feature/responsividade
-```
-
-```bash
-  bugfix/roteamento
-```
-
-```bash
-  bugfix/erro-busca-relatorios
-```
+_**NÃO PODERÃO SER FEITOS MERGES NA MAIN SEM AUTORIZAÇÃO DO SUPERVISOR (PROFESSOR IGOR)!**_
 
 ### Dos commits
 
-O título deve ser curto e descritivo seguindo a seguinte formatação:
+O título deve ser curto e descritivo sobre a produção feita, a gosto do dev. A descrição é opcional e livre para o programagor se achar necessário, limitando-se a 72 caracteres por linha para manter a legibilidade no terminal.
 
-_**palavra indicando o tipo da alteração + substantivo referido a ação feita + elemento + arquivo onde foi realizado.**_
-
-Das palavras reservadas:
-
-- *style:* para mudanças estéticas e formatações, sem alteração de lógica;
-- *fix:* para correção de bugs;
-- *feat:* para adição de nova funcionalidade;
-- *refactor:* alterações no código que não afetam o comportamento externo;
-- *chore:* alterações não relacionadas ao código da aplicação, como atualização de dependências.
-
-Dos substantivos:
-
-- criação;
-- mudança;
-- correção;
-- exclusão;
-- instalação.
-
-Exemplos:
-
-```bash 
-  fix: mudança no roteamento das páginas do orientador em index.js
-```
-
-```bash
-  feat: criação da request da lista de relatórios do aluno em OrientadorConsulta.vue
-```
-
-```bash
-  refactor: correção do texto da HomePage.vue
-```
-
-```bash
-  style: mudança de estilo em RedefinirSenha.vue
-```
-
-```bash
-  chore: instalação do Axios no projeto
-```
-
-Tal formatação na escrita dos títulos podem sofrer alterações em casos de exceções. Espera-se compreensão e bom senso do programador para tal. Que o texto não fuja muito da lógica apresentada. 
-
-A descrição é opcional e livre para o programagor se achar necessário, limitando-se a 72 caracteres por linha para manter a legibilidade no terminal.
-
-### Dos merges
-
-O título deve seguir a seguinte formatação:
-
-_**Merge <compare-branch> into <base-branch> – breve descrição do que foi feito na branch.**_
-
-Exemplos:
-
-```bash 
-  Merge feature/login into develop/identidade-visual – Adicionar estilo com bootstrap
-```
-
-```bash 
-  Merge fix/header into develop/identidade-visual – Fazer cabecalho para usuario logado
-```
-
-```bash 
-  Merge develop/identidade-visual into main – Arrumar identidade visual da aplicação
-```
+_**Espera-se compreensão e bom senso do programador para tal.**_
 
 ### Padrão dos Componentes
 
@@ -265,21 +180,9 @@ Dentro da pasta ```\src``` é onde serão feitas as alterações do projeto. Nel
 
 Vamos percorrer cada uma dessas pastas para entender o que contém cada uma delas e como utilizá-las.
 
-_**Não será permitido criar arquivos, componentes e pastas fora dessa organização!**_
-
 ### Assets
 
 Nesta pasta ficam os arquivos de mídia e de estilo, cada qual a sua pasta correspondente. Se seu arquivo não corresponder a nenhum dos tipos especificados, deve ser alocado na pasta ```\extras```.
-
-- css;
-- extras;
-- icons;
-- images;
-- videos.
-
-![image](https://github.com/user-attachments/assets/a4d4be45-1e43-4bbd-8b8c-ca613bfba539)
-
-_Não será permitido criar arquivos dentro de ```\assets``` soltos, todos devem estar dentro de algum dos diretórios listados acima._
 
 ### Components
 
@@ -287,9 +190,7 @@ Nesta pasta contém os arquivos de componentes do Vuejs e a pasta ```\__tests__`
 
 Estes componentes ```.vue``` são criados para serem atribuidos aos elementos  de páginas HTML, como por exemplo, itens de listas, botões, cabeçalhos e rodaés.
 
-**ATENÇÃO!**
-
-**Componentes Vue.js devem ser nomeados com letra maiúcula e devem possuir mais de uma palavra, como no exemplo: ```HelloWorld.vue```.**
+**ATENÇÃO! Componentes Vue.js devem ser nomeados com letra maiúcula e devem possuir mais de uma palavra, como no exemplo: ```HelloWorld.vue```.**
 
 A pasta ```\__tests__``` contém um único arquivo chamado  ```HelloWorld.spec.js``` que é um teste automatizado para verificar o funcionamento do componente *HelloWorld.vue* em um projeto Vue. Utilizando a biblioteca de testes Vitest e a ferramenta @vue/test-utils, ele monta o componente e assegura que, ao receber uma propriedade específica, o texto renderizado pelo componente corresponda ao esperado.
 
@@ -299,19 +200,13 @@ _**Durante esta primeira fase do projeto não utilizaremos esse tipo de teste no
 
 A pasta ```\router``` contém um único arquivo chamado  ```index.js``` que é um arquivo JavaScript para definição das rotas das views (páginas) do nosso projeto Vue.js. Esse arquivo utiliza-se do Vue-Router para criar as rotas da aplicação. Isso se faz necessário pois esta é uma SPA.
 
-_Não será permitido criar outras pastas e arquivos dentro de ```\router```._
-
 ### Services
 
 A pasta ```\services``` contém um único arquivo chamado  ```api.js``` que é um arquivo JavaScript para definição da URL base do nosso projeto Vue.js para as requisições do frontend com a biblioteca Axios.
 
-_Não será permitido criar outras pastas dentro de ```\services```._
-
 ### Stores
 
 A pasta ```\stores``` contém um único arquivo chamado  ```counter.js``` que define uma store utilizando a biblioteca Pinia (gerenciamento de estado recomendado para projetos Vue 3), nele, a store mantém um estado reativo. Ao exportar essa store, ela se torna acessível em outros componentes do aplicativo, facilitando o compartilhamento e a centralização do estado do contador em toda a aplicação.
-
-_Não será permitido criar outras pastas e arquivos dentro de ```\stores```._
 
 ### Views
 
@@ -319,9 +214,7 @@ Nesta pasta contém os arquivos de componentes do Vuejs.
 
 Estes componentes ```.vue``` são criados para serem atribuidos como páginas HTML, como por exemplo, a página inicial, página de cadastro, página de login, etc.
 
-**ATENÇÃO!**
-
-**Componentes Vue.js devem ser nomeados com letra maiúcula e devem possuir mais de uma palavra, como no exemplo: ```HelloWorld.vue```.**
+**ATENÇÃO! Componentes Vue.js devem ser nomeados com letra maiúcula e devem possuir mais de uma palavra, como no exemplo: ```HelloWorld.vue```.**
 
 ### App.vue
 
@@ -334,10 +227,6 @@ O arquivo ```App.vue``` é o componente raiz de uma aplicação Vue. Ele serve c
 ### Main.js
 
 O arquivo ```main.js``` é o ponto de entrada da aplicação Vue, onde a instância da aplicação é criada, configurada e inicializada no componente raiz ```App.vue```. O código também configura o gerenciamento de estado com a Pinia, adiciona o roteamento com o Vue Router e por fim, monta a aplicação no elemento HTML com o ID ```#app``` no ```index.html```.
-
-# Roteiro
-
-//Para alterações futuras desejadas no projeto
 
 # Suporte
 
@@ -359,14 +248,12 @@ Se você tiver dúvidas, encontrar problemas ou precisar de ajuda com este proje
 
  - Igor de Almeida Aguiar | aguiarigor365@gmail.com | [AguiarIgor](https://github.com/AguiarIgor)
 
+ - João Guilherme Carvalho Novaes | joaoguilhermecarvalhonovaes@gmail.com | [JoaoGuiNovaes](https://github.com/JoaoGuiNovaes)
+
 # Status do projeto
 
 Em andamento:
  - Início em 18/07/2024.
-
-# Licença
-
-//Para a licença de uso do projeto
 
 # Telas
 
