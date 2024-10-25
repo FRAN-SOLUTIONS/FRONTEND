@@ -50,16 +50,6 @@ Tenha instalado no seu computador a versão do [Node.js](https://nodejs.org/pt) 
 
 ## Nos computadores do IFSP
 
-O arquivo ```.npmrc``` já contém a configuração do proxy da rede do instituto. A princípio, este arquivo não deve causar problema nos computadores domésticos.
-
-Este projeto deve funcionar normalmente nos computadores da escola só por causa desse arquivo, basta rodar no terminal da pasta do projeto o comando:
-```bash
-  npm install
-```
-Caso não dê certo, configure o proxy manualmente seguindo o passo a passo abaixo:
-
-### Configuração do proxy da rede do IFSP
-
 Antes de mexer no projeto no computador da escola, configure o proxy da rede.
 
 No menu iniciar, procure por "Redes" e abra o aplicativo. Irá ser mostrado dois links e duas portas lógicas, copie estas informações.
@@ -67,15 +57,21 @@ No menu iniciar, procure por "Redes" e abra o aplicativo. Irá ser mostrado dois
 Abra um novo terminal e digite os seguintes comandos:
 
 ```bash
-  npm config set proxy  meu.endereco.proxy:8080
+  npm config set proxy meu.endereco.proxy:8080
 ```
 ```bash
-  npm config set https-proxy  meu.endereco.proxy:8080
+  npm config set https-proxy meu.endereco.proxy:8080
 ```
 
 Note que "meu.endereco.proxy" é o link que aparece no aplicativo Redes configurado no computador da instituição e que "8080" é a porta lógica.
 
-Se o link não tiver, adicione "http://".
+Se o link não tiver, adicione "http://" nas duas URL.
+
+Depois de configurado, rode o comando: 
+
+```bash
+  npm install
+```
 
 # Instruções de uso
 
@@ -86,6 +82,7 @@ Se o link não tiver, adicione "http://".
   ```bash
     npm run dev
   ```
+  
 - ```Ctrl + "click"``` no link gerado para acessar no navegador;
 - Para parar o servidor, no terminal, digite ```Ctrl + C``` e depois ```S + enter```.
 
