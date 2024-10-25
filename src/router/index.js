@@ -6,7 +6,6 @@ import CadastroDeAlunos from '@/views/CadastroDeAlunos.vue'
 import CadastroDeOrientadores from '@/views/CadastroDeOrientadores.vue'
 import LoginPage from '@/views/LoginPage.vue'
 import RedefinirSenha from '@/views/RedefinirSenha.vue'
-import HomeCoordenador from '@/views/HomeCoordenador.vue'
 import HomeOrientador from '@/views/HomeOrientador.vue'
 import TesteConexao from '@/views/TesteConexao.vue'
 
@@ -46,11 +45,6 @@ const router = createRouter({
       path: '/homeOrientador',
       name: 'HomeOrientador',
       component: HomeOrientador,
-    },
-    {
-      path: '/homeCoordenador',
-      name: 'HomeCoordenador',
-      component: HomeCoordenador,
     },
     {
       path: '/teste',
