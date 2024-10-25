@@ -1,102 +1,160 @@
 <script setup>
-import '@/assets/css/global.css';
+import '@/assets/css/global.css'
 
-function abrirNav() {
-    document.getElementById("menuOculto").style.width = "300px";
-    document.getElementById("principal").style.marginRight = "300px";
+function abrirMenu() {
+  document.getElementById('menuOculto').style.width = '300px'
+  document.getElementById('principal').style.marginRight = '300px'
 }
 
-function fecharNav() {
-    document.getElementById("menuOculto").style.width = "0";
-    document.getElementById("principal").style.marginRight = "0";
+function fecharMenu() {
+  document.getElementById('menuOculto').style.width = '0'
+  document.getElementById('principal').style.marginRight = '0'
+}
+
+function abrirNotificacao() {
+  document.getElementById('notificacaoOculta').style.width = '300px'
+  document.getElementById('principal').style.marginRight = '300px'
+}
+
+function fecharNotificacao() {
+  document.getElementById('notificacaoOculta').style.width = '0'
+  document.getElementById('principal').style.marginRight = '0'
 }
 </script>
 
 <template>
-    <header class="py-3 d-flex align-items-center justify-content-between">
-        <div class="d-flex align-items-center">
-            <img src="../assets/images/if_logo_2.png" alt="Logo" class="header-logo">
+  <header class="py-3 d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+      <img
+        src="../assets/images/if_logo_2.png"
+        alt="Logo"
+        class="header-logo"
+      />
+    </div>
+    <div>
+      <h2>// Nome do sistema</h2>
+    </div>
+    <div>
+      <span @click="abrirNotificacao()" style="cursor: pointer">
+        <font-awesome-icon class="icon-redondo" :icon="['far', 'bell']" />
+      </span>
+      <span @click="abrirMenu()" style="cursor: pointer">
+        <font-awesome-icon class="icon-redondo" :icon="['far', 'user']" />
+      </span>
+
+      <aside id="menuOculto" class="menuOculto">
+        <a href="" class="btnFechar" @click="fecharMenu()">&times;</a>
+        <a href="#">Perfil</a>
+        <a href="#">Alunos</a>
+        <a href="#">Configurações</a>
+        <a href="#">Sair</a>
+      </aside>
+
+      <aside id="notificacaoOculta" class="menuOculto">
+        <a href="" class="btnFechar" @click="fecharNotificacao()">&times;</a>
+
+        <div class="container text-center">
+          <div class="row">
+            <div class="col-auto cartao d-flex">
+              <div class="d-flex align-items-center justify-content-center">
+                <font-awesome-icon :icon="['far', 'calendar']" />
+              </div>
+              <div class="col">
+                <p>
+                  Lorem Ipsum is simply dummy text of the printing and
+                  typesetting industry. Lorem Ipsum has been the industry's
+                  standard dummy text ever since the 1500s, when an unknown
+                  printer took a galley of type and scrambled it to make a type
+                  specimen book.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="row align-items-start">
+            <div class="col cartao">
+              orem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book.
+            </div>
+          </div>
+          <div class="row align-items-start">
+            <div class="col cartao">
+              orem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book.
+            </div>
+          </div>
         </div>
-        <div>
-            <h1>// Nome do sistema</h1>
-        </div>
-        <div>
-            <span @click="abrirNav()" style="cursor: pointer;">
-                <font-awesome-icon class="icon-redondo" :icon="['far', 'user']" />
-            </span>
-            
-            <aside id="menuOculto" class="menuOculto">
-                <a href="" class="btnFechar" @click="fecharNav()">&times;</a>
-                <a href="#">Perfil</a>
-                <a href="#">Alunos</a>
-                <a href="#">Configurações</a>
-                <a href="#">Sair</a>
-            </aside>
-        </div>
-    </header>
+      </aside>
+    </div>
+  </header>
 </template>
 
 <style scoped>
 header {
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-    background-color: #01400B;
-    color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background-color: #01400b;
+  color: white;
 }
 
 .header-logo {
-    height: 60px;
-}
-
-span{
-    height: 40px;
+  height: 60px;
 }
 
 .icon-redondo {
-    border: 1px solid #fff; /* Cor da borda */
-    border-radius: 50%; /* Borda redonda */
-    padding: 5px; /* Adiciona um pouco de espaço ao redor do ícone */
-    display: inline-block; /* Faz o elemento se comportar como um bloco para a borda funcionar */
+  border: 1px solid #fff; /* Cor da borda */
+  border-radius: 50%; /* Borda redonda */
+  padding: 5px; /* Adiciona um pouco de espaço ao redor do ícone */
+  display: inline-block; /* Faz o elemento se comportar como um bloco para a borda funcionar */
+  margin-right: 20px;
 }
 
-.menuOculto{
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    background-color: #01400B;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
+.menuOculto {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: #01400b;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
 }
 
-.menuOculto a{
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    color: #dddddd;
-    display: block;
-    transition: 0.5s;
+.menuOculto a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  color: #dddddd;
+  display: block;
+  transition: 0.5s;
 }
 
-.menuOculto a:hover{
-    color: #ff2e2e;
+.menuOculto a:hover {
+  color: #ff2e2e;
 }
 
-.btnFechar{
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-size: 36px;
-    margin: left 2%;;
+.btnFechar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 36px;
+  margin: left 2%;
 }
 
-#principal{
-    /*padding: 16px;*/
-    transition: margin-left 0.5s;
+#principal {
+  /*padding: 16px;*/
+  transition: margin-left 0.5s;
+}
 
+.cartao {
+  border: 1px solid #fff;
+  margin-bottom: 5%;
+  padding: 10%;
 }
 
 /* @media screen and (max-height: 450px){
