@@ -146,9 +146,7 @@ async function handleSubmit(event) {
           </div>
           <button type="submit" class="btn-custom">Criar Conta</button>
         </form>
-        <p class="text-center mt-3">
-          Já tem uma conta? <router-link to="login">Faça login.</router-link>
-        </p>
+        
       </div>
     </div>
     <div v-else>
