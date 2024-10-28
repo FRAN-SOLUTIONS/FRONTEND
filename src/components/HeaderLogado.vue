@@ -47,9 +47,8 @@ function fecharNotificacao() {
 
       <aside id="menuOculto" class="menuOculto">
         <a href="" class="btnFechar" @click="fecharMenu()">&times;</a>
-        <a href="#">Perfil</a>
-        <a href="#">Alunos</a>
-        <a href="#">Configurações</a>
+        <router-link to="perfil">Perfil</router-link>
+        <router-link to="alunos">Alunos</router-link>
         <a href="#">Sair</a>
       </aside>
 
@@ -70,41 +69,6 @@ function fecharNotificacao() {
             though the transition does limit overflow.
           </BAccordionItem>
         </BAccordion>
-
-        <!-- <div class="container text-center">
-          <div class="row">
-            <div class="col-auto cartao d-flex">
-              <div class="d-flex align-items-center justify-content-center">
-                <font-awesome-icon :icon="['far', 'calendar']" />
-              </div>
-              <div class="col">
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="row align-items-start">
-            <div class="col cartao">
-              orem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-          </div>
-          <div class="row align-items-start">
-            <div class="col cartao">
-              orem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-          </div>
-        </div> -->
       </aside>
     </div>
   </header>
@@ -173,6 +137,13 @@ header {
   border: 1px solid #fff;
   margin-bottom: 5%;
   padding: 10%;
+}
+
+.custom-accordion-item {
+  background-color: #f0f8ff; /* Alterando para um azul claro */
+  color: #000; /* Ajustando a cor do texto */
+  border-radius: 8px; /* Opcional: Cantos arredondados */
+  padding: 1rem;
 }
 
 /* @media screen and (max-height: 450px){
