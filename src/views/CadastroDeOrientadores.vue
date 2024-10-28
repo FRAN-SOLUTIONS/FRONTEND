@@ -31,22 +31,17 @@ async function handleSubmit(event) {
     alert('As senhas não coincidem.')
     return
   }
-
-  //logica do backend
-
-  alert('Cadastro raliizado com sucesso!')
   step.value = 2
 
   try {
     const orientador = {
       nome: nome.value,
       prontuario: prontuario.value,
-      telefone: telefone.value,
       email: email.value,
-      senha: senha.value,
+      password: senha.value,
     }
     const response = await axios.post(
-      'http://localhost:8082/FRAN/alunos/signup',
+      'http://localhost:8082/FRAN/orientadores/signup',
       orientador,
     )
     console.log(response)
