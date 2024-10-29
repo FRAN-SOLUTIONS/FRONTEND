@@ -55,8 +55,9 @@ function fecharNotificacao() {
       <aside id="notificacaoOculta" class="menuOculto">
         <a href="" class="btnFechar" @click="fecharNotificacao()">&times;</a>
 
+        <!--este templante deve ser usaco com um v-for para que cada uma das nptificações seja renderizada num BAccordeonItem diferente-->
         <BAccordion free>
-          <BAccordionItem title="Accordion Item #1">
+          <BAccordionItem style="background-color: #01400b; color: white" title="Nova mensagem.">
             <strong class="d-block"
               >This is the first item's accordion body.</strong
             >

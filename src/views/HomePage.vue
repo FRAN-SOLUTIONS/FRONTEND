@@ -81,7 +81,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
               orientadores, permitindo que eles se concentrem no que realmente
               importa: a orientação e o desenvolvimento dos alunos.
             </h5>
-            <h5>
+            <!-- <h5>
               Se você é um aluno do IFSP e está prestes a começar um estágio
               (obrigatório ou não) e já conversou com seu orientador,
               cadastre-se para que ele possa dar início ao acompanhamento das
@@ -90,7 +90,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
               <RouterLink to="/cadastroAlunos"
                 >Cadastre-se agora mesmo!
               </RouterLink>
-            </h5>
+            </h5> -->
             <h5>
               Se você é um orientador de estágios do IFSP e vai começar a
               orientar um aluno adicione-o à lista de seus orientandos e começa
