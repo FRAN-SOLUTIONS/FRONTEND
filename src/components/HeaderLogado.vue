@@ -26,16 +26,16 @@ function fecharNotificacao() {
 </script>
 
 <template>
-  <header class="py-3 d-flex align-items-center justify-content-between">
+  <header class="py-1 d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center">
       <img
         src="../assets/images/if_logo_2.png"
         alt="Logo"
-        class="header-logo"
+        style="width: 70%; height: 70%"
       />
     </div>
     <div>
-      <h2>// Nome do sistema</h2>
+      <h2 class="titulo">Orienta +</h2>
     </div>
     <div>
       <span @click="abrirNotificacao()" style="cursor: pointer">
@@ -57,7 +57,10 @@ function fecharNotificacao() {
 
         <!--este templante deve ser usaco com um v-for para que cada uma das nptificações seja renderizada num BAccordeonItem diferente-->
         <BAccordion free>
-          <BAccordionItem style="background-color: #01400b; color: white" title="Nova mensagem.">
+          <BAccordionItem
+            style="background-color: #01400b; color: white"
+            title="Nova mensagem."
+          >
             <strong class="d-block"
               >This is the first item's accordion body.</strong
             >
@@ -82,10 +85,6 @@ header {
   padding: 0 20px;
   background-color: #01400b;
   color: white;
-}
-
-.header-logo {
-  height: 60px;
 }
 
 .icon-redondo {
