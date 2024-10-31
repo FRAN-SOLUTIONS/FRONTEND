@@ -77,7 +77,7 @@ async function handleSubmit() {
         </div>
         <button type="submit" class="btn-custom">Entrar</button>
       </form>
-      <p class="text-center mt-3">Esqueceu a senha?<router-link to="redefinirSenha">Redefinir minha senha.</router-link></p>
+      <p class="text-center mt-3">Esqueceu a senha? <router-link to="redefinirSenha">Redefinir minha senha.</router-link></p>
     </div>
   </main>
 

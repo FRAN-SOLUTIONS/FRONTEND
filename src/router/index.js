@@ -8,7 +8,6 @@ import LoginPage from '@/views/LoginPage.vue'
 import RedefinirSenha from '@/views/RedefinirSenha.vue'
 import HomeOrientador from '@/views/HomeOrientador.vue'
 import TesteConexao from '@/views/TesteConexao.vue'
-import ListaAlunos from '@/views/ListaAlunos.vue'
 import PerfilOrientador from '@/views/PerfilOrientador.vue'
 
 const router = createRouter({
@@ -52,11 +51,6 @@ const router = createRouter({
       path: '/teste',
       name: 'TesteConexao',
       component: TesteConexao,
-    },
-    {
-      path: '/alunos',
-      name: 'Alunos',
-      component: ListaAlunos,
     },
     {
       path: '/perfil',

@@ -1,6 +1,7 @@
 <script setup>
 import HeaderLogado from '@/components/HeaderLogado.vue'
 import FooterComp from '@/components/FooterComp.vue'
+import FileNavComp from '@/components/FileNavComp.vue';
 
 import '@/assets/css/global.css'
 </script>
@@ -10,6 +11,9 @@ import '@/assets/css/global.css'
     <HeaderLogado />
 
     <main class="conteudo"> 
+
+      <FileNavComp />
+
       <div class="container-xxl mt-5 mb-5 p-5 text-center">
         <div class="row justify-content-md-center">
           <div class="col-4 g-2 m-2 p-4 d-flex flex-column align-items-center justify-content-center" style="border-right: 2px solid #01400b; height: 100%;">

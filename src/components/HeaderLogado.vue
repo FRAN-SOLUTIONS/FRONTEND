@@ -4,15 +4,15 @@ import { BAccordion, BAccordionItem } from 'bootstrap-vue-next'
 import '../../node_modules/bootstrap/dist/css/bootstrap.css'
 import '../../node_modules/bootstrap-vue-next/dist/bootstrap-vue-next.css'
 
-function abrirMenu() {
+/* function abrirMenu() {
   document.getElementById('menuOculto').style.width = '300px'
   document.getElementById('principal').style.marginRight = '300px'
-}
+} */
 
-function fecharMenu() {
+/* function fecharMenu() {
   document.getElementById('menuOculto').style.width = '0'
   document.getElementById('principal').style.marginRight = '0'
-}
+} */
 
 function abrirNotificacao() {
   document.getElementById('notificacaoOculta').style.width = '25%'
@@ -28,11 +28,13 @@ function fecharNotificacao() {
 <template>
   <header class="py-1 d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center">
-      <img
-        src="../assets/images/if_logo_2.png"
-        alt="Logo"
-        style="width: 70%; height: 70%"
-      />
+      <router-link to="/">
+        <img
+          src="../assets/images/if_logo_2.png"
+          alt="Logo"
+          style="width: 70%; height: 70%"
+        />
+      </router-link>
     </div>
     <div>
       <h2 class="titulo">Orienta +</h2>
@@ -41,16 +43,17 @@ function fecharNotificacao() {
       <span @click="abrirNotificacao()" style="cursor: pointer">
         <font-awesome-icon class="icon-redondo" :icon="['far', 'bell']" />
       </span>
-      <span @click="abrirMenu()" style="cursor: pointer">
-        <font-awesome-icon class="icon-redondo" :icon="['far', 'user']" />
-      </span>
 
-      <aside id="menuOculto" class="menuOculto">
+      <!-- <span @click="abrirMenu()" style="cursor: pointer">
+        <font-awesome-icon class="icon-redondo" :icon="['far', 'user']" />
+      </span> -->
+
+      <!-- <aside id="menuOculto" class="menuOculto">
         <a href="" class="btnFechar" @click="fecharMenu()">&times;</a>
         <router-link to="perfil">Perfil</router-link>
-        <router-link to="alunos">Alunos</router-link>
+        <router-link to="homeOrientador">Alunos</router-link>
         <a href="#">Sair</a>
-      </aside>
+      </aside> -->
 
       <aside id="notificacaoOculta" class="menuOculto">
         <a href="" class="btnFechar" @click="fecharNotificacao()">&times;</a>
