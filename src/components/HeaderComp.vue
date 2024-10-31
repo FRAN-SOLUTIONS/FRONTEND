@@ -5,16 +5,15 @@ import '../assets/css/global.css'
 <template>
   <header class="header py-1 d-flex align-items-center justify-content-between">
     <div class="logo-container d-flex align-items-center">
-      <img
-        src="../assets/images/if_logo_2.png"
-        alt="Logo" width="68%"
-      />
+      <router-link to="/">
+        <img src="../assets/images/if_logo_2.png" alt="Logo" width="68%" />
+      </router-link>
     </div>
 
     <div class="titulo-container flex-grow-1 d-flex justify-content-center">
-      <h2 class="titulo" style="margin-left: 10%;">Orienta +</h2>
+      <h2 class="titulo" style="margin-left: 10%">Orienta +</h2>
     </div>
-        
+
     <div class="botao-container d-flex align-items-center">
       <router-link to="/cadastro">
         <button class="btn btn-outline-success mr-2 custom-btn">
@@ -22,9 +21,7 @@ import '../assets/css/global.css'
         </button>
       </router-link>
       <router-link to="/login">
-        <button class="btn btn-outline-success mr-2 custom-btn">
-          Login
-        </button>
+        <button class="btn btn-outline-success mr-2 custom-btn">Login</button>
       </router-link>
     </div>
   </header>
