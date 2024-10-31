@@ -1,13 +1,14 @@
 <script setup>
 import HeaderComp from '@/components/HeaderComp.vue'
 import FooterComp from '@/components/FooterComp.vue'
+import '@/assets/css/global.css'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 </script>
 
 <template>
   <div>
     <HeaderComp />
-    <main class="d-flex flex-column align-items-center bg-body-tertiary">
+    <main class="d-flex flex-column align-items-center bg-body-tertiary conteudo">
       <div style="width: 95%">
         <div id="begin" class="d-flex flex-column align-items-center my-5">
           <h1 class="fw-bold text-center">

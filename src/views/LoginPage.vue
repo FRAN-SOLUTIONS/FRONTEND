@@ -55,7 +55,7 @@ async function handleSubmit() {
   <HeaderComp />
 
   <main class="conteudo">
-    <!-- <h2 class="text-center mt-4">Faça login para entrar</h2> -->
+    <h2 class="text-center mt-4">Faça login para entrar</h2>
 
     <div class="form-container">
       <form @submit.prevent="handleSubmit">
@@ -70,7 +70,6 @@ async function handleSubmit() {
               required
             />
           </div>
-
           <div class="form-group">
             <label for="senha">Senha:</label>
             <input v-model="senha" id="senha" class="form-control" type="password" required />
@@ -93,7 +92,6 @@ h2 {
 main {
   max-width: 500px;
   margin: 0 auto;
-  padding: 20px;
 }
 
 .form-container {
