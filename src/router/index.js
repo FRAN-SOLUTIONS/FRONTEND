@@ -29,7 +29,7 @@ const router = createRouter({
       component: CadastroDeAlunos,
     },
     {
-      path: '/cadastroOrientadores',
+      path: '/cadastro',
       name: 'CadastroDeOrientadores',
       component: CadastroDeOrientadores,
     },

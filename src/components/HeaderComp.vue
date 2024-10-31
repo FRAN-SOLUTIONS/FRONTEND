@@ -16,7 +16,7 @@ import '../assets/css/global.css'
     </div>
         
     <div class="botao-container d-flex align-items-center">
-      <router-link to="/cadastroOrientadores">
+      <router-link to="/cadastro">
         <button class="btn btn-outline-success mr-2 custom-btn">
           Cadastro
         </button>
