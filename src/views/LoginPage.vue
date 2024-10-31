@@ -55,7 +55,7 @@ async function handleSubmit() {
   <HeaderComp />
 
   <main class="conteudo">
-    <h2 class="text-center mt-4">Faça login para entrar</h2>
+    <!-- <h2 class="text-center mt-4">Faça login para entrar</h2> -->
 
     <div class="form-container">
       <form @submit.prevent="handleSubmit">
