@@ -47,7 +47,7 @@ function resetPassword() {
 <template>
   <HeaderComp />
 
-  <main class="conteudo">
+  <main >
     <h2 class="text-center mt-4">
       Preencha os campos a seguir para redefinir sua senha:
     </h2>

@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-1">
         <div class="col-md-4 d-flex align-items-center">
             <router-link to="home"><img src="../assets/images/FRAN_logo.png" width="40px" style="border-radius: 50%; margin-left: 15px;"></router-link>
         </div>
@@ -17,8 +17,12 @@
 </template>
 
 <style scoped>
-footer{
+footer {
     background-color: #01400B;
     color: white;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
 }
 </style>

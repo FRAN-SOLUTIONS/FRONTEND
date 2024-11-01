@@ -93,7 +93,7 @@ async function handleSubmit(event) {
 <template>
   <HeaderComp />
 
-  <main class="conteudo">
+  <main class="conteudo mb-5">
     <!-- <div v-if="step === 1"> -->
     <div>
       <h2 class="text-center mt-4">Informe os dados do aluno:</h2>
@@ -173,7 +173,7 @@ async function handleSubmit(event) {
             </div>
           </div>
 
-          <button type="submit" class="btn-custom">Cadastrar</button>
+          <button type="submit" class="btn-custom mt-2">Cadastrar</button>
         </form>
       </div>
     </div>
@@ -211,7 +211,8 @@ main {
   margin-bottom: 5px;
 }
 
-.form-group input, .form-group select {
+.form-group input,
+.form-group select {
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;

@@ -2,6 +2,8 @@
 <script setup>
 import FooterComp from '@/components/FooterComp.vue'
 import HeaderComp from '@/components/HeaderComp.vue'
+import '@/assets/css/global.css'
+
 import axios from 'axios'
 
 import { ref } from 'vue'
@@ -171,7 +173,7 @@ h2 {
 main {
   max-width: 700px; /* Aumenta a largura máxima do contêiner */
   margin: 0 auto;
-  padding: 20px;
+  /* padding: 20px; */
 }
 
 .form-container {

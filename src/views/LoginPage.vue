@@ -70,7 +70,6 @@ async function handleSubmit() {
               required
             />
           </div>
-
           <div class="form-group">
             <label for="senha">Senha:</label>
             <input v-model="senha" id="senha" class="form-control" type="password" required />
@@ -78,7 +77,7 @@ async function handleSubmit() {
         </div>
         <button type="submit" class="btn-custom">Entrar</button>
       </form>
-      <p class="text-center mt-3">Esqueceu a senha?<router-link to="redefinirSenha">Redefinir minha senha.</router-link></p>
+      <p class="text-center mt-3">Esqueceu a senha? <router-link to="redefinirSenha">Redefinir minha senha.</router-link></p>
     </div>
   </main>
 
@@ -93,7 +92,6 @@ h2 {
 main {
   max-width: 500px;
   margin: 0 auto;
-  padding: 20px;
 }
 
 .form-container {

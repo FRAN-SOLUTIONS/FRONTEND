@@ -8,6 +8,7 @@ import LoginPage from '@/views/LoginPage.vue'
 import RedefinirSenha from '@/views/RedefinirSenha.vue'
 import HomeOrientador from '@/views/HomeOrientador.vue'
 import TesteConexao from '@/views/TesteConexao.vue'
+import PerfilOrientador from '@/views/PerfilOrientador.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,7 +28,7 @@ const router = createRouter({
       component: CadastroDeAlunos,
     },
     {
-      path: '/cadastroOrientadores',
+      path: '/cadastro',
       name: 'CadastroDeOrientadores',
       component: CadastroDeOrientadores,
     },
@@ -50,6 +51,11 @@ const router = createRouter({
       path: '/teste',
       name: 'TesteConexao',
       component: TesteConexao,
+    },
+    {
+      path: '/perfil',
+      name: 'Perfil',
+      component: PerfilOrientador,
     },
   ],
 })

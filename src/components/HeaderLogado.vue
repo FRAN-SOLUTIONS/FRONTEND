@@ -4,15 +4,15 @@ import { BAccordion, BAccordionItem } from 'bootstrap-vue-next'
 import '../../node_modules/bootstrap/dist/css/bootstrap.css'
 import '../../node_modules/bootstrap-vue-next/dist/bootstrap-vue-next.css'
 
-function abrirMenu() {
+/* function abrirMenu() {
   document.getElementById('menuOculto').style.width = '300px'
   document.getElementById('principal').style.marginRight = '300px'
-}
+} */
 
-function fecharMenu() {
+/* function fecharMenu() {
   document.getElementById('menuOculto').style.width = '0'
   document.getElementById('principal').style.marginRight = '0'
-}
+} */
 
 function abrirNotificacao() {
   document.getElementById('notificacaoOculta').style.width = '25%'
@@ -26,38 +26,44 @@ function fecharNotificacao() {
 </script>
 
 <template>
-  <header class="py-3 d-flex align-items-center justify-content-between">
+  <header class="py-1 d-flex align-items-center justify-content-between">
     <div class="d-flex align-items-center">
-      <img
-        src="../assets/images/if_logo_2.png"
-        alt="Logo"
-        class="header-logo"
-      />
+      <router-link to="/">
+        <img
+          src="../assets/images/if_logo_2.png"
+          alt="Logo"
+          style="width: 70%; height: 70%"
+        />
+      </router-link>
     </div>
     <div>
-      <h2>// Nome do sistema</h2>
+      <h1 class="titulo">Orienta +</h1>
     </div>
     <div>
       <span @click="abrirNotificacao()" style="cursor: pointer">
         <font-awesome-icon class="icon-redondo" :icon="['far', 'bell']" />
       </span>
-      <span @click="abrirMenu()" style="cursor: pointer">
-        <font-awesome-icon class="icon-redondo" :icon="['far', 'user']" />
-      </span>
 
-      <aside id="menuOculto" class="menuOculto">
+      <!-- <span @click="abrirMenu()" style="cursor: pointer">
+        <font-awesome-icon class="icon-redondo" :icon="['far', 'user']" />
+      </span> -->
+
+      <!-- <aside id="menuOculto" class="menuOculto">
         <a href="" class="btnFechar" @click="fecharMenu()">&times;</a>
-        <a href="#">Perfil</a>
-        <a href="#">Alunos</a>
-        <a href="#">Configurações</a>
+        <router-link to="perfil">Perfil</router-link>
+        <router-link to="homeOrientador">Alunos</router-link>
         <a href="#">Sair</a>
-      </aside>
+      </aside> -->
 
       <aside id="notificacaoOculta" class="menuOculto">
         <a href="" class="btnFechar" @click="fecharNotificacao()">&times;</a>
 
+        <!--este templante deve ser usaco com um v-for para que cada uma das nptificações seja renderizada num BAccordeonItem diferente-->
         <BAccordion free>
-          <BAccordionItem title="Accordion Item #1">
+          <BAccordionItem
+            style="background-color: #01400b; color: white"
+            title="Nova mensagem."
+          >
             <strong class="d-block"
               >This is the first item's accordion body.</strong
             >
@@ -70,41 +76,6 @@ function fecharNotificacao() {
             though the transition does limit overflow.
           </BAccordionItem>
         </BAccordion>
-
-        <!-- <div class="container text-center">
-          <div class="row">
-            <div class="col-auto cartao d-flex">
-              <div class="d-flex align-items-center justify-content-center">
-                <font-awesome-icon :icon="['far', 'calendar']" />
-              </div>
-              <div class="col">
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="row align-items-start">
-            <div class="col cartao">
-              orem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-          </div>
-          <div class="row align-items-start">
-            <div class="col cartao">
-              orem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-          </div>
-        </div> -->
       </aside>
     </div>
   </header>
@@ -117,10 +88,6 @@ header {
   padding: 0 20px;
   background-color: #01400b;
   color: white;
-}
-
-.header-logo {
-  height: 60px;
 }
 
 .icon-redondo {
@@ -173,6 +140,13 @@ header {
   border: 1px solid #fff;
   margin-bottom: 5%;
   padding: 10%;
+}
+
+.custom-accordion-item {
+  background-color: #f0f8ff; /* Alterando para um azul claro */
+  color: #000; /* Ajustando a cor do texto */
+  border-radius: 8px; /* Opcional: Cantos arredondados */
+  padding: 1rem;
 }
 
 /* @media screen and (max-height: 450px){
