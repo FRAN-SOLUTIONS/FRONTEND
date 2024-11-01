@@ -6,6 +6,7 @@ import '@/assets/css/global.css'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+axios.defaults.withCredentials = true;
 
 const router = useRouter()
 

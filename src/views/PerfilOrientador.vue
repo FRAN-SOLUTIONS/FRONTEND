@@ -1,9 +1,22 @@
 <script setup>
+import { ref, onMounted } from 'vue';
 import HeaderLogado from '@/components/HeaderLogado.vue'
 import FooterComp from '@/components/FooterComp.vue'
 import FileNavComp from '@/components/FileNavComp.vue'
-
+import axios from 'axios';
+axios.defaults.withCredentials = true;
 import '@/assets/css/global.css'
+
+const orientador = ref(null);
+onMounted(async () => {
+  try {
+    const response = await axios.get('http://localhost:8082/FRAN/orientadores/me');
+    orientador.value = response.data;
+  } catch (error) {
+    console.error("Erro ao buscar orientador:", error);
+  }
+});
+
 </script>
 
 <template>
@@ -26,7 +39,9 @@ import '@/assets/css/global.css'
               width="50%"
               style="margin: 10%"
             />
-            <h1>Nome Completo</h1>
+            <h1>{{ orientador ? orientador.nome : "Carregando..." }}</h1>
+            <h2>{{ orientador ? orientador.prontuario : "Carregando..." }}</h2>
+            <h2>{{ orientador ? orientador.email : "Carregando..." }}</h2>
             <textarea
               placeholder="Dados Cadastrados"
               style="margin: 20%"
