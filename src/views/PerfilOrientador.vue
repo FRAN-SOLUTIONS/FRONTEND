@@ -1,7 +1,7 @@
 <script setup>
 import HeaderLogado from '@/components/HeaderLogado.vue'
 import FooterComp from '@/components/FooterComp.vue'
-import FileNavComp from '@/components/FileNavComp.vue';
+import FileNavComp from '@/components/FileNavComp.vue'
 
 import '@/assets/css/global.css'
 </script>
@@ -9,65 +9,52 @@ import '@/assets/css/global.css'
 <template>
   <div>
     <HeaderLogado />
-
-    <main class="conteudo"> 
-
+    <main class="conteudo mt-0">
       <FileNavComp />
-
-      <div class="container-xxl mt-5 mb-5 p-5 text-center">
-        <div class="row justify-content-md-center">
-          <div class="col-4 g-2 m-2 p-4 d-flex flex-column align-items-center justify-content-center" style="border-right: 2px solid #01400b; height: 100%;">
-            <img src="@/assets/images/user.png" alt="" width="50%" style="margin: 10%;">
+      <div
+        class="container-xxl mt-3 text-center"
+        style="border: 1px solid #01400b; border-radius: 0.25rem"
+      >
+        <div class="row">
+          <div
+            class="col-3 d-flex flex-column align-items-center"
+            style="border-right: 1px solid #01400b; height: 100%"
+          >
+            <img
+              src="@/assets/images/user.png"
+              alt=""
+              width="50%"
+              style="margin: 10%"
+            />
             <h1>Nome Completo</h1>
-            <textarea placeholder="Dados Cadastrados" style="margin: 20%;"></textarea>
+            <textarea
+              placeholder="Dados Cadastrados"
+              style="margin: 20%"
+            ></textarea>
           </div>
-          <div class="col-3 g-2 m-2 p-4 d-flex flex-column align-items-center justify-content-center">
+          <div
+            class="col-2 g-2 d-flex flex-column align-items-center justify-content-center"
+          >
             <div class="text-center mb-2"><p>Dashboard</p></div>
             <div class="text-center mb-2"><p>Relatórios</p></div>
             <div class="text-center mb-2"><p>Processos Ativos</p></div>
             <div class="text-center mb-2"><p>Despachos</p></div>
             <div class="text-center"><p>Todos os Processos</p></div>
           </div>
-        </div>
-        <div class="row" style="background-color: rosybrown; margin-top: 5%;">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus velit explicabo officiis tempora consectetur! Porro modi nesciunt illo provident nihil mollitia, fugit necessitatibus aperiam nulla sint libero, blanditiis debitis numquam!
+          <div
+            class="col-7 justify-content-center"
+            style="border-left: 1px solid #01400b"
+          >
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus,
+            modi molestiae illo nam tempore quod voluptates ea saepe officiis
+            labore vero nostrum pariatur expedita eligendi, eveniet unde quos
+            corporis? Sequi!
+          </div>
         </div>
       </div>
     </main>
-
-    <!-- <main class="conteudo">
-      <div class="container-xxl mt-5 mb-5 p-5 text-center">
-        <div class="row justify-content-md-center"  style="background-color: palevioletred;">
-          <div class="col-4 g-2 m-2 p-4" style="background-color: pink; border-right: 2px solid #01400b;">
-            <img src="@/assets/images/user.png" alt="" width="50%">
-            <h1>Nome Completo</h1>
-          </div>
-          <div class="col-3 g-2 m-2 p-4 align-items-center justify-content-center" style="border-left: 2px solid #01400b;">
-            <div class="d-flex align-items-center">
-              <p>Dashboard</p>
-            </div>
-            <div class="d-flex align-items-center">
-              <p>Relatórios</p>
-            </div>
-            <div class="d-flex align-items-center">
-              <p>Processos Ativos</p>
-            </div>
-            <div class="d-flex align-items-center">
-              <p>Despachos</p>
-            </div>
-            <div class="d-flex align-items-center">
-              <p>Todos os Processos</p>
-            </div>
-          </div>
-        </div>
-        <div class="row"  style="background-color: rosybrown;">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Necessitatibus velit explicabo officiis tempora consectetur! Porro modi nesciunt illo provident nihil mollitia, fugit necessitatibus aperiam nulla sint libero, blanditiis debitis numquam!
-        </div>
-      </div>
-    </main> -->
-
     <FooterComp />
   </div>
 </template>
 
-<style lang="css" scoped></style>
+<style scoped></style>
