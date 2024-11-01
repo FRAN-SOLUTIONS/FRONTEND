@@ -9,6 +9,7 @@ import RedefinirSenha from '@/views/RedefinirSenha.vue'
 import HomeOrientador from '@/views/HomeOrientador.vue'
 import TesteConexao from '@/views/TesteConexao.vue'
 import PerfilOrientador from '@/views/PerfilOrientador.vue'
+import PerfilAluno from '@/views/PerfilAluno.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,6 +58,11 @@ const router = createRouter({
       name: 'Perfil',
       component: PerfilOrientador,
     },
+    {
+      path: '/perfilAluno',
+      name: 'PerfilAluno',
+      component: PerfilAluno,
+    }
   ],
 })
 
