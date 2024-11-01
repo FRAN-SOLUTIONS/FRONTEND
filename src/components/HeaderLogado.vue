@@ -37,7 +37,7 @@ function fecharNotificacao() {
       </router-link>
     </div>
     <div>
-      <h2 class="titulo">Orienta +</h2>
+      <h1 class="titulo">Orienta +</h1>
     </div>
     <div>
       <span @click="abrirNotificacao()" style="cursor: pointer">
