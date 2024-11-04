@@ -4,6 +4,7 @@ import axios from 'axios'
 // Importando os componentes para criar suas rotas
 import HomePage from '@/views/HomePage.vue'
 import CadastroDeAlunos from '@/views/CadastroDeAlunos.vue'
+import CadastroDeEstagios from '@/views/CadastroDeEstagios.vue'
 import CadastroDeOrientadores from '@/views/CadastroDeOrientadores.vue'
 import LoginPage from '@/views/LoginPage.vue'
 import RedefinirSenha from '@/views/RedefinirSenha.vue'
@@ -11,6 +12,8 @@ import HomeOrientador from '@/views/HomeOrientador.vue'
 import TesteConexao from '@/views/TesteConexao.vue'
 import PerfilOrientador from '@/views/PerfilOrientador.vue'
 import PerfilAluno from '@/views/PerfilAluno.vue'
+
+axios.defaults.withCredentials = true;
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +31,12 @@ const router = createRouter({
       path: '/cadastroAlunos',
       name: 'CadastroDeAlunos',
       component: CadastroDeAlunos,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/cadastroEstagio',
+      name: 'CadastroDeEstagios',
+      component: CadastroDeEstagios,
       meta: { requiresAuth: true },
     },
     {

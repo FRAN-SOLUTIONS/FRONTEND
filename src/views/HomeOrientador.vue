@@ -17,6 +17,9 @@ import FileNavComp from '@/components/FileNavComp.vue'
         <router-link to="cadastroAlunos">
           <h2>Cadastrar novo aluno/orientando.</h2>
         </router-link>
+        <router-link to="cadastroEstagio">
+          <h2>Cadastrar novo estagio de um aluno.</h2>
+        </router-link>
       </div>
     </main>
     <FooterComp />
