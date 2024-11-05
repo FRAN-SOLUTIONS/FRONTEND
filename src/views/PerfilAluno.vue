@@ -1,6 +1,20 @@
 <script setup>
 import HeaderLogado from '@/components/HeaderLogado.vue'
 import FooterComp from '@/components/FooterComp.vue'
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+axios.defaults.withCredentials = true;
+
+const orientador = ref(null);
+onMounted(async () => {
+  try {
+    const response = await axios.get('http://localhost:8082/FRAN/orientadores/me');
+    orientador.value = response.data;
+  } catch (error) {
+    console.error("Erro ao buscar orientador:", error);
+  }
+});
+
 </script>
 
 <template>
