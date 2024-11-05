@@ -12,8 +12,9 @@ import HomeOrientador from '@/views/HomeOrientador.vue'
 import TesteConexao from '@/views/TesteConexao.vue'
 import PerfilOrientador from '@/views/PerfilOrientador.vue'
 import PerfilAluno from '@/views/PerfilAluno.vue'
+import PageNotFound from '@/views/PageNotFound.vue'
 
-axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -77,14 +78,22 @@ const router = createRouter({
       name: 'PerfilAluno',
       component: PerfilAluno,
       meta: { requiresAuth: true },
-    }
+    },
+    {
+      path: '/404',
+      name: 'PageNotFound',
+      component: PageNotFound,
+      meta: { requiresAuth: false },
+    },
   ],
 })
 
 // Função para verificar autenticação via endpoint
 async function checkAuthentication() {
   try {
-    const response = await axios.get('http://localhost:8082/FRAN/orientadores/me')
+    const response = await axios.get(
+      'http://localhost:8082/FRAN/orientadores/me',
+    )
     return response.status === 200
   } catch (error) {
     console.log(error)
@@ -102,7 +111,7 @@ router.beforeEach(async (to, from, next) => {
       next({ name: 'LoginPage' }) // Redireciona para a página de login se não autenticado
     }
   } else {
-    next() 
+    next()
   }
 })
 
