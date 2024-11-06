@@ -1,6 +1,6 @@
 <script setup>
 import '@/assets/css/global.css'
-//import { BAccordion, BAccordionItem } from 'bootstrap-vue-next'
+import { BAccordion, BAccordionItem } from 'bootstrap-vue-next'
 import '../../node_modules/bootstrap/dist/css/bootstrap.css'
 import '../../node_modules/bootstrap-vue-next/dist/bootstrap-vue-next.css'
 
@@ -14,7 +14,7 @@ import '../../node_modules/bootstrap-vue-next/dist/bootstrap-vue-next.css'
   document.getElementById('principal').style.marginRight = '0'
 } */
 
-/* function abrirNotificacao() {
+function abrirNotificacao() {
   document.getElementById('notificacaoOculta').style.width = '25%'
   document.getElementById('principal').style.marginRight = '25%'
 }
@@ -22,7 +22,7 @@ import '../../node_modules/bootstrap-vue-next/dist/bootstrap-vue-next.css'
 function fecharNotificacao() {
   document.getElementById('notificacaoOculta').style.width = '0'
   document.getElementById('principal').style.marginRight = '0'
-} */
+}
 </script>
 
 <template>
@@ -40,9 +40,9 @@ function fecharNotificacao() {
       <h1 class="titulo">Orienta +</h1>
     </div>
     <div>
-      <!--<span @click="abrirNotificacao()" style="cursor: pointer">
+      <span @click="abrirNotificacao()" style="cursor: pointer">
         <font-awesome-icon class="icon-redondo" :icon="['far', 'bell']" />
-      </span> -->
+      </span>
 
       <!-- <span @click="abrirMenu()" style="cursor: pointer">
         <font-awesome-icon class="icon-redondo" :icon="['far', 'user']" />
@@ -55,11 +55,11 @@ function fecharNotificacao() {
         <a href="#">Sair</a>
       </aside> -->
 
-      <!--<aside id="notificacaoOculta" class="menuOculto">
-        <a href="" class="btnFechar" @click="fecharNotificacao()">&times;</a>-->
+      <aside id="notificacaoOculta" class="menuOculto">
+        <a href="" class="btnFechar" @click="fecharNotificacao()">&times;</a>
 
         <!--este templante deve ser usaco com um v-for para que cada uma das nptificações seja renderizada num BAccordeonItem diferente-->
-        <!--<BAccordion free>
+        <BAccordion free>
           <BAccordionItem
             style="background-color: #01400b; color: white"
             title="Nova mensagem."
@@ -76,7 +76,7 @@ function fecharNotificacao() {
             though the transition does limit overflow.
           </BAccordionItem>
         </BAccordion>
-      </aside>-->
+      </aside>
     </div> 
   </header>
 </template>
