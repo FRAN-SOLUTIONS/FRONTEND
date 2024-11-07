@@ -81,6 +81,69 @@ function fecharNotificacao() {
   </header>
 </template>
 
+<!--
+-- Tabela Aluno
+CREATE TABLE Aluno (
+    prontuario VARCHAR(255) PRIMARY KEY,
+    codigo_pessoa INT,
+    telefone VARCHAR(15),
+    curso VARCHAR(255) NOT NULL, 
+    FOREIGN KEY (codigo_pessoa) REFERENCES Pessoa(codigo)
+);
+
+-- Tabela Coordenador
+CREATE TABLE Coordenador (
+    prontuario VARCHAR(255) PRIMARY KEY,
+    codigo_pessoa INT,
+    FOREIGN KEY (codigo_pessoa) REFERENCES Pessoa(codigo)
+);
+
+-- Tabela Orientador
+CREATE TABLE Orientador(
+    prontuario VARCHAR(255) PRIMARY KEY,
+    codigo_pessoa INT,
+    FOREIGN KEY (codigo_pessoa) REFERENCES Pessoa(codigo)
+);
+
+-- Tabela Empresa
+CREATE TABLE Empresa (
+    codigo INT PRIMARY KEY,
+    nome VARCHAR(255),
+    razao_social VARCHAR(255),
+    cnpj VARCHAR(15) NOT NULL,
+    email VARCHAR(255),
+    telefone VARCHAR(15)
+  );
+
+-- Tabela Estagio
+CREATE TABLE Estagio (
+    codigo INT PRIMARY KEY,
+    prontuario_aluno VARCHAR(255),  -- Alterado para VARCHAR(255)
+    prontuario_coordenador VARCHAR(255),  -- Alterado para VARCHAR(255)
+    prontuario_orientador VARCHAR(255),  -- Alterado para VARCHAR(255)
+    codigo_empresa INT,
+    obrigatorio BOOLEAN NOT NULL,
+    carga_diaria INT NOT NULL,
+    data_inicio DATE NOT NULL,
+    data_termino DATE NOT NULL,
+    status VARCHAR(255) NOT NULL,
+    FOREIGN KEY (prontuario_aluno) REFERENCES Aluno(prontuario),
+    FOREIGN KEY (prontuario_coordenador) REFERENCES Coordenador(prontuario),
+    FOREIGN KEY (prontuario_orientador) REFERENCES Orientador(prontuario),
+    FOREIGN KEY (codigo_empresa) REFERENCES Empresa(codigo)
+);
+
+-- Tabela Alerta
+CREATE TABLE Alerta (
+    codigo INT PRIMARY KEY,
+    codigo_estagio INT,
+    tipo VARCHAR(255) NOT NULL,
+    mensagem VARCHAR(255),
+    vencimento DATE,
+    FOREIGN KEY (codigo_estagio) REFERENCES Estagio(codigo)
+); 
+-->
+
 <style scoped>
 header {
   display: flex;
