@@ -1,12 +1,11 @@
-<!-- eslint-disable no-unused-vars -->
 <script setup>
 import FooterComp from '@/components/FooterComp.vue'
 import HeaderComp from '@/components/HeaderComp.vue'
 import '@/assets/css/global.css'
 
 import axios from 'axios'
-
 import { ref } from 'vue'
+import { BFormGroup, BFormInput, BButton, BFormInvalidFeedback, BForm } from 'bootstrap-vue-3'
 
 const nome = ref('')
 const prontuario = ref('')
@@ -17,42 +16,73 @@ const confirmarSenha = ref('')
 
 const step = ref(1)
 
+const touched = ref({
+  nome: false,
+  prontuario: false,
+  email: false,
+  senha: false,
+  confirmarSenha: false,
+})
+
+const errors = ref({
+  nome: false,
+  prontuario: false,
+  email: false,
+  senha: false,
+  confirmarSenha: false,
+})
+
+function validateForm() {
+  errors.value = {
+    nome: nome.value.length < 3, // Mínimo de 3 caracteres
+    prontuario: !/^(?=.*[A-Za-z])(?=.*\d).+$/.test(prontuario.value), // Prontuário com pelo menos 1 letra e 1 número
+    email: !email.value.includes('@'), // Verifica se o email contém "@"
+    senha: senha.value.length < 6, // Senha com mínimo de 6 caracteres
+    confirmarSenha: senha.value !== confirmarSenha.value, // Senhas coincidem
+  }
+
+  return !Object.values(errors.value).some(error => error)
+}
+
+function handleBlur(field) {
+  touched.value[field] = true
+  if (field === 'nome') {
+    errors.value.nome = nome.value.length < 3
+  } else if (field === 'prontuario') {
+    errors.value.prontuario = !/^(?=.*[A-Za-z])(?=.*\d).+$/.test(prontuario.value)
+  } else if (field === 'email') {
+    errors.value.email = !email.value.includes('@')
+  } else if (field === 'senha') {
+    errors.value.senha = senha.value.length < 6
+  } else if (field === 'confirmarSenha') {
+    errors.value.confirmarSenha = senha.value !== confirmarSenha.value
+  }
+}
+
 async function handleSubmit(event) {
   event.preventDefault()
-  if (
-    !nome.value ||
-    !prontuario.value ||
-    !email.value ||
-    !senha.value ||
-    !confirmarSenha.value
-  ) {
-    alert('Por favor, preencha todos os campos obrigatórios.')
+  if (!validateForm()) {
     return
   }
-  if (senha.value !== confirmarSenha.value) {
-    alert('As senhas não coincidem.')
-    return
-  }
+
   step.value = 2
 
   try {
     const orientador = {
       nome: nome.value,
       prontuario: prontuario.value,
+      telefone: telefone.value,
       email: email.value,
       password: senha.value,
     }
     const response = await axios.post(
       'http://localhost:8082/FRAN/orientadores/signup',
-      orientador,
+      orientador
     )
     console.log(response)
     step.value = 2
   } catch (error) {
-    // Exibe erro se houver falha no cadastro
-    console.log(
-      'Erro ao cadastrar aluno: ' + (error.response?.data || error.message),
-    )
+    console.log('Erro ao cadastrar orientador: ' + (error.response?.data || error.message))
   }
 }
 </script>
@@ -62,87 +92,67 @@ async function handleSubmit(event) {
 
   <main class="conteudo">
     <div v-if="step === 1">
-      <h2 class="text-center mt-4">
-        Primeira vez aqui, orientador? Cadastre-se:
-      </h2>
+      <h2 class="text-center mt-4">Primeira vez aqui, orientador? Cadastre-se:</h2>
 
       <div class="form-container">
-        <form id="cadastroForm" @submit.prevent="handleSubmit">
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label for="nome-completo">Nome Completo:</label>
-              <input
-                v-model="nome"
-                id="nome"
-                class="form-control"
-                type="text"
-                required
-              />
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-12">
-              <label for="prontuario">Prontuário:</label>
-              <input
-                v-model="prontuario"
-                id="prontuario"
-                class="form-control"
-                type="text"
-                required
-              />
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input
-              v-model="email"
-              id="email"
-              class="form-control"
-              type="email"
-              required
+        <BForm @submit.prevent="handleSubmit">
+          <BFormGroup label="Nome Completo:">
+            <BFormInput 
+              v-model="nome" 
+              type="text" 
+              :state="touched.nome ? !errors.nome : null" 
+              @blur="handleBlur('nome')"
             />
-          </div>
-          <div class="form-group">
-            <label for="senha">Senha:</label>
-            <input
-              v-model="senha"
-              id="senha"
-              class="form-control"
-              type="password"
-              required
+            <BFormInvalidFeedback v-if="errors.nome">Nome deve conter no mínimo 3 caracteres.</BFormInvalidFeedback>
+          </BFormGroup>
+
+          <BFormGroup label="Prontuário:">
+            <BFormInput 
+              v-model="prontuario" 
+              type="text" 
+              :state="touched.prontuario ? !errors.prontuario : null" 
+              @blur="handleBlur('prontuario')"
             />
-          </div>
-          <div class="form-group">
-            <label for="confirmar-senha">Confirmar Senha:</label>
-            <input
-              v-model="confirmarSenha"
-              id="confirmar-senha"
-              class="form-control"
-              type="password"
-              required
+            <BFormInvalidFeedback v-if="errors.prontuario">Prontuário deve conter pelo menos 1 letra e 1 número.</BFormInvalidFeedback>
+          </BFormGroup>
+
+          <BFormGroup label="Email:">
+            <BFormInput 
+              v-model="email" 
+              type="email" 
+              :state="touched.email ? !errors.email : null" 
+              @blur="handleBlur('email')"
             />
-          </div>
-          <div
-            style="
-              text-align: center;
-              justify-content: center;
-              margin-bottom: 10px;
-            "
-          >
-            <input
-              type="checkbox"
-              class="form-check-input"
-              id="termos"
-              name="termos"
-              required
-              style="margin-right: 10px"
+            <BFormInvalidFeedback v-if="errors.email">Email deve conter um "@" válido.</BFormInvalidFeedback>
+          </BFormGroup>
+
+          <BFormGroup label="Senha:">
+            <BFormInput 
+              v-model="senha" 
+              type="password" 
+              :state="touched.senha ? !errors.senha : null" 
+              @blur="handleBlur('senha')"
             />
-            <label for="termos"
-              >Eu concordo que li os <a href="#">termos de uso</a>.</label
-            >
+            <BFormInvalidFeedback v-if="errors.senha">Senha deve ter pelo menos 6 caracteres.</BFormInvalidFeedback>
+          </BFormGroup>
+
+          <BFormGroup label="Confirmar Senha:">
+            <BFormInput 
+              v-model="confirmarSenha" 
+              type="password" 
+              :state="touched.confirmarSenha ? !errors.confirmarSenha : null" 
+              @blur="handleBlur('confirmarSenha')"
+            />
+            <BFormInvalidFeedback v-if="errors.confirmarSenha">As senhas não coincidem.</BFormInvalidFeedback>
+          </BFormGroup>
+
+          <div class="form-check form-check-custom">
+            <input type="checkbox" class="form-check-input" id="termos" name="termos" required />
+            <label for="termos" class="form-check-label">Eu concordo que li os <a href="#">termos de uso</a>.</label>
           </div>
-          <button type="submit" class="btn-custom">Criar Conta</button>
-        </form>
+
+          <BButton type="submit" class="btn-custom">Criar Conta</BButton>
+        </BForm>
         <p class="text-center mt-3">
           Já tem uma conta? <router-link to="login">Faça login.</router-link>
         </p>
@@ -152,9 +162,7 @@ async function handleSubmit(event) {
       <h2>Faça login para entrar</h2>
       <form class="form-container">
         <div class="form-group">
-          <router-link to="homeOrientador" style="text-decoration: none"
-            ><button class="btn-custom">Login</button></router-link
-          >
+          <router-link to="homeOrientador" style="text-decoration: none"><button class="btn-custom">Login</button></router-link>
         </div>
       </form>
     </div>
@@ -165,15 +173,14 @@ async function handleSubmit(event) {
 
 <style scoped>
 h2 {
-  color: #01400b; /* Define a cor */
+  color: #01400b;
   text-align: center;
   margin-top: 1.5rem !important;
 }
 
 main {
-  max-width: 700px; /* Aumenta a largura máxima do contêiner */
+  max-width: 700px;
   margin: 0 auto;
-  /* padding: 20px; */
 }
 
 .form-container {
@@ -183,43 +190,29 @@ main {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #eaebee; /* Cor de fundo das caixas de formulário */
-}
-
-.form-check {
-  text-align: center; /* Centraliza o checkbox e o texto */
+.form-check-custom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   margin-bottom: 15px;
 }
 
 .btn-custom {
   display: block;
-  width: 50%; /* Diminui o tamanho do botão */
+  width: 50%;
   padding: 10px;
-  background-color: #01400b; /* Cor do botão */
+  background-color: #01400b;
   color: #fff;
   border: none;
-  border-radius: 8px; /* Bordas arredondadas */
+  border-radius: 8px;
   cursor: pointer;
   text-align: center;
-  margin: 0 auto; /* Centraliza o botão */
+  margin: 0 auto;
 }
 
 .btn-custom:hover {
-  background-color: #012d08; /* Cor do botão ao passar o mouse */
+  background-color: #012d08;
 }
 
 .text-center {
@@ -241,7 +234,7 @@ main {
 /* Responsividade */
 @media (max-width: 768px) {
   .header-logo {
-    height: 60px; /* Ajuste a altura da imagem conforme necessário */
+    height: 60px;
   }
 
   header h1 {
@@ -265,173 +258,3 @@ main {
   }
 }
 </style>
-
-<!-- <script setup>
-//import FooterComp from '@/components/FooterComp.vue';
-//import HeaderComp from '@/components/HeaderComp.vue';
-//import axios from 'axios';
-//import { ref } from 'vue'; // Importa 'ref' para criar variáveis reativas
-//import '@/assets/css/global.css'
-
-/* criação de orientadores no front
-const orientadores = ref([]);
-const nome = ref('');
-const prontuario = ref('');
-const email = ref('');
-
-// Função para adicionar um orientador
-function addOrientador() {
-  if (!nome.value.trim() || !prontuario.value.trim() || !email.value.trim()) {
-    return; // Se algum campo estiver vazio, a função é interrompida.
-  }
-
-  // Adiciona o novo orientador à lista
-  orientadores.value.push({
-    nome: nome.value,
-    prontuario: prontuario.value,
-    email: email.value,
-  });
-
-  // Limpa os campos de entrada após o cadastro
-  nome.value = '';
-  prontuario.value = '';
-  email.value = '';
-}
-
-// Função para remover um orientador da lista
-function removeOrientador(index) {
-  orientadores.value.splice(index, 1); // Remove o orientador pelo índice.
-}
-*/
-
-/* async function handleSubmit(event) {
-    event.preventDefault();
-    try {
-        const orientador = {
-            nome: nome.value,
-            prontuario: prontuario.value,
-            email: email.value,
-            password: senha.value,
-        };
-        const response = await axios.post('http://localhost:8082/FRAN/orientadores/signup', orientador);
-        console.log(response)
-    } catch (error) {
-        // Exibe erro se houver falha no cadastro
-        console.log('Erro ao cadastrar orientador: ' + (error.response?.data || error.message));
-    }
-
-} */
-</script> -->
-
-<!-- <template>
-    <HeaderComp />
-    <main class="conteudo">
-        <div>
-            <h1>Esta é a página de cadastro dos orientadores.</h1>
-            
-            <div>
-                <div class="divDoFormulario">
-                    <form class="formulario" @submit="handleSubmit">
-                        <hr /> 
-                        
-                        <h1 class="tituloFormulario">Cadastrar novo orientador de estágio</h1>
-                        <br>
-                        
-                        <input placeholder="Nome" type="text" v-model="nome" id="nome">
-                        <input placeholder="Prontuário" type="text" v-model="prontuario" id="prontuario">
-                        <input placeholder="Email" type="email" v-model="email" id="email">
-                        <input placeholder="senha" type="senha" v-model="senha" id="senha">
-                
-                        <button @click="addOrientador" type="submit" class="enviar">Cadastrar</button>
-                    </form>
-                    <br>
-                </div> -->
-
-<!--
-                 <div class="divDaLista">
-                    <div class="lista" v-for="(orientador, index) in orientadores" :key="index">
-                        <span class="orientador__nome">Nome: <strong>{{ orientador.nome }}</strong></span>
-                        <p>{{ orientador.prontuario }}</p>
-                        <p>{{ orientador.email }}</p>
-                        <br><hr /><br>
-                        <div>
-                            <a href="#" @click.prevent="removeOrientador(index)">Excluir</a>
-                        </div>
-                    </div>
-                    -->
-<!-- </div>      
-        </div>
-    </main>
-    <FooterComp />
-</template>-->
-
-<!-- <style scoped>
-.divDoFormulario{
-    margin: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.divDaLista{
-    margin: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.formulario{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    background-color: #fff; /* Cor de fundo do formulário */
-    padding: 20px;
-    margin: 10px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.lista{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    background-color: #fff; /* Cor de fundo do formulário */
-    padding: 20px;
-    margin: 10px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.tituloFormulario{
-    text-align: center;
-}
-
-label{
-    align-self: flex-start;
-}
-
-input[type="text"], input[type="email"], input[type="password"]{
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    height: 25px;
-    display: block;
-}
-
-.enviar{
-    align-items: center;
-    cursor: pointer;
-    border-radius: 8px;
-    background-color: #33b83a;
-    height: 30px;
-    width: 90px;
-}
-
-.enviar:hover {
-    background-color: rgb(0, 255, 0);
-    border: 1px solid rgb(0, 255, 0);
-    box-shadow: 0 0 10px rgb(0, 255, 0);
-}
-</style> -->
