@@ -1,6 +1,8 @@
 <script setup>
 import FooterComp from '@/components/FooterComp.vue'
 import HeaderComp from '@/components/HeaderComp.vue'
+import BotaoComp from '@/components/BotaoComp.vue'
+
 import '@/assets/css/global.css'
 
 import { ref } from 'vue'
@@ -76,7 +78,8 @@ async function handleSubmit() {
             <input v-model="senha" id="senha" class="form-control" type="password" required />
           </div>
         </div>
-        <button type="submit" class="btn-custom">Entrar</button>
+        <!-- <button type="submit" class="btn-custom">Entrar</button> -->
+        <BotaoComp titulo="Entrar" tamanho="m" type="submit"/>
       </form>
       <p class="text-center mt-3">Esqueceu a senha? <router-link to="redefinirSenha">Redefinir minha senha.</router-link></p>
     </div>
@@ -119,7 +122,7 @@ main {
   background-color: #eaebee;
 }
 
-.btn-custom {
+/* .btn-custom {
   display: block;
   width: 50%;
   padding: 10px;
@@ -132,5 +135,5 @@ main {
 
 .btn-custom:hover {
   background-color: #012d08;
-}
+} */
 </style>

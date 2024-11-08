@@ -1,10 +1,13 @@
 <script setup>
 import '@/assets/css/global.css'
-import { ref } from 'vue'
+
 import HeaderComp from '@/components/HeaderComp.vue'
 import FooterComp from '@/components/FooterComp.vue'
+import BotaoComp from '@/components/BotaoComp.vue'
+
 import validator from 'validator'
 
+import { ref } from 'vue'
 import { useRouter } from 'vue-router' // Importa o router
 const router = useRouter() // Inicializa o router
 
@@ -63,8 +66,9 @@ function resetPassword() {
               class="form-control"
               required
             />
-
-            <button @click="sendEmail" class="btn-custom">Enviar</button>
+            
+            <BotaoComp titulo="Enviar" tamanho="m" @click="sendEmail" />
+            <!-- <button @click="sendEmail" class="btn-custom">Enviar</button> -->
           </div>
         </div>
         <div v-else-if="step === 2">
@@ -87,9 +91,10 @@ function resetPassword() {
               required
             />
 
-            <button @click.prevent="resetPassword" class="btn-custom">
+            <BotaoComp titulo="Redefinir" tamanho="m" type="submit" @click.prevent="resetPassword" />
+            <!-- <button @click.prevent="resetPassword" class="btn-custom">
               Redefinir
-            </button>
+            </button>  -->
           </div>
         </div>
       </form>
@@ -139,7 +144,7 @@ main {
   background-color: #eaebee; /* Cor de fundo das caixas de formulário */
 }
 
-.btn-custom {
+/* .btn-custom {
   display: block;
   width: 50%;
   padding: 10px;
@@ -151,6 +156,6 @@ main {
 }
 
 .btn-custom:hover {
-  background-color: #012d08; /* Cor do botão ao passar o mouse */
-}
+  background-color: #012d08; 
+} */
 </style>

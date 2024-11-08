@@ -1,7 +1,10 @@
 <script setup>
 import FooterComp from '@/components/FooterComp.vue'
 import HeaderComp from '@/components/HeaderComp.vue'
+import BotaoComp from '@/components/BotaoComp.vue'
+
 import axios from 'axios'
+
 import { ref } from 'vue'
 
 const obrigatorio = ref('sim')
@@ -102,7 +105,10 @@ async function handleSubmit(event) {
           <input v-model="prontuarioCoordenador" id="prontuarioCoordenador" class="form-control" type="text" required />
         </div>
 
-        <button type="submit" class="btn-custom mt-2">Cadastrar Estágio</button>
+        <!-- <button type="submit" class="btn-custom mt-2">Cadastrar Estágio</button> -->
+
+        <BotaoComp titulo="Cadastrar Estágio" tamanho="g" type="submit"/>
+        
       </form>
     </div>
   </main>
@@ -147,7 +153,7 @@ main {
   background-color: #eaebee;
 }
 
-.btn-custom {
+/* .btn-custom {
   display: block;
   width: 50%;
   padding: 10px;
@@ -162,5 +168,5 @@ main {
 
 .btn-custom:hover {
   background-color: #012d08;
-}
+} */
 </style>

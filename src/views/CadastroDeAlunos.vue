@@ -2,6 +2,8 @@
 <script setup>
 import FooterComp from '@/components/FooterComp.vue'
 import HeaderComp from '@/components/HeaderComp.vue'
+import BotaoComp from '@/components/BotaoComp.vue'
+
 import axios from 'axios'
 import validator from 'validator'
 
@@ -173,7 +175,8 @@ async function handleSubmit(event) {
             </div>
           </div>
 
-          <button type="submit" class="btn-custom mt-2">Cadastrar</button>
+          <!-- <button type="submit" class="btn-custom mt-2">Cadastrar</button> -->
+          <BotaoComp :titulo="'Cadastrar'" tamanho="g" />
         </form>
       </div>
     </div>
@@ -225,23 +228,6 @@ main {
   margin-bottom: 15px;
 }
 
-.btn-custom {
-  display: block;
-  width: 50%; /* Diminui o tamanho do botão */
-  padding: 10px;
-  background-color: #01400b; /* Cor do botão */
-  color: #fff;
-  border: none;
-  border-radius: 8px; /* Bordas arredondadas */
-  cursor: pointer;
-  text-align: center;
-  margin: 0 auto; /* Centraliza o botão */
-}
-
-.btn-custom:hover {
-  background-color: #012d08; /* Cor do botão ao passar o mouse */
-}
-
 .text-center {
   text-align: center;
 }
@@ -284,4 +270,22 @@ main {
     padding: 8px;
   }
 }
+
+
+/* .btn-custom {
+  display: block;
+  width: 50%;
+  padding: 10px;
+  background-color: #01400b; 
+  color: #fff;
+  border: none;
+  border-radius: 8px; 
+  cursor: pointer;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.btn-custom:hover {
+  background-color: #012d08; 
+} */
 </style>

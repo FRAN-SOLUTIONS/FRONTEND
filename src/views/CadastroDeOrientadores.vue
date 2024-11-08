@@ -1,11 +1,15 @@
 <script setup>
 import FooterComp from '@/components/FooterComp.vue'
 import HeaderComp from '@/components/HeaderComp.vue'
+import BotaoComp from '@/components/BotaoComp.vue'
+
 import '@/assets/css/global.css'
 
 import axios from 'axios'
+
 import { ref } from 'vue'
-import { BFormGroup, BFormInput, BButton, BFormInvalidFeedback, BForm } from 'bootstrap-vue-3'
+/* import { BFormGroup, BFormInput, BButton, BFormInvalidFeedback, BForm } from 'bootstrap-vue-3' */
+import { BFormGroup, BFormInput, BFormInvalidFeedback, BForm } from 'bootstrap-vue-3'
 
 const nome = ref('')
 const prontuario = ref('')
@@ -151,7 +155,8 @@ async function handleSubmit(event) {
             <label for="termos" class="form-check-label">Eu concordo que li os <a href="#">termos de uso</a>.</label>
           </div>
 
-          <BButton type="submit" class="btn-custom">Criar Conta</BButton>
+          <!-- <BButton type="submit" class="btn-custom">Criar Conta</BButton> -->
+          <BotaoComp titulo="Criar Conta" tamanho="g" type="submit" />
         </BForm>
         <p class="text-center mt-3">
           Já tem uma conta? <router-link to="login">Faça login.</router-link>
@@ -198,23 +203,6 @@ main {
   margin-bottom: 15px;
 }
 
-.btn-custom {
-  display: block;
-  width: 50%;
-  padding: 10px;
-  background-color: #01400b;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: center;
-  margin: 0 auto;
-}
-
-.btn-custom:hover {
-  background-color: #012d08;
-}
-
 .text-center {
   text-align: center;
 }
@@ -257,4 +245,21 @@ main {
     padding: 8px;
   }
 }
+
+/* .btn-custom {
+  display: block;
+  width: 50%;
+  padding: 10px;
+  background-color: #01400b;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.btn-custom:hover {
+  background-color: #012d08;
+} */
 </style>
