@@ -8,7 +8,9 @@ import BotaoComp from '@/components/BotaoComp.vue'
 import validator from 'validator'
 
 import { ref } from 'vue'
+
 import { useRouter } from 'vue-router' // Importa o router
+
 const router = useRouter() // Inicializa o router
 
 // Variáveis reativas
@@ -50,8 +52,9 @@ function resetPassword() {
 <template>
   <HeaderComp />
 
-  <main >
-    <h2 class="text-center mt-4">
+  <main class="conteudo">
+    
+    <h2 class="text-center">
       Preencha os campos a seguir para redefinir sua senha:
     </h2>
 
@@ -66,7 +69,7 @@ function resetPassword() {
               class="form-control"
               required
             />
-            
+
             <BotaoComp titulo="Enviar" tamanho="m" @click="sendEmail" />
             <!-- <button @click="sendEmail" class="btn-custom">Enviar</button> -->
           </div>
@@ -91,7 +94,12 @@ function resetPassword() {
               required
             />
 
-            <BotaoComp titulo="Redefinir" tamanho="m" type="submit" @click.prevent="resetPassword" />
+            <BotaoComp
+              titulo="Redefinir"
+              tamanho="m"
+              type="submit"
+              @click.prevent="resetPassword"
+            />
             <!-- <button @click.prevent="resetPassword" class="btn-custom">
               Redefinir
             </button>  -->
@@ -108,13 +116,8 @@ function resetPassword() {
 h2 {
   color: #01400b; /* Define a cor */
   text-align: center;
-  margin-top: 1.5rem !important;
-}
-
-main {
-  max-width: 100%; /* Aumenta a largura máxima do contêiner */
-  margin: 0 auto;
-  padding: 20px;
+  margin-top: 5%;
+  margin-bottom: 3%;
 }
 
 .form-container {
@@ -125,10 +128,6 @@ main {
   margin-top: 0;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-  margin-bottom: 15px;
 }
 
 .form-group label {

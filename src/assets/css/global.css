@@ -18,5 +18,5 @@ body {
 }
 
 .conteudo {
-  padding-bottom: 5%;
+  min-height: 100vh;
 }

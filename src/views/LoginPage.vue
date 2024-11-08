@@ -58,7 +58,8 @@ async function handleSubmit() {
   <HeaderComp />
 
   <main class="conteudo">
-    <h2 class="text-center mt-4">Faça login para entrar</h2>
+    
+    <h2>Faça login para entrar</h2>
 
     <div class="form-container">
       <form @submit.prevent="handleSubmit">
@@ -90,12 +91,10 @@ async function handleSubmit() {
 
 <style scoped>
 h2 {
-  color: #01400b;
-}
-
-main {
-  max-width: 500px;
-  margin: 0 auto;
+  color: #01400b; /* Define a cor */
+  text-align: center;
+  margin-top: 5%;
+  margin-bottom: 3%;
 }
 
 .form-container {
@@ -103,6 +102,8 @@ main {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: auto;
 }
 
 .form-group {

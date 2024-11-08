@@ -31,7 +31,6 @@ const buttonWidth = computed(() => {
 
 .botao{
   display: block;
-  width: 50%; /* Diminui o tamanho do botão */
   padding: 10px;
   background-color: #01400b; /* Cor do botão */
   color: #fff;
@@ -39,7 +38,7 @@ const buttonWidth = computed(() => {
   border-radius: 8px; /* Bordas arredondadas */
   cursor: pointer;
   text-align: center;
-  margin: 0 auto; /* Centraliza o botão */
+  margin: 10% auto; /* Centraliza o botão */
 }
 
 .botao:hover {

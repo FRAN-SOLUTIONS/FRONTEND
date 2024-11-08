@@ -10,8 +10,8 @@
             <span class="mb-3">© 2024 FRAN Solutions, Inc. Todos os direitos reservados.</span>
         </div>
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-            <li class="ms-3"><a class="text-body-secondary" href="https://suap.ifsp.edu.br/accounts/login/?next=/"><img src="../assets/images/suap_logo.png" style="width: 40px; margin-right: 10px;"></a></li>
-            <li class="ms-3"><a class="text-body-secondary" href="https://spo.ifsp.edu.br/menu/191-estagios-documentos"><img src="../assets/images/if_logo_2.png" style="width: 30px; margin-right: 20px"></a></li>
+            <li class="ms-3"><a class="text-body-secondary" href="https://suap.ifsp.edu.br/accounts/login/?next=/"><img src="../assets/images/suap_logo.png" style="width: 60px; margin-right: 10px; margin-top: 6px;"></a></li>
+            <li class="ms-3"><a class="text-body-secondary" href="https://spo.ifsp.edu.br/menu/191-estagios-documentos"><img src="../assets/images/if_logo_2.png" style="width: 30px; margin-right: 20px; margin-top: 8px;"></a></li>
         </ul>
     </footer>
 </template>
@@ -21,8 +21,5 @@ footer {
     background-color: #01400B;
     color: white;
     width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
 }
 </style>
