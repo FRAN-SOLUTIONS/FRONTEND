@@ -11,14 +11,15 @@ import { ref } from 'vue'
 /* import { BFormGroup, BFormInput, BButton, BFormInvalidFeedback, BForm } from 'bootstrap-vue-3' */
 import { BFormGroup, BFormInput, BFormInvalidFeedback, BForm } from 'bootstrap-vue-3'
 
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
 const nome = ref('')
 const prontuario = ref('')
 const telefone = ref('')
 const email = ref('')
 const senha = ref('')
 const confirmarSenha = ref('')
-
-const step = ref(1)
 
 const touched = ref({
   nome: false,
@@ -69,8 +70,6 @@ async function handleSubmit(event) {
     return
   }
 
-  step.value = 2
-
   try {
     const orientador = {
       nome: nome.value,
@@ -83,8 +82,11 @@ async function handleSubmit(event) {
       'http://localhost:8082/FRAN/orientadores/signup',
       orientador
     )
+    
     console.log(response)
-    step.value = 2
+    alert('Cadastro realizado com sucesso!')
+    router.push('/login')
+    
   } catch (error) {
     console.log('Erro ao cadastrar orientador: ' + (error.response?.data || error.message))
   }
@@ -95,7 +97,7 @@ async function handleSubmit(event) {
   <HeaderComp />
 
   <main class="conteudo">
-    <div v-if="step === 1">
+    <div>
       <h2 class="text-center mt-4">Primeira vez aqui, orientador? Cadastre-se:</h2>
 
       <div class="form-container">
@@ -162,14 +164,6 @@ async function handleSubmit(event) {
           Já tem uma conta? <router-link to="login">Faça login.</router-link>
         </p>
       </div>
-    </div>
-    <div v-else>
-      <h2>Faça login para entrar</h2>
-      <form class="form-container">
-        <div class="form-group">
-          <router-link to="homeOrientador" style="text-decoration: none"><button class="btn-custom">Login</button></router-link>
-        </div>
-      </form>
     </div>
   </main>
 
