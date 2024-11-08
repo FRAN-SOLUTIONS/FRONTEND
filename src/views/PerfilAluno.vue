@@ -1,6 +1,7 @@
 <script setup>
 import HeaderLogado from '@/components/HeaderLogado.vue'
 import FooterComp from '@/components/FooterComp.vue'
+import BotaoComp from '@/components/BotaoComp.vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
@@ -69,6 +70,29 @@ onMounted(async () => {
                 Carga Horário Diária:
                 <span class="fw-normal" id="cargaDiaria">6 horas</span>
               </h5>
+            </div>
+          </div>
+          <div class="vr p-0"></div> <!-- Divider between the second and third card -->
+          <div
+            id="botoes"
+            class="col ps-5 d-flex flex-column align-items-center justify-content-center"
+          >
+            <div class="text-center">
+              <h5 class="fw-bold mb-3">
+                Ações Rápidas
+              </h5>
+              <div class="mb-05">
+                <BotaoComp :titulo="'Gerar despacho inicial'" tamanho="g" />
+              </div>
+              <div class="mb-05">
+                <BotaoComp :titulo="'Gerar despacho final'" tamanho="g" />
+              </div>
+              <div class="mb-05">
+                <BotaoComp :titulo="'Iniciar estágio automático'" tamanho="g" />
+              </div>
+              <div class="mb-05">
+                <BotaoComp :titulo="'Finalizar estágio automático'" tamanho="g" />
+              </div>
             </div>
           </div>
         </div>
@@ -145,6 +169,10 @@ th {
 
 .checkbox:focus {
   border-color: var(--bs-secondary);
+}
+
+.mb-05 {
+  margin-bottom: 0.25rem !important;
 }
 
 /*.border-red{
