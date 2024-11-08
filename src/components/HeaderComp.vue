@@ -1,41 +1,42 @@
-<script setup>
-import '../assets/css/global.css'
-</script>
-
 <template>
-  <header class="header d-flex align-items-center justify-content-between">
-    <div class="d-flex align-items-center">
-      <router-link to="/">
-        <img src="../assets/images/if_logo_2.png" alt="Logo" width="68%" />
-      </router-link>
-    </div>
-
-    <div class="text-center flex-grow-1 d-flex justify-content-center">
-      <h1 class="titulo" style="margin-left: 10%">Orienta +</h1>
-    </div>
-
-    <div class="botao-container d-flex align-items-center">
-      <router-link to="/cadastro">
-        <button class="btn btn-outline-success mr-2 custom-btn">
-          Cadastro
-        </button>
-      </router-link>
+  <header class="header">
+    <h1 class="titulo">Orienta +</h1>
+    <div class="buttons">
       <router-link to="/login">
-        <button class="btn btn-outline-success mr-2 custom-btn">Login</button>
+        <button class="btn btn-outline-success custom-btn">Login</button>
+      </router-link>
+      <router-link to="/cadastro">
+        <button class="btn btn-outline-primary custom-btn">Cadastro</button>
       </router-link>
     </div>
   </header>
 </template>
 
+<script setup>
+</script>
+
 <style scoped>
-header {
-  padding: 0 20px;
-  background-color: #01400b;
-  color: white;
+.header {
+  background-color: #01400B;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 10px 0;
 }
 
-.botao-container {
-  white-space: nowrap; /* Impede que os botões se quebrem em linhas diferentes */
+.titulo {
+  color: white;
+  font-size: 2rem;
+  text-align: center;
+  margin: 0;
+}
+
+.buttons {
+  position: absolute;
+  right: 20px;
+  display: flex;
+  gap: 10px;
 }
 
 .custom-btn {
