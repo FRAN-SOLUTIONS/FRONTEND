@@ -1,12 +1,15 @@
 <script setup>
-/* import { ref, computed, onMounted } from 'vue';
- */
-
+/* import { ref, computed, onMounted } from 'vue';*/
 import { ref, computed } from 'vue';
+
 import HeaderLogado from '@/components/HeaderLogado.vue';
 import FooterComp from '@/components/FooterComp.vue';
+import FileNavComp from '@/components/FileNavComp.vue';
+import BotaoComp from '@/components/BotaoComp.vue';
+
+import '@/assets/css/global.css'
+
 /* import axios from 'axios' */
-import FileNavComp from '@/components/FileNavComp.vue'
 
 const alunos = ref([
     { nome: "Hugo Feltran Wirth", prontuario: "SP3068234", curso: "Informática", email: "exemplo@gmail.com" },
@@ -54,109 +57,75 @@ function goToPage(page) {
         currentPage.value = page;
     }
 }
-
-
 </script>
 
 <template>
     <HeaderLogado />
-    <main class="main-content">
+    <!-- <main class="main-content"> -->
+    <main class="conteudo">
         <FileNavComp />
 
-        <h2>MEUS ALUNOS:</h2>
+        <div class="p-3">
+            <h2>Meus Alunos: </h2>
 
-        <div class="actions">
-            <nav>
-                <div class="container-fluid">
-                    <form class="d-flex" @submit.prevent>
-                        <input class="" v-model="searchValue" placeholder="Pesquisar" aria-label="Search" />
-                        <i class="bi bi-search"></i>
-                    </form>
-                </div>
-            </nav>
+            <div class="actions">
+                <nav>
+                    <div class="container-fluid">
+                        <form class="d-flex" @submit.prevent>
+                            <input class="" v-model="searchValue" placeholder="Pesquisar" aria-label="Search" />
+                            <i class="bi bi-search"></i>
+                        </form>
+                    </div>
+                </nav>
 
-            <router-link to="cadastroAlunos">
-                <button class="btn-action"><i class="bi bi-plus-circle"></i>Adicionar Aluno</button>
-            </router-link>
-        </div>
+                <router-link to="cadastroAlunos">
+                    <BotaoComp titulo="Adicionar Aluno" tamanho="m" type="submit"/>
+                </router-link>
 
-        <div class="estagiario-container" id="estagiario-container">
-            <div v-for="aluno in paginatedAlunos" :key="aluno.prontuario" class="card">
-                <p><strong>Aluno:</strong> {{ aluno.nome }}</p>
-                <p><strong>Prontuário:</strong> {{ aluno.prontuario }}</p>
-                <p><strong>Curso:</strong> {{ aluno.curso }}</p>
-                <p><strong>E-mail:</strong> {{ aluno.email }}</p>
+                <!-- <router-link to="cadastroAlunos">
+                    <button class="btn-action"><i class="bi bi-plus-circle"></i>Adicionar Aluno</button>
+                </router-link> -->
             </div>
-        </div>
 
-        <!-- Paginação -->
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item" :class="{ disabled: currentPage === 1 }">
-                    <a class="page-link" href="#" @click.prevent="goToPage(currentPage - 1)" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
-                    <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
-                </li>
-                <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-                    <a class="page-link" href="#" @click.prevent="goToPage(currentPage + 1)" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+            <div class="estagiario-container" id="estagiario-container">
+                <div v-for="aluno in paginatedAlunos" :key="aluno.prontuario" class="card">
+                    <p><strong>Aluno:</strong> {{ aluno.nome }}</p>
+                    <p><strong>Prontuário:</strong> {{ aluno.prontuario }}</p>
+                    <p><strong>Curso:</strong> {{ aluno.curso }}</p>
+                    <p><strong>E-mail:</strong> {{ aluno.email }}</p>
+                </div>
+            </div>
+
+            <!-- Paginação -->
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item" :class="{ disabled: currentPage === 1 }">
+                        <a class="page-link" href="#" @click.prevent="goToPage(currentPage - 1)" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
+                        <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
+                    </li>
+                    <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+                        <a class="page-link" href="#" @click.prevent="goToPage(currentPage + 1)" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </main>
 
     <FooterComp />
 </template>
 
 <style scoped>
-
-body {
-    background-color: #ffffff;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-header {
-    background-color: #01400B;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    height: 70px;
-}
-
-header img {
-    height: 50px;
-}
-
-.user-icon-container {
-    display: flex;
-    align-items: center;
-}
-
-header .user-icon {
-    font-size: 30px;
-    color: white;
-}
-
-.main-content {
-    background-color: white;
-    padding: 50px;
-    width: auto;
-    margin: 30px auto;
-}
-
 h2 {
-    color: #339933;
     font-weight: bold;
     text-align: left;
     margin-bottom: 20px;
+    color: #01400b;
 }
 
 .actions {
@@ -164,20 +133,6 @@ h2 {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-}
-
-.btn-action {
-    display: inline-flex;
-    align-items: center;
-    color: #339933;
-    font-size: 18px;
-    font-weight: bold;
-    border: none;
-    background: none;
-}
-
-.btn-action i {
-    margin-right: 5px;
 }
 
 .search-container {
@@ -220,8 +175,60 @@ h2 {
     margin-top: 20px;
 }
 
+/* .btn-action {
+    display: inline-flex;
+    align-items: center;
+    color: #339933;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    background: none;
+}
+
+.btn-action i {
+    margin-right: 5px;
+} */
+
 /* div > nav{
     
+} */
+
+/* body {
+    background-color: #ffffff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+} */
+
+/* header {
+    background-color: #01400B;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 70px;
+} */
+
+/* header img {
+    height: 50px;
+} */
+
+/* .user-icon-container {
+    display: flex;
+    align-items: center;
+} */
+
+/* header .user-icon {
+    font-size: 30px;
+    color: white;
+} */
+
+/* .main-content {
+    background-color: white;
+    padding: 50px;
+    width: auto;
+    margin: 30px auto;
 } */
 
 </style>
