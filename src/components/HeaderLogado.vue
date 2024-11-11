@@ -1,6 +1,8 @@
 <template>
-  <header class="header">
-    <h1 class="titulo">Orienta +</h1>
+  <header class="header d-flex justify-content-center align-items-center w-100">
+      <router-link class="titulo text-center text-white text-decoration-none m-0" to="/homeOrientador">
+        Orienta +
+      </router-link>
   </header>
 </template>
 
@@ -10,17 +12,15 @@
 <style scoped>
 .header {
   background-color: #01400B;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
   padding: 10px 0;
 }
 
 .titulo {
-  color: white;
   font-size: 2rem;
-  text-align: center;
-  margin: 0;
+}
+
+.titulo:hover {
+  transform: scale(1.3);
+  transition: ease transform 1s;
 }
 </style>
