@@ -32,39 +32,23 @@ async function handleSubmit(event) {
     !nome.value ||
     !prontuario.value ||
     !email.value ||
-    !curso.value ||
-    !opcao.value //||
-    //!senha.value ||
-    //!confirmarSenha.value
+    !curso.value 
   ) {
     alert('Por favor, preencha todos os campos obrigatórios.')
     return
   }
 
   // Validação dos campos antes do envio
-  if (!validarProntuario(prontuario.value)) {
-    alert('Prontuário inválido!')
-    return
-  }
+  //if (!validarProntuario(prontuario.value)) {
+    //alert('Prontuário inválido!')
+    //return
+  //}
 
   if (!validator.isEmail(email.value)) {
-    // Valida o e-mail
     alert('Email válido')
     return
   }
-
-  if (opcao.value !== 'sim' && opcao.value !== 'nao') {
-    alert('Por favor, selecione "Sim" ou "Não".')
-    return
-  }
-  /* if (senha.value !== confirmarSenha.value) {
-        alert('As senhas não coincidem.');
-        return;
-    } */
-
-  //logica do backend
   alert('Aluno cadastrado com sucesso!')
-  //step.value = 2;
 
   try {
     const aluno = {
@@ -73,16 +57,13 @@ async function handleSubmit(event) {
       telefone: telefone.value,
       email: email.value,
       curso: curso.value,
-      //opcao: obrigatorio = opcao.value,
-      //senha: senha.value,
     }
     const response = await axios.post(
       'http://localhost:8082/FRAN/alunos/signup',
       aluno,
     )
     console.log(response)
-    alert('Aluno cadastrado com sucesso!')
-    //step.value = 2;
+    //alert('Aluno cadastrado com sucesso!')
   } catch (error) {
     // Exibe erro se houver falha no cadastro
     console.log(
@@ -163,20 +144,8 @@ async function handleSubmit(event) {
               />
             </div>
           </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="opcao">Estágio Obrigatório?</label>
-              <select v-model="opcao" id="opcao" class="form-control" required>
-                <option value="">Selecione</option>
-                <option value="sim">Sim</option>
-                <option value="nao">Não</option>
-              </select>
-            </div>
-          </div>
-
           <!-- <button type="submit" class="btn-custom mt-2">Cadastrar</button> -->
-          <BotaoComp :titulo="'Cadastrar'" tamanho="g" />
+          <BotaoComp :titulo="'Cadastrar'"  type="submit" tamanho="g"/>
         </form>
       </div>
     </div>

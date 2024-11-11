@@ -26,8 +26,7 @@ async function handleSubmit(event) {
     !cargaDiaria.value ||
     !dataInicio.value ||
     !dataTermino.value ||
-    !prontuarioAluno.value ||
-    !prontuarioCoordenador.value
+    !prontuarioAluno.value
   ) {
     alert('Por favor, preencha todos os campos obrigatórios.')
     return
@@ -98,13 +97,7 @@ async function handleSubmit(event) {
         <div class="form-group">
           <label for="prontuarioAluno">Prontuário do Aluno:</label>
           <input v-model="prontuarioAluno" id="prontuarioAluno" class="form-control" type="text" required />
-        </div>
-
-        <div class="form-group">
-          <label for="prontuarioCoordenador">Prontuário do Coordenador:</label>
-          <input v-model="prontuarioCoordenador" id="prontuarioCoordenador" class="form-control" type="text" required />
-        </div>
-
+        </div>  
         <!-- <button type="submit" class="btn-custom mt-2">Cadastrar Estágio</button> -->
 
         <BotaoComp titulo="Cadastrar Estágio" tamanho="g" type="submit"/>

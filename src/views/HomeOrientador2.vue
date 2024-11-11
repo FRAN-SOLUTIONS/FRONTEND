@@ -1,6 +1,6 @@
 <script setup>
-/* import { ref, computed, onMounted } from 'vue';*/
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import axios from 'axios';
 
 import HeaderLogado from '@/components/HeaderLogado.vue';
 import FooterComp from '@/components/FooterComp.vue';
@@ -9,94 +9,86 @@ import BotaoComp from '@/components/BotaoComp.vue';
 
 import '@/assets/css/global.css'
 
-/* import axios from 'axios' */
-
-const alunos = ref([
-    { nome: "Hugo Feltran Wirth", prontuario: "SP3068234", curso: "Informática", email: "exemplo@gmail.com" },
-    { nome: "João Silva", prontuario: "SP3068235", curso: "Engenharia", email: "joao@gmail.com" },
-    { nome: "João Silva", prontuario: "SP3068235", curso: "Engenharia", email: "joao@gmail.com" },
-    { nome: "João Silva", prontuario: "SP3068235", curso: "Engenharia", email: "joao@gmail.com" },
-    { nome: "João Silva", prontuario: "SP3068235", curso: "Engenharia", email: "joao@gmail.com" },
-    { nome: "João Silva", prontuario: "SP3068235", curso: "Engenharia", email: "joao@gmail.com" },
-    { nome: "João Silva", prontuario: "SP3068235", curso: "Engenharia", email: "joao@gmail.com" },
-    { nome: "João Silva", prontuario: "SP3068235", curso: "Engenharia", email: "joao@gmail.com" },
-    { nome: "João Silva", prontuario: "SP3068235", curso: "Engenharia", email: "joao@gmail.com" },
-    { nome: "João Silva", prontuario: "SP3068235", curso: "Engenharia", email: "joao@gmail.com" },
-    { nome: "João Silva", prontuario: "SP3068235", curso: "Engenharia", email: "joao@gmail.com" },
-    { nome: "João Silva", prontuario: "SP3068235", curso: "Engenharia", email: "joao@gmail.com" },
-]);
-
+const estagios = ref([]); // Novo array para armazenar os estágios
 const searchValue = ref('');
 const cardsPerPage = 10;
 const currentPage = ref(1);
 
+
 function normalizeText(text) {
     return text.toLowerCase()
-        .normalize('NFD') 
-        .replace(/[\u0300-\u036f]/g, '') 
-        .replace(/\s+/g, ' '); 
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s+/g, ' ');
 }
 
-const filteredAlunos = computed(() => {
+const filteredEstagios = computed(() => {
     const normalizedSearch = normalizeText(searchValue.value);
-    return alunos.value.filter(aluno =>
-        normalizeText(aluno.nome).includes(normalizedSearch)
+    return estagios.value.filter(estagio =>
+        normalizeText(estagio.aluno.nome).includes(normalizedSearch)
     );
 });
 
-const paginatedAlunos = computed(() => {
+const paginatedEstagios = computed(() => {
     const start = (currentPage.value - 1) * cardsPerPage;
     const end = start + cardsPerPage;
-    return filteredAlunos.value.slice(start, end);
+    return filteredEstagios.value.slice(start, end);
 });
 
-const totalPages = computed(() => Math.ceil(filteredAlunos.value.length / cardsPerPage));
+const totalPages = computed(() => Math.ceil(filteredEstagios.value.length / cardsPerPage));
 
 function goToPage(page) {
     if (page >= 1 && page <= totalPages.value) {
         currentPage.value = page;
     }
 }
+
+onMounted(async () => {
+    try {
+        const response = await axios.get('http://localhost:8082/FRAN/estagios/');
+        estagios.value = response.data;
+        console.log(response.data)
+    } catch (error) {
+        console.error("Erro ao buscar os estágios:", error);
+    }
+});
 </script>
 
 <template>
     <HeaderLogado />
-    <!-- <main class="main-content"> -->
     <main class="conteudo">
         <FileNavComp />
 
         <div class="p-3">
-            <h2>Meus Alunos: </h2>
+            <h2>Meus Estágios: </h2>
 
             <div class="actions">
                 <nav>
                     <div class="container-fluid">
                         <form class="d-flex" @submit.prevent>
-                            <input class="" v-model="searchValue" placeholder="Pesquisar" aria-label="Search" />
+                            <input class="" v-model="searchValue" placeholder="Pesquisar Estágio" aria-label="Search" />
                             <i class="bi bi-search"></i>
                         </form>
                     </div>
                 </nav>
 
+                <router-link to="cadastroEstagio">
+                    <BotaoComp titulo="Adicionar Estágio" tamanho="m" type="submit"/>
+                </router-link>
                 <router-link to="cadastroAlunos">
                     <BotaoComp titulo="Adicionar Aluno" tamanho="m" type="submit"/>
                 </router-link>
-
-                <!-- <router-link to="cadastroAlunos">
-                    <button class="btn-action"><i class="bi bi-plus-circle"></i>Adicionar Aluno</button>
-                </router-link> -->
             </div>
 
             <div class="estagiario-container" id="estagiario-container">
-                <div v-for="aluno in paginatedAlunos" :key="aluno.prontuario" class="card">
-                    <p><strong>Aluno:</strong> {{ aluno.nome }}</p>
-                    <p><strong>Prontuário:</strong> {{ aluno.prontuario }}</p>
-                    <p><strong>Curso:</strong> {{ aluno.curso }}</p>
-                    <p><strong>E-mail:</strong> {{ aluno.email }}</p>
+                <div v-for="estagio in paginatedEstagios" :key="estagio.id" class="card">
+                    <p><strong>Nome do aluno:</strong> {{ estagio.aluno.nome }}</p>
+                    <p><strong>Prontuario:</strong> {{ estagio.aluno.prontuario }}</p>
+                    <p><strong>Curso:</strong> {{ estagio.aluno.curso }}</p>
+                    <p><strong>Status:</strong> {{ estagio.status }}</p>
                 </div>
             </div>
 
-            <!-- Paginação -->
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item" :class="{ disabled: currentPage === 1 }">
@@ -116,7 +108,6 @@ function goToPage(page) {
             </nav>
         </div>
     </main>
-
     <FooterComp />
 </template>
 
@@ -130,6 +121,7 @@ h2 {
 
 .actions {
     display: flex;
+
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
