@@ -110,15 +110,21 @@ async function checkAuthentication() {
 
 // Guarda de navegação global
 router.beforeEach(async (to, from, next) => {
-  if (to.meta.requiresAuth) {
-    const isAuthenticated = await checkAuthentication()
-    if (isAuthenticated) {
-      next()
-    } else {
-      next({ name: 'LoginPage' }) // Redireciona para a página de login se não autenticado
-    }
-  } else {
-    next()
+  const isAuthenticated = await checkAuthentication()
+
+  // Se a rota requer autenticação e o usuário não estiver autenticado
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    next({ name: 'LoginPage' })
+  } 
+  // Se o usuário estiver autenticado e tentar acessar rotas públicas
+  else if (
+    (to.path === '/' || to.path === '/home' || to.path === '/login' || to.path === '/cadastro') &&
+    isAuthenticated
+  ) {
+    next({ name: 'HomeOrientador' })
+  } 
+  else {
+    next() 
   }
 })
 
