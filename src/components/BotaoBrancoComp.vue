@@ -26,25 +26,21 @@ const buttonWidth = computed(() => {
 
 <template>
   <!-- Aplica o width dinamicamente usando o :style -->
-  <BButton :style="{ width: buttonWidth }" class="botao">
+  <BButton :style="{ width: buttonWidth }" class="btn btn-outline-primary custom-btn">
     {{ titulo }}
   </BButton>
 </template>
 
 <style scoped>
-.botao {
-  display: block;
-  padding: 10px;
-  background-color: #01400b; /* Cor do botão */
-  color: #fff;
-  border: none;
-  border-radius: 8px; /* Bordas arredondadas */
-  cursor: pointer;
-  text-align: center;
-  margin: 0 auto; /* Centraliza o botão */
+.custom-btn {
+  margin: 10px;
+  border: 1px solid white;
+  color: white;
+  transition: 0.3s;
+  background-color: #01400b !important;
 }
 
-.botao:hover {
-  background-color: #012d08; /* Cor do botão ao passar o mouse */
+.custom-btn:hover {
+  background-color: #1e5d28;
 }
 </style>

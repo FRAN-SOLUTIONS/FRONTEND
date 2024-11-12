@@ -1,7 +1,12 @@
 <script setup>
-import BotaoComp from '@/components/BotaoComp.vue';
+import '../assets/css/global.css'
+
+import BotaoBrancoComp from './BotaoBrancoComp.vue';
+
 import axios from 'axios'
+
 import { useRouter } from 'vue-router'
+
 axios.defaults.withCredentials = true;
 
 const router = useRouter()
@@ -20,35 +25,16 @@ const logout = async () => {
 </script>
 
 <template>
-  <header class="header d-flex justify-content-center align-items-center w-100">
-      <router-link class="titulo text-center text-white text-decoration-none m-0" to="/homeOrientador">
-        Orienta +
-      </router-link>
-      <BotaoComp class="butao" titulo="Sair" tamanho="g" @click="logout" />
+  <header>
+    <router-link to="homeOrientador" style="text-decoration: none; color: inherit;">
+      <h1 class="titulo">Orienta +</h1>
+    </router-link>
+
+    <div class="botoesHeader">
+      <BotaoBrancoComp titulo="Sair" tamanho="p" @click="logout" />
+    </div>
   </header>
 </template>
 
-<script setup>
-</script>
-
-
 <style scoped>
-.header {
-  background-color: #01400B;
-  padding: 10px 0;
-}
-
-.titulo {
-  font-size: 2rem;
-}
-
-.titulo:hover {
-  transform: scale(1.3);
-  transition: ease transform 1s;
-}
-
-.butao{
-  margin: 0;
-}
-
 </style>
