@@ -2,6 +2,8 @@
 import '@/assets/css/global.css'
 
 import HeaderComp from '@/components/HeaderComp.vue'
+import { useAuth } from '@/services/useAuth';
+import HeaderLogado from '@/components/HeaderLogado.vue';
 import FooterComp from '@/components/FooterComp.vue'
 import BotaoComp from '@/components/BotaoComp.vue'
 
@@ -10,6 +12,8 @@ import validator from 'validator'
 import { ref } from 'vue'
 
 import { useRouter } from 'vue-router' // Importa o router
+
+const { isLoggedIn } = useAuth();
 
 const router = useRouter() // Inicializa o router
 
@@ -50,7 +54,7 @@ function resetPassword() {
 </script>
 
 <template>
-  <HeaderComp />
+ <component :is="isLoggedIn ? HeaderLogado : HeaderComp  " />
 
   <main class="conteudo">
     

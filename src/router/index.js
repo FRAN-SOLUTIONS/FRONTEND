@@ -14,6 +14,7 @@ import TesteConexao from '@/views/TesteConexao.vue'
 import PerfilOrientador from '@/views/PerfilOrientador.vue'
 import PerfilAluno from '@/views/PerfilAluno.vue'
 import PageNotFound from '@/views/PageNotFound.vue'
+import TesteModal from '@/views/TesteModal.vue'
 
 axios.defaults.withCredentials = true
 
@@ -50,6 +51,11 @@ const router = createRouter({
       path: '/login',
       name: 'LoginPage',
       component: LoginPage,
+    },
+    {
+      path: '/testeModal',
+      name: 'testeModal',
+      component: TesteModal,
     },
     {
       path: '/redefinirSenha',

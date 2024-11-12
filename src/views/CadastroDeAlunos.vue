@@ -1,8 +1,13 @@
 <!-- eslint-disable no-unused-vars -->
 <script setup>
 import FooterComp from '@/components/FooterComp.vue'
+import { useAuth } from '@/services/useAuth';
+import HeaderLogado from '@/components/HeaderLogado.vue';
 import HeaderComp from '@/components/HeaderComp.vue'
 import BotaoComp from '@/components/BotaoComp.vue'
+
+const { isLoggedIn } = useAuth();
+console.log(isLoggedIn )
 
 import axios from 'axios'
 import validator from 'validator'
@@ -15,10 +20,6 @@ const telefone = ref('')
 const email = ref('')
 const curso = ref('')
 const opcao = ref('')
-//const senha = ref('');
-//const confirmarSenha = ref('');
-
-//const step = ref(1);
 
 function validarProntuario(prontuario) {
   const regex = /^[A-Za-z]{2}\d{7}$/
@@ -74,7 +75,8 @@ async function handleSubmit(event) {
 </script>
 
 <template>
-  <HeaderComp />
+
+<component :is="isLoggedIn ? HeaderLogado : HeaderComp  " />
 
   <main class="conteudo mb-5">
     <!-- <div v-if="step === 1"> -->

@@ -1,11 +1,15 @@
 <script setup>
 import FooterComp from '@/components/FooterComp.vue'
 import HeaderComp from '@/components/HeaderComp.vue'
+import { useAuth } from '@/services/useAuth';
+import HeaderLogado from '@/components/HeaderLogado.vue';
 import BotaoComp from '@/components/BotaoComp.vue'
 
 import axios from 'axios'
 
 import { ref } from 'vue'
+
+const { isLoggedIn } = useAuth();
 
 const obrigatorio = ref('sim')
 const cargaDiaria = ref('')
@@ -64,7 +68,7 @@ async function handleSubmit(event) {
 </script>
 
 <template>
-  <HeaderComp />
+  <component :is="isLoggedIn ? HeaderLogado : HeaderComp  " />
 
   <main class="conteudo mb-5">
     <h2 class="text-center mt-4">Cadastro de Estágio</h2>
