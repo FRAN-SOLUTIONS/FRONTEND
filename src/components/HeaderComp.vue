@@ -7,8 +7,8 @@ import BotaoBrancoComp from './BotaoBrancoComp.vue';
   <header>
     <h1 class="titulo">Orienta +</h1>
     <div class="botoesHeader">
-      <router-link to="/login"><BotaoBrancoComp titulo="Login" tamanho="p" @click="logout" /></router-link>
-      <router-link to="/cadastro"><BotaoBrancoComp titulo="Cadastro" tamanho="p" @click="logout" /></router-link>
+      <router-link to="/login"><BotaoBrancoComp titulo="Login" tamanho="p"/></router-link>
+      <router-link to="/cadastro"><BotaoBrancoComp titulo="Cadastro" tamanho="p"/></router-link>
     </div>
   </header>
 </template>
