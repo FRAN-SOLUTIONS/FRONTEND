@@ -9,6 +9,9 @@ import axios from 'axios'
 
 import { ref } from 'vue'
 
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
 const { isLoggedIn } = useAuth();
 
 const obrigatorio = ref('sim')
@@ -36,6 +39,11 @@ async function handleSubmit(event) {
     return
   }
 
+  if(cargaDiaria.value <3){
+    alert('A carga diária deve ser maior ou igual a 3')
+    return
+  }
+
   try {
     const estagio = {
       obrigatorio: obrigatorio.value === 'sim',
@@ -56,14 +64,7 @@ async function handleSubmit(event) {
     console.error('Erro ao cadastrar estágio:', error.response?.data || error.message)
     alert('Erro ao cadastrar estágio.')
   }
-
-  obrigatorio.value = ""
-    cargaDiaria.value = ""
-    dataInicio.value = ""
-    dataTermino.value = ""
-    prontuarioAluno.value = ""
-    prontuarioCoordenador.value = ""
-
+  router.push('/homeOrientador')
 }
 </script>
 

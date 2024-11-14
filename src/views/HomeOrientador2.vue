@@ -52,7 +52,7 @@ function goToPage(page) {
 
 onMounted(async () => {
     try {
-        const response = await axios.get('http://localhost:8082/FRAN/estagios/');
+        const response = await axios.get('http://localhost:8082/FRAN/estagios/orientador/estagios');
         estagios.value = response.data;
     } catch (error) {
         console.error("Erro ao buscar os estágios:", error);

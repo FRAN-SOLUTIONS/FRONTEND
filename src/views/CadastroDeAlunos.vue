@@ -13,6 +13,7 @@ import axios from 'axios'
 import validator from 'validator'
 
 import { ref } from 'vue'
+import router from '@/router';
 
 const nome = ref('')
 const prontuario = ref('')
@@ -71,6 +72,7 @@ async function handleSubmit(event) {
       'Erro ao cadastrar aluno: ' + (error.response?.data || error.message),
     )
   }
+  router.push('/homeOrientador')
 }
 </script>
 
