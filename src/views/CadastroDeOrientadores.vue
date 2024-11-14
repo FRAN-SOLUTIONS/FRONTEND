@@ -8,8 +8,7 @@ import '@/assets/css/global.css'
 import axios from 'axios'
 
 import { ref } from 'vue'
-/* import { BFormGroup, BFormInput, BButton, BFormInvalidFeedback, BForm } from 'bootstrap-vue-3' */
-import { BFormGroup, BFormInput, BFormInvalidFeedback, BForm } from 'bootstrap-vue-3'
+import { BFormGroup, BFormInput, BFormInvalidFeedback, BInputGroup, BInputGroupPrepend, BInputGroupText, BForm } from 'bootstrap-vue-3'
 
 import { useRouter } from 'vue-router';
 const router = useRouter();
@@ -38,11 +37,16 @@ const errors = ref({
 })
 
 function validateForm() {
+  const nomeRegex = /^[a-zA-Z\s]+$/;
+  const prontuarioRegex = /^[0-9]{6,8}$/; // Mínimo 6 números, máximo 8
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*ifsp\.edu\.br$/;
+  const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
   errors.value = {
-    nome: nome.value.length < 3, // Mínimo de 3 caracteres
-    prontuario: !/^(?=.*[A-Za-z])(?=.*\d).+$/.test(prontuario.value), // Prontuário com pelo menos 1 letra e 1 número
-    email: !email.value.includes('@'), // Verifica se o email contém "@"
-    senha: senha.value.length < 6, // Senha com mínimo de 6 caracteres
+    nome: !nomeRegex.test(nome.value), // Apenas letras e espaços
+    prontuario: !prontuarioRegex.test(prontuario.value), // Mínimo 6 e máximo 8 números
+    email: !emailRegex.test(email.value), // Email deve conter "@ifsp.edu.br"
+    senha: !senhaRegex.test(senha.value), // Mínimo 8 caracteres, letras e números
     confirmarSenha: senha.value !== confirmarSenha.value, // Senhas coincidem
   }
 
@@ -50,15 +54,20 @@ function validateForm() {
 }
 
 function handleBlur(field) {
+  const nomeRegex = /^[a-zA-Z\s]+$/;
+  const prontuarioRegex = /^[0-9]{6,8}$/; // Mínimo 6 números, máximo 8
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*ifsp\.edu\.br$/;
+  const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
   touched.value[field] = true
   if (field === 'nome') {
-    errors.value.nome = nome.value.length < 3
+    errors.value.nome = !nomeRegex.test(nome.value)
   } else if (field === 'prontuario') {
-    errors.value.prontuario = !/^(?=.*[A-Za-z])(?=.*\d).+$/.test(prontuario.value)
+    errors.value.prontuario = !prontuarioRegex.test(prontuario.value)
   } else if (field === 'email') {
-    errors.value.email = !email.value.includes('@')
+    errors.value.email = !emailRegex.test(email.value)
   } else if (field === 'senha') {
-    errors.value.senha = senha.value.length < 6
+    errors.value.senha = !senhaRegex.test(senha.value)
   } else if (field === 'confirmarSenha') {
     errors.value.confirmarSenha = senha.value !== confirmarSenha.value
   }
@@ -73,9 +82,8 @@ async function handleSubmit(event) {
   try {
     const orientador = {
       nome: nome.value,
-      prontuario: prontuario.value,
+      prontuario: `SP${prontuario.value}`,
       telefone: telefone.value,
-      email: email.value,
       password: senha.value,
     }
     const response = await axios.post(
@@ -109,17 +117,22 @@ async function handleSubmit(event) {
               :state="touched.nome ? !errors.nome : null" 
               @blur="handleBlur('nome')"
             />
-            <BFormInvalidFeedback v-if="errors.nome">Nome deve conter no mínimo 3 caracteres.</BFormInvalidFeedback>
+            <BFormInvalidFeedback v-if="errors.nome">Nome deve conter apenas letras e espaços.</BFormInvalidFeedback>
           </BFormGroup>
 
           <BFormGroup label="Prontuário:">
-            <BFormInput 
-              v-model="prontuario" 
-              type="text" 
-              :state="touched.prontuario ? !errors.prontuario : null" 
-              @blur="handleBlur('prontuario')"
-            />
-            <BFormInvalidFeedback v-if="errors.prontuario">Prontuário deve conter pelo menos 1 letra e 1 número.</BFormInvalidFeedback>
+            <BInputGroup>
+              <BInputGroupPrepend>
+                <BInputGroupText>SP</BInputGroupText>
+              </BInputGroupPrepend>
+              <BFormInput 
+                v-model="prontuario" 
+                type="text" 
+                :state="touched.prontuario ? !errors.prontuario : null" 
+                @blur="handleBlur('prontuario')"
+              />
+              <BFormInvalidFeedback v-if="errors.prontuario">Prontuário deve conter entre 6 e 8 números.</BFormInvalidFeedback>
+            </BInputGroup>
           </BFormGroup>
 
           <BFormGroup label="Email:">
@@ -129,7 +142,7 @@ async function handleSubmit(event) {
               :state="touched.email ? !errors.email : null" 
               @blur="handleBlur('email')"
             />
-            <BFormInvalidFeedback v-if="errors.email">Email deve conter um "@" válido.</BFormInvalidFeedback>
+            <BFormInvalidFeedback v-if="errors.email">Email deve conter "@ifsp.edu.br".</BFormInvalidFeedback>
           </BFormGroup>
 
           <BFormGroup label="Senha:">
@@ -139,7 +152,7 @@ async function handleSubmit(event) {
               :state="touched.senha ? !errors.senha : null" 
               @blur="handleBlur('senha')"
             />
-            <BFormInvalidFeedback v-if="errors.senha">Senha deve ter pelo menos 6 caracteres.</BFormInvalidFeedback>
+            <BFormInvalidFeedback v-if="errors.senha">Senha deve ter pelo menos 8 caracteres, incluindo letras e números.</BFormInvalidFeedback>
           </BFormGroup>
 
           <BFormGroup label="Confirmar Senha:">
@@ -157,7 +170,6 @@ async function handleSubmit(event) {
             <label for="termos" class="form-check-label">Eu concordo que li os <a href="#">termos de uso</a>.</label>
           </div>
 
-          <!-- <BButton type="submit" class="btn-custom">Criar Conta</BButton> -->
           <BotaoComp titulo="Criar Conta" tamanho="g" type="submit" />
         </BForm>
         <p class="text-center mt-3">
@@ -239,21 +251,4 @@ main {
     padding: 8px;
   }
 }
-
-/* .btn-custom {
-  display: block;
-  width: 50%;
-  padding: 10px;
-  background-color: #01400b;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: center;
-  margin: 0 auto;
-}
-
-.btn-custom:hover {
-  background-color: #012d08;
-} */
 </style>
