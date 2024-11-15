@@ -15,7 +15,7 @@ import PerfilOrientador from '@/views/PerfilOrientador.vue'
 import PerfilAluno from '@/views/PerfilAluno.vue'
 import PageNotFound from '@/views/PageNotFound.vue'
 import TesteModal from '@/views/TesteModal.vue'
-import NotificacoesPage from '@/views/NotificacoesPage.vue'
+import NotificacoesPage from '@/views/AlertaPage.vue'
 
 axios.defaults.withCredentials = true
 

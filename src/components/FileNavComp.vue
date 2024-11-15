@@ -1,5 +1,4 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
     <div class="caixa">
@@ -21,6 +20,16 @@
                     :class="{ active: $route.name === 'Perfil' }"
                     style="color: inherit; text-decoration: none;">
                     Perfil
+                </router-link>
+            </li>
+            <li class="nav-item">
+                <router-link 
+                    to="notificacoes" 
+                    class="nav-link" 
+                    :class="{ active: $route.name === 'NotificacoesPage' }" 
+                    aria-current="page"
+                    style="color: inherit; text-decoration: none;">
+                    Alertas
                 </router-link>
             </li>
         </ul>
