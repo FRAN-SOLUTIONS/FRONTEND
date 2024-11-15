@@ -17,17 +17,21 @@ const props = defineProps({
 // Computed que define a largura do botão com base no tamanho
 const buttonWidth = computed(() => {
   return props.tamanho === 'p'
-    ? '100px'
+    ? '80px'
     : props.tamanho === 'g'
       ? '300px'
-      : '200px'
+      : '190px'
 })
 </script>
 
 <template>
   <!-- Aplica o width dinamicamente usando o :style -->
-  <BButton :style="{ width: buttonWidth }" class="btn btn-outline-primary custom-btn">
+  <BButton
+    :style="{ width: buttonWidth }"
+    class="custom-btn"
+  >
     {{ titulo }}
+    <slot></slot>
   </BButton>
 </template>
 
@@ -41,6 +45,10 @@ const buttonWidth = computed(() => {
 }
 
 .custom-btn:hover {
-  background-color: #1e5d28;
+  background-color: #2c7239 !important;
+}
+
+.custom-btn:focus{
+  border: 1px solid white !important;
 }
 </style>

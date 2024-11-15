@@ -15,6 +15,7 @@ import PerfilOrientador from '@/views/PerfilOrientador.vue'
 import PerfilAluno from '@/views/PerfilAluno.vue'
 import PageNotFound from '@/views/PageNotFound.vue'
 import TesteModal from '@/views/TesteModal.vue'
+import NotificacoesPage from '@/views/NotificacoesPage.vue'
 
 axios.defaults.withCredentials = true
 
@@ -84,6 +85,12 @@ const router = createRouter({
       path: '/perfilAluno',
       name: 'PerfilAluno',
       component: PerfilAluno,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/notificacoes',
+      name: 'NotificacoesPage',
+      component: NotificacoesPage,
       meta: { requiresAuth: true },
     },
     {

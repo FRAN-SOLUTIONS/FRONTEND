@@ -31,10 +31,26 @@ const logout = async () => {
     </router-link>
 
     <div class="botoesHeader">
+      <!-- <router-link to="404" style="text-decoration: none; color: inherit;"><i class="bi bi-bell-fill notify"></i></router-link> -->
+      
+      <!-- <router-link to="404" style="text-decoration: none; color: inherit;">
+        <BotaoBrancoComp titulo="Notificações" tamanho="m" />
+      </router-link> -->
+      
+      <router-link to="notificacoes" style="text-decoration: none; color: inherit;">
+        <BotaoBrancoComp titulo="Notificações" tamanho="m">
+          <i class="bi bi-bell-fill" style="margin-left: 10px;"></i>
+        </BotaoBrancoComp>
+      </router-link>
+
       <BotaoBrancoComp titulo="Sair" tamanho="p" @click="logout" />
     </div>
   </header>
 </template>
 
 <style scoped>
+.notify{
+  font-size: 1.5rem;
+  color: white;
+}
 </style>

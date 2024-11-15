@@ -17,10 +17,10 @@ const props = defineProps({
 // Computed que define a largura do botão com base no tamanho
 const buttonWidth = computed(() => {
   return props.tamanho === 'p'
-    ? '100px'
+    ? '80px'
     : props.tamanho === 'g'
       ? '300px'
-      : '200px'
+      : '190px'
 })
 </script>
 
@@ -45,6 +45,6 @@ const buttonWidth = computed(() => {
 }
 
 .botao:hover {
-  background-color: #012d08; /* Cor do botão ao passar o mouse */
+  background-color: #2c7239 !important;
 }
 </style>
