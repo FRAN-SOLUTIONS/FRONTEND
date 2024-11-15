@@ -134,7 +134,9 @@ msgAlerta.value[0] = 'o relatorio deve ser enviado'*/
                         <p style="margin: 0;"><strong>Empresa:</strong> {{ nomeEmpresa[index] }}</p>
                     </b-card-text>
 
-                    <b-link to="404" class="card-link" style="color: #01400b;">Mais informações</b-link>
+                    <b-link to="404" class="card-link" style="color: #01400b;">
+                        <strong>Mais informações</strong>
+                    </b-link>
                 </b-card>
             </div>
         </div>
