@@ -2,59 +2,50 @@
 import '@/assets/css/global.css'
 
 import HeaderComp from '@/components/HeaderComp.vue'
-import { useAuth } from '@/services/useAuth';
-import HeaderLogado from '@/components/HeaderLogado.vue';
 import FooterComp from '@/components/FooterComp.vue'
 import BotaoComp from '@/components/BotaoComp.vue'
 
-import validator from 'validator'
-
 import { ref } from 'vue'
 
-import { useRouter } from 'vue-router' // Importa o router
+import { useRoute, useRouter } from 'vue-router'
 
-const { isLoggedIn } = useAuth();
 
-const router = useRouter() // Inicializa o router
+const router = useRouter() 
+const route = useRoute();
 
-// Variáveis reativas
-const step = ref(1) // Controla qual etapa está ativa
-
-const enderecoEmail = ref('')
 const novaSenha = ref('')
 const confirmaSenha = ref('')
+const token = ref(route.query.token || '');
 
-// Função para enviar o email e passar para a próxima etapa
-function sendEmail() {
-  if (!enderecoEmail.value) {
-    alert('Por favor, digite seu email.')
-    return
-  } else if (!validator.isEmail(enderecoEmail.value)) {
-    // Valida o e-mail
-    alert('Email válido')
-    return
-  }
-  // Lógica do backend mandar email
-
-  step.value = 2 // Avança para a etapa de redefinição de senha
-}
-
-// Função para validar e redefinir a senha
 function resetPassword() {
   if (novaSenha.value !== confirmaSenha.value) {
-    alert('As senhas não coincidem!')
-    return
+    alert('As senhas não coincidem!');
+    return;
   }
 
-  alert('Senha redefinida com sucesso!')
-
-  // Lógica do backend para enviar a nova senha ao servidor
-  router.push({ name: 'LoginPage' })
+  // Enviar a nova senha e o token para o backend
+  fetch('http://localhost:8082/FRAN/orientadores/change-password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      password: novaSenha.value,
+      token: token.value,
+    }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        alert('Senha redefinida com sucesso!');
+        router.push({ name: 'LoginPage' });
+      } else {
+        alert('Erro ao redefinir a senha.');
+      }
+    })
+    .catch(() => alert('Erro ao conectar ao servidor.'));
 }
 </script>
 
 <template>
- <component :is="isLoggedIn ? HeaderLogado : HeaderComp  " />
+ <HeaderComp/>
 
   <main class="conteudo">
     
@@ -64,21 +55,7 @@ function resetPassword() {
 
     <div class="form-container">
       <form>
-        <div v-if="step === 1">
-          <div class="form-group">
-            <label for="email" class="form-label">Email:</label>
-            <input
-              type="email"
-              v-model="enderecoEmail"
-              class="form-control"
-              required
-            />
-
-            <BotaoComp titulo="Enviar" tamanho="m" @click="sendEmail" />
-            <!-- <button @click="sendEmail" class="btn-custom">Enviar</button> -->
-          </div>
-        </div>
-        <div v-else-if="step === 2">
+        <div>
           <div class="form-group">
             <label for="nova-Senha" class="form-label">Nova Senha:</label>
             <input
