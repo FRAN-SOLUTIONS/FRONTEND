@@ -49,59 +49,6 @@ nomeEmpresa.value.push('IFSP');
 tipoAlerta.value.push('a entregar');
 msgAlerta.value.push('O relatório deve ser enviado');
 
-/* const nome = ref([])
-const email = ref([])
-const prontuario = ref([])
-const nomeEmpresa = ref([])
-const tipoAlerta = ref([])
-const msgAlerta = ref([])
-const vencimento = ref([])
-//const dataHoje = ref(new Date().toLocaleDateString('pt-BR'))
-
-vencimento.value[0] = new Date('2024-10-30').toLocaleDateString('pt-BR')
-vencimento.value[1] = new Date('2024-11-30').toLocaleDateString('pt-BR')
-
-nome.value[0] = 'Maria'
-email.value[0] = 'maria@email.com'
-prontuario.value[0] = 'SP123456'
-nomeEmpresa.value[0] = 'Google'
-tipoAlerta.value[0] = 'atrasado'
-msgAlerta.value[0] = 'o relatorio esta atrasado'
-
-nome.value[0] = 'João'
-email.value[0] = 'joao@email.com'
-prontuario.value[0] = 'SP123456'
-nomeEmpresa.value[0] = 'Microsoft'
-tipoAlerta.value[0] = 'atrasado'
-msgAlerta.value[0] = 'o relatorio esta atrasado'
-
-nome.value[0] = 'Gustavo'
-email.value[0] = 'gustavo@email.com'
-prontuario.value[0] = 'SP123456'
-nomeEmpresa.value[0] = 'kiman'
-tipoAlerta.value[0] = 'a entregar'
-msgAlerta.value[0] = 'o relatorio deve ser enviado'
-
-nome.value[0] = 'luiza'
-email.value[0] = 'luiza@email.com'
-prontuario.value[0] = 'SP123456'
-nomeEmpresa.value[0] = 'IFSP'
-tipoAlerta.value[0] = 'entregue'
-msgAlerta.value[0] = 'o foi entregue'
-
-nome.value[0] = 'Maria'
-email.value[0] = 'maria@email.com'
-prontuario.value[0] = 'SP123456'
-nomeEmpresa.value[0] = 'Google'
-tipoAlerta.value[0] = 'a entregar'
-msgAlerta.value[0] = 'o relatorio deve ser enviado'
-
-nome.value[0] = 'Joao'
-email.value[0] = 'joao@email.com'
-prontuario.value[0] = 'SP123456'
-nomeEmpresa.value[0] = 'Google'
-tipoAlerta.value[0] = 'a entregar' 
-msgAlerta.value[0] = 'o relatorio deve ser enviado'*/
 </script>
 
 <template>
