@@ -12,7 +12,6 @@ const orientador = ref(null)
 const editando = ref(false)
 const imagemAleatoria = ref('')
 
-// Importando as imagens
 import user1 from '@/assets/images/user1.png'
 import user2 from '@/assets/images/user2.png'
 import user3 from '@/assets/images/user3.png'
@@ -23,7 +22,6 @@ import user7 from '@/assets/images/user7.png'
 import user8 from '@/assets/images/user8.png'
 import user9 from '@/assets/images/user9.png'
 
-// Array de imagens
 const imagens = [user1, user2, user3, user4, user5, user6, user7, user8, user9]
 
 // Função para selecionar uma imagem aleatória
@@ -45,19 +43,22 @@ onMounted(async () => {
   }
 })
 
-// Função para salvar as alterações
 const salvarAlteracoes = async () => {
   try {
+  
     const response = await axios.put(
-      `http://localhost:8082/FRAN/orientadores/${orientador.value.id}`,
-      orientador.value
-    )
-    console.log('Dados atualizados:', response.data)
-    editando.value = false // Sair do modo de edição
+      'http://localhost:8082/FRAN/orientadores/edit', 
+      orientador.value 
+    );
+
+    console.log('Alterações salvas com sucesso:', response.data);
+    editando.value = false;
+
+    orientador.value = response.data;
   } catch (error) {
-    console.error('Erro ao salvar alterações:', error)
+    console.error('Erro ao salvar alterações:', error);
   }
-}
+};
 
 // Função para alternar o modo de edição
 const editarDados = () => {
@@ -119,20 +120,7 @@ const editarDados = () => {
             <h4 v-else>
               {{ orientador ? orientador.email : 'Carregando...' }}
             </h4>
-
-            <!-- Telefone -->
-            <div v-if="editando">
-              <input
-                type="text"
-                v-model="orientador.telefone"
-                placeholder="Telefone"
-                class="form-control mb-3"
-              />
-            </div>
-            <h4 v-else class="mb-5">
-              {{ orientador ? orientador.telefone : 'Carregando...' }}
-            </h4>
-
+           
             <!-- Botões -->
             <div>
               <BotaoComp
