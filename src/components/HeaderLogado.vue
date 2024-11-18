@@ -52,9 +52,9 @@ const alunos = ref([
     email: 'joao@email.com',
     prontuario: 'SP123457',
     nomeEmpresa: 'Microsoft',
-    tipoAlerta: 'a entregar',
-    msgAlerta: 'O relatório deve ser enviado',
-    vencimento: new Date('2024-11-30'),
+    tipoAlerta: 'atrasado',
+    msgAlerta: 'O relatório está atrasado',
+    vencimento: new Date('2024-10-30'),
   },
   {
     nome: 'Gustavo',
@@ -148,6 +148,16 @@ const alunos = ref([
       </div>
     </aside>
   </header>
+  
+  <!-- Alerta de alunos atrasados -->
+  <div v-for="(aluno, index) in alunos" :key="index">
+    <div v-if="aluno.tipoAlerta === 'atrasado'" class="alert alert-danger d-flex justify-content-between" role="alert">
+      <span>
+        <strong>{{ aluno.nome }}</strong>: {{ aluno.msgAlerta }} - Vencimento: {{ aluno.vencimento.toLocaleDateString() }}
+      </span>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  </div>
 </template>
 
 <style scoped>
