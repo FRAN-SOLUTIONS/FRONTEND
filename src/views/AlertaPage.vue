@@ -32,7 +32,7 @@ nome.value.push('João');
 email.value.push('joao@email.com');
 prontuario.value.push('SP123457');
 nomeEmpresa.value.push('Microsoft');
-tipoAlerta.value.push('a entregar');
+tipoAlerta.value.push('atrasado');
 msgAlerta.value.push('O relatório deve ser enviado');
 
 nome.value.push('Gustavo');
