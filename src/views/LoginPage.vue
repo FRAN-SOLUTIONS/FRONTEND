@@ -30,22 +30,18 @@ function validarSenha(senha) {
 async function handleSubmit() {
   if (!prontuario.value) {
     alert('Por favor, preencha o prontuário.')
-    return
   } else if (!validarProntuario(prontuario.value)) {
     alert('Prontuário inválido!')
-    return
   } else if (!senha.value) {
     alert('Por favor, digite sua senha.')
-    return
   } else if (!validarSenha(senha.value)) {
     alert('A senha deve ter pelo menos 6 caracteres.')
-    return
   }
 
   try {
     const orientador = {
       prontuario: prontuario.value,
-      password: senha.value.toLowerCase()
+      password: senha.value
     }
     const response = await axios.post('http://localhost:8082/FRAN/orientadores/login', orientador)
     router.push({ name: 'HomeOrientador' })
