@@ -45,7 +45,7 @@ async function handleSubmit() {
   try {
     const orientador = {
       prontuario: prontuario.value,
-      password: senha.value
+      password: senha.value.toLowerCase()
     }
     const response = await axios.post('http://localhost:8082/FRAN/orientadores/login', orientador)
     router.push({ name: 'HomeOrientador' })

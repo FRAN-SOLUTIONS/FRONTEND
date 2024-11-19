@@ -82,7 +82,7 @@ async function handleSubmit(event) {
   try {
     const orientador = {
       nome: nome.value,
-      prontuario: `SP${prontuario.value}`,
+      prontuario: `sp${prontuario.value}`,
       email: email.value,
       telefone: telefone.value,
       password: senha.value,
