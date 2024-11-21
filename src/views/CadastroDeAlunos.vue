@@ -1,155 +1,204 @@
-<!-- eslint-disable no-unused-vars -->
 <script setup>
-import FooterComp from '@/components/FooterComp.vue'
+import { ref, reactive } from 'vue';
+import axios from 'axios';
 import { useAuth } from '@/services/useAuth';
-import HeaderLogado from '@/components/HeaderLogado.vue';
-import HeaderComp from '@/components/HeaderComp.vue'
-import BotaoComp from '@/components/BotaoComp.vue'
-
-const { isLoggedIn } = useAuth();
-console.log(isLoggedIn )
-
-import axios from 'axios'
-import validator from 'validator'
-
-import { ref } from 'vue'
 import router from '@/router';
 
-const nome = ref('')
-const prontuario = ref('')
-const telefone = ref('')
-const email = ref('')
-const curso = ref('')
-const opcao = ref('')
+import '@/assets/css/global.css';
 
-function validarProntuario(prontuario) {
-  const regex = /^[A-Za-z]{2}\d{7}$/
-  return regex.test(prontuario)
+import FooterComp from '@/components/FooterComp.vue';
+import HeaderLogado from '@/components/HeaderLogado.vue';
+import HeaderComp from '@/components/HeaderComp.vue';
+import BotaoComp from '@/components/BotaoComp.vue';
+
+// Autenticação
+const { isLoggedIn } = useAuth();
+console.log(isLoggedIn);
+
+// Dados do formulário
+const nome = ref('');
+const prontuario = ref('');
+const telefone = ref('');
+const email = ref('');
+const curso = ref('');
+
+// Estados de validação
+const touched = reactive({
+  nome: false,
+  prontuario: false,
+  telefone: false,
+  email: false,
+  curso: false,
+});
+
+const errors = reactive({
+  nome: false,
+  prontuario: false,
+  telefone: false,
+  email: false,
+  curso: false,
+});
+
+// Funções de validação para cada campo
+const validateNome = () => /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/.test(nome.value);
+const validateProntuario = () => /^[a-zA-Z]{0,3}[0-9]{6,8}$/.test(prontuario.value);
+const validateTelefone = () => telefone.value === '' || /^\d{2}\d{5}-\d{4}$/.test(telefone.value); // Telefone vazio é válido
+const validateEmail = () => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*ifsp\.edu\.br$/.test(email.value);
+const validateCurso = () => /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/.test(curso.value);
+
+function handleBlur(field) {
+  touched[field] = true;
+
+  if (field === 'nome') {
+    errors.nome = !validateNome();
+  } else if (field === 'prontuario') {
+    errors.prontuario = !validateProntuario();
+  } else if (field === 'telefone') {
+    errors.telefone = !validateTelefone();
+  } else if (field === 'email') {
+    errors.email = !validateEmail();
+  } else if (field === 'curso') {
+    errors.curso = !validateCurso();
+  }
 }
 
 async function handleSubmit(event) {
-  event.preventDefault()
+  event.preventDefault();
 
-  if (
-    !nome.value ||
-    !prontuario.value ||
-    !email.value ||
-    !curso.value 
-  ) {
-    alert('Por favor, preencha todos os campos obrigatórios.')
-    return
+  const allFieldsValid = [
+    validateNome(),
+    validateProntuario(),
+    validateTelefone(), // Verifica se o telefone é válido, mas não impede o envio se estiver vazio
+    validateEmail(),
+    validateCurso(),
+  ].every(Boolean);
+
+  if (!allFieldsValid) {
+    alert('Por favor, preencha todos os campos corretamente!');
+    return;
   }
-
-  // Validação dos campos antes do envio
-  //if (!validarProntuario(prontuario.value)) {
-    //alert('Prontuário inválido!')
-    //return
-  //}
-
-  if (!validator.isEmail(email.value)) {
-    alert('Email válido')
-    return
-  }
-  alert('Aluno cadastrado com sucesso!')
 
   try {
     const aluno = {
       nome: nome.value,
       prontuario: prontuario.value,
-      telefone: telefone.value,
+      telefone: telefone.value,  // Permite telefone vazio
       email: email.value,
       curso: curso.value,
-    }
-    const response = await axios.post(
-      'http://localhost:8082/FRAN/alunos/signup',
-      aluno,
-    )
-    console.log(response)
-    //alert('Aluno cadastrado com sucesso!')
+    };
+    const response = await axios.post('http://localhost:8082/FRAN/alunos/signup', aluno);
+    console.log(response);
+    alert('Aluno cadastrado com sucesso!');
+    router.push('/homeOrientador');
   } catch (error) {
-    // Exibe erro se houver falha no cadastro
-    console.log(
-      'Erro ao cadastrar aluno: ' + (error.response?.data || error.message),
-    )
+    console.error('Erro ao cadastrar aluno:', error);
   }
-  router.push('/homeOrientador')
 }
 </script>
 
-<template>
 
-<component :is="isLoggedIn ? HeaderLogado : HeaderComp  " />
+<template>
+  <component :is="isLoggedIn ? HeaderLogado : HeaderComp" />
 
   <main class="conteudo mb-5">
-    <!-- <div v-if="step === 1"> -->
     <div>
       <h2 class="text-center mt-4">Informe os dados do aluno:</h2>
 
       <div class="form-container">
         <form id="cadastroForm" @submit.prevent="handleSubmit">
-          <div class="form-row">
-            <div class="form-group col-md-12">
+          <div class="row">
+            <!-- Nome -->
+            <div class="form-group col-12">
               <label for="nome-completo">Nome Completo:</label>
-              <input
+              <b-form-input
                 v-model="nome"
                 id="nome"
                 class="form-control"
                 type="text"
+                :state="touched.nome ? !errors.nome : null"
+                @blur="handleBlur('nome')"
                 required
               />
+              <b-form-invalid-feedback>
+                O nome deve conter apenas letras e espaços.
+              </b-form-invalid-feedback>
             </div>
           </div>
 
-          <div class="form-row">
+          <div class="row">
+            <!-- Prontuário -->
             <div class="form-group col-md-6">
               <label for="prontuario">Prontuário:</label>
-              <input
+              <b-form-input
                 v-model="prontuario"
                 id="prontuario"
                 class="form-control"
                 type="text"
+                :state="touched.prontuario ? !errors.prontuario : null"
+                @blur="handleBlur('prontuario')"
                 required
               />
+              <b-form-invalid-feedback>
+                O prontuário deve seguir o formato: XX1234567.
+              </b-form-invalid-feedback>
             </div>
 
+            <!-- Telefone -->
             <div class="form-group col-md-6">
               <label for="telefone">Telefone (opcional):</label>
-              <input
+              <b-form-input
                 v-model="telefone"
                 id="telefone"
                 class="form-control"
                 type="tel"
+                :state="touched.telefone ? !errors.telefone : null"
+                @blur="handleBlur('telefone')"
               />
+              <b-form-invalid-feedback>
+                O telefone deve ser no formato: DD99999-9999.
+              </b-form-invalid-feedback>
             </div>
           </div>
 
-          <div class="form-row">
-            <div class="form-group">
+          <div class="row">
+            <!-- Email -->
+            <div class="form-group col-12">
               <label for="email">Email:</label>
-              <input
+              <b-form-input
                 v-model="email"
                 id="email"
                 class="form-control"
                 type="email"
+                :state="touched.email ? !errors.email : null"
+                @blur="handleBlur('email')"
                 required
               />
+              <b-form-invalid-feedback>
+                O e-mail deve ser do tipo 'usuario@aluno.ifsp.edu.br'.
+              </b-form-invalid-feedback>
             </div>
           </div>
 
-          <div class="form-row">
-            <div class="form-group">
+          <div class="row">
+            <!-- Curso -->
+            <div class="form-group col-12">
               <label for="curso">Curso:</label>
-              <input
+              <b-form-input
                 v-model="curso"
                 id="curso"
                 class="form-control"
                 type="text"
+                :state="touched.curso ? !errors.curso : null"
+                @blur="handleBlur('curso')"
                 required
               />
+              <b-form-invalid-feedback>
+                O curso deve conter apenas letras e espaços.
+              </b-form-invalid-feedback>
             </div>
           </div>
-          <!-- <button type="submit" class="btn-custom mt-2">Cadastrar</button> -->
-          <BotaoComp :titulo="'Cadastrar'"  type="submit" tamanho="g"/>
+
+          <BotaoComp :titulo="'Cadastrar'" type="submit" tamanho="g" />
         </form>
       </div>
     </div>
@@ -158,15 +207,37 @@ async function handleSubmit(event) {
   <FooterComp />
 </template>
 
+
 <style scoped>
+/* Remove o fundo azul nos campos */
+.form-control {
+  background-color: transparent !important;
+  border-color: #ced4da; /* Cor padrão para borda */
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Verde para válido */
+.form-control.is-valid {
+  background-color: transparent !important;
+  border-color: #28a745 !important;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
+/* Vermelho para inválido */
+.form-control.is-invalid {
+  background-color: transparent !important;
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
 h2 {
-  color: #01400b; /* Define a cor */
+  color: #01400b;
   text-align: center;
   margin-top: 1.5rem !important;
 }
 
 main {
-  max-width: 700px; /* Aumenta a largura máxima do contêiner */
+  max-width: 700px;
   margin: 0 auto;
   padding: 20px;
 }
@@ -186,79 +257,4 @@ main {
   display: block;
   margin-bottom: 5px;
 }
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #eaebee; /* Cor de fundo das caixas de formulário */
-}
-
-.form-check {
-  text-align: center; /* Centraliza o checkbox e o texto */
-  margin-bottom: 15px;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.mt-3 {
-  margin-top: 1rem;
-}
-
-.mt-4 {
-  margin-top: 1.5rem;
-}
-
-.mt-5 {
-  margin-top: 3rem;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-  .header-logo {
-    height: 60px; /* Ajuste a altura da imagem conforme necessário */
-  }
-
-  header h1 {
-    font-size: 1.5rem;
-  }
-
-  .container {
-    padding: 10px;
-  }
-
-  .form-container {
-    padding: 15px;
-  }
-
-  .form-row .form-group {
-    margin-bottom: 10px;
-  }
-
-  .btn-custom {
-    padding: 8px;
-  }
-}
-
-
-/* .btn-custom {
-  display: block;
-  width: 50%;
-  padding: 10px;
-  background-color: #01400b; 
-  color: #fff;
-  border: none;
-  border-radius: 8px; 
-  cursor: pointer;
-  text-align: center;
-  margin: 0 auto;
-}
-
-.btn-custom:hover {
-  background-color: #012d08; 
-} */
 </style>
