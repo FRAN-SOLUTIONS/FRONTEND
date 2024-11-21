@@ -8,7 +8,7 @@ import '@/assets/css/global.css'
 import axios from 'axios'
 
 import { ref } from 'vue'
-import { BFormGroup, BFormInput, BFormInvalidFeedback, BInputGroup, BInputGroupPrepend, BInputGroupText, BForm } from 'bootstrap-vue-3'
+import { BFormGroup, BFormInput, BFormInvalidFeedback, BForm } from 'bootstrap-vue-3'
 
 import { useRouter } from 'vue-router';
 const router = useRouter();
@@ -37,39 +37,39 @@ const errors = ref({
 })
 
 function validateForm() {
-  const nomeRegex = /^[a-zA-Z\s]+$/;
-  const prontuarioRegex = /^[0-9]{6,8}$/; // Mínimo 6 números, máximo 8
+  const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/; // Permite letras com acento e espaços
+  const prontuarioRegex = /^[a-zA-Z]{0,3}[0-9]{6,8}$/; // De 0 a 3 letras seguidas de 6 a 8 números
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*ifsp\.edu\.br$/;
   const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
   errors.value = {
-    nome: !nomeRegex.test(nome.value), // Apenas letras e espaços
-    prontuario: !prontuarioRegex.test(prontuario.value), // Mínimo 6 e máximo 8 números
-    email: !emailRegex.test(email.value), // Email deve conter "@ifsp.edu.br"
-    senha: !senhaRegex.test(senha.value), // Mínimo 8 caracteres, letras e números
-    confirmarSenha: senha.value !== confirmarSenha.value, // Senhas coincidem
-  }
+    nome: !nomeRegex.test(nome.value),
+    prontuario: !prontuarioRegex.test(prontuario.value),
+    email: !emailRegex.test(email.value),
+    senha: !senhaRegex.test(senha.value),
+    confirmarSenha: senha.value !== confirmarSenha.value,
+  };
 
-  return !Object.values(errors.value).some(error => error)
+  return !Object.values(errors.value).some(error => error);
 }
 
 function handleBlur(field) {
-  const nomeRegex = /^[a-zA-Z\s]+$/;
-  const prontuarioRegex = /^[0-9]{6,8}$/; // Mínimo 6 números, máximo 8
+  const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/;
+  const prontuarioRegex = /^[a-zA-Z]{0,3}[0-9]{6,8}$/; // De 0 a 3 letras seguidas de 6 a 8 números
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*ifsp\.edu\.br$/;
   const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
-  touched.value[field] = true
-  if (field === 'nome') {
-    errors.value.nome = !nomeRegex.test(nome.value)
-  } else if (field === 'prontuario') {
-    errors.value.prontuario = !prontuarioRegex.test(prontuario.value)
-  } else if (field === 'email') {
-    errors.value.email = !emailRegex.test(email.value)
-  } else if (field === 'senha') {
-    errors.value.senha = !senhaRegex.test(senha.value)
-  } else if (field === 'confirmarSenha') {
-    errors.value.confirmarSenha = senha.value !== confirmarSenha.value
+  touched.value[field] = true;
+  if (field === "nome") {
+    errors.value.nome = !nomeRegex.test(nome.value);
+  } else if (field === "prontuario") {
+    errors.value.prontuario = !prontuarioRegex.test(prontuario.value);
+  } else if (field === "email") {
+    errors.value.email = !emailRegex.test(email.value);
+  } else if (field === "senha") {
+    errors.value.senha = !senhaRegex.test(senha.value);
+  } else if (field === "confirmarSenha") {
+    errors.value.confirmarSenha = senha.value !== confirmarSenha.value;
   }
 }
 
@@ -82,7 +82,7 @@ async function handleSubmit(event) {
   try {
     const orientador = {
       nome: nome.value,
-      prontuario: `SP${prontuario.value}`,
+      prontuario: prontuario.value,
       email: email.value,
       telefone: telefone.value,
       password: senha.value,
@@ -122,18 +122,13 @@ async function handleSubmit(event) {
           </BFormGroup>
 
           <BFormGroup label="Prontuário:">
-            <BInputGroup>
-              <BInputGroupPrepend>
-                <BInputGroupText>SP</BInputGroupText>
-              </BInputGroupPrepend>
-              <BFormInput 
-                v-model="prontuario" 
-                type="text" 
-                :state="touched.prontuario ? !errors.prontuario : null" 
-                @blur="handleBlur('prontuario')"
-              />
-              <BFormInvalidFeedback v-if="errors.prontuario">Prontuário deve conter entre 6 e 8 números.</BFormInvalidFeedback>
-            </BInputGroup>
+            <BFormInput 
+              v-model="prontuario" 
+              type="text" 
+              :state="touched.prontuario ? !errors.prontuario : null" 
+              @blur="handleBlur('prontuario')"
+            />
+            <BFormInvalidFeedback v-if="errors.prontuario">Prontuário deve conter de 0 a 3 letras seguidas de 6 a 8 números.</BFormInvalidFeedback>
           </BFormGroup>
 
           <BFormGroup label="Email:">
@@ -182,6 +177,7 @@ async function handleSubmit(event) {
 
   <FooterComp />
 </template>
+
 
 <style scoped>
 h2 {
