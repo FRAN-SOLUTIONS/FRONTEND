@@ -1,17 +1,11 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import HeaderLogado from '@/components/HeaderLogado.vue'
 import FooterComp from '@/components/FooterComp.vue'
 import FileNavComp from '@/components/FileNavComp.vue'
 import BotaoComp from '@/components/BotaoComp.vue'
 import axios from 'axios'
-axios.defaults.withCredentials = true
 import '@/assets/css/global.css'
-
-const orientador = ref(null)
-const editando = ref(false)
-const imagemAleatoria = ref('')
-
 import user1 from '@/assets/images/user1.png'
 import user2 from '@/assets/images/user2.png'
 import user3 from '@/assets/images/user3.png'
@@ -21,6 +15,12 @@ import user6 from '@/assets/images/user6.png'
 import user7 from '@/assets/images/user7.png'
 import user8 from '@/assets/images/user8.png'
 import user9 from '@/assets/images/user9.png'
+
+axios.defaults.withCredentials = true
+
+const orientador = ref(null)
+const editando = ref(false)
+const imagemAleatoria = ref('')
 
 const imagens = [user1, user2, user3, user4, user5, user6, user7, user8, user9]
 
@@ -33,7 +33,7 @@ const escolherImagemAleatoria = () => {
 onMounted(async () => {
   try {
     const response = await axios.get(
-      'http://localhost:8082/FRAN/orientadores/me'
+      'http://localhost:8082/FRAN/orientadores/me',
     )
     orientador.value = response.data
 
@@ -45,24 +45,31 @@ onMounted(async () => {
 
 const salvarAlteracoes = async () => {
   try {
-  
+    console.log(orientador.value)
     const response = await axios.put(
-      'http://localhost:8082/FRAN/orientadores/edit', 
-      orientador.value 
-    );
+      'http://localhost:8082/FRAN/orientadores/edit',
+      orientador.value,
+    )
 
-    console.log('Alterações salvas com sucesso:', response.data);
-    editando.value = false;
+    console.log('Alterações salvas com sucesso:', response.data)
+    editando.value = false
 
-    orientador.value = response.data;
+    orientador.value = response.data
   } catch (error) {
-    console.error('Erro ao salvar alterações:', error);
+    console.error('Erro ao salvar alterações:', error)
   }
-};
+}
 
-// Função para alternar o modo de edição
-const editarDados = () => {
-  editando.value = !editando.value
+// Função para alternar o modo de edição dos inputs
+const editarInput = event => {
+  const botaoClicado = event.target
+  if(botaoClicado.classList.contains('btn')){
+    const input = botaoClicado.previousElementSibling
+    input.disabled = !input.disabled
+  } else{
+    const input = botaoClicado.parentElement.previousElementSibling
+    input.disabled = !input.disabled
+  }
 }
 </script>
 
@@ -72,79 +79,108 @@ const editarDados = () => {
     <main class="conteudo mt-0">
       <FileNavComp />
       <div class="container text-center">
-        <div class="row">
-          <div class="col d-flex flex-column align-items-center">
-            <!-- Imagem aleatória -->
-            <img
-              :src="imagemAleatoria"
-              alt="Imagem do orientador"
-              width="20%"
-              class="mb-3 mt-4"
-            />
+        <div class="col d-flex flex-column align-items-center">
+          <!-- Imagem aleatória -->
+          <img
+            :src="imagemAleatoria"
+            alt="Imagem do orientador"
+            width="20%"
+            class="mb-3 mt-4"
+          />
 
+          <!-- Inputs -->
+          <div>
             <!-- Nome -->
-            <div v-if="editando">
-              <input
-                type="text"
-                v-model="orientador.nome"
-                placeholder="Nome"
-                class="form-control mb-3"
-              />
+            <div
+              v-if="orientador"
+              class="row g-3 align-items-center justify-content-between mb-3"
+            >
+              <div class="col-auto">
+                <label for="inputNome" class="col-form-label"> Nome: </label>
+              </div>
+              <div class="col-auto input-group w-75">
+                <input
+                  type="text"
+                  v-model="orientador.nome"
+                  class="form-control"
+                  id="inputNome"
+                  disabled
+                />
+                <BotaoComp @click="editarInput" titulo="Editar" tamanho="p" />
+              </div>
             </div>
-            <h2 v-else class="mb-5">
-              {{ orientador ? orientador.nome : 'Carregando...' }}
-            </h2>
 
             <!-- Prontuário -->
-            <div v-if="editando">
-              <input
-                type="text"
-                v-model="orientador.prontuario"
-                placeholder="Prontuário"
-                class="form-control mb-3"
-              />
+            <div
+              v-if="orientador"
+              class="row g-3 align-items-center justify-content-between mb-3"
+            >
+              <div class="col-auto">
+                <label for="inputProntuario" class="col-form-label">
+                  Prontuário:
+                </label>
+              </div>
+              <div class="col-auto input-group w-75">
+                <input
+                  type="text"
+                  v-model="orientador.prontuario"
+                  class="form-control"
+                  id="inputProntuario"
+                  disabled
+                />
+                <BotaoComp @click="editarInput" titulo="Editar" tamanho="p" />
+              </div>
             </div>
-            <h4 v-else>
-              {{ orientador ? orientador.prontuario : 'Carregando...' }}
-            </h4>
 
             <!-- Email -->
-            <div v-if="editando">
-              <input
-                type="email"
-                v-model="orientador.email"
-                placeholder="Email"
-                class="form-control mb-3"
-              />
+            <div
+              v-if="orientador"
+              class="row g-3 align-items-center justify-content-between mb-3"
+            >
+              <div class="col-auto">
+                <label for="inputEmail" class="col-form-label"> E-mail: </label>
+              </div>
+              <div class="col-auto input-group w-75">
+                <input
+                  type="email"
+                  v-model="orientador.email"
+                  class="form-control"
+                  id="inputEmail"
+                  disabled
+                />
+                <BotaoComp @click="editarInput" titulo="Editar" tamanho="p" />
+              </div>
             </div>
-            <h4 v-else>
-              {{ orientador ? orientador.email : 'Carregando...' }}
-            </h4>
-           
-            <!-- Botões -->
-            <div>
-              <BotaoComp
-                v-if="!editando"
-                @click="editarDados"
-                titulo="Editar dados cadastrados"
-                tamanho="g"
-                class="mb-3"
-              />
-              <BotaoComp
-                v-if="editando"
-                @click="salvarAlteracoes"
-                titulo="Salvar alterações"
-                tamanho="g"
-                class="mb-3"
-              />
-              <BotaoComp
-                v-if="editando"
-                @click="editarDados"
-                titulo="Cancelar"
-                tamanho="g"
-                class="mb-3"
-              />
+
+            <!-- Senha -->
+            <div
+              v-if="orientador"
+              class="row g-3 align-items-center justify-content-between mb-3"
+            >
+              <div class="col-auto">
+                <label for="inputSenha" class="col-form-label"> Senha: </label>
+              </div>
+              <div class="col-auto input-group w-75">
+                <input
+                  type="password"
+                  placeholder="*********"
+                  class="form-control"
+                  id="inputSenha"
+                  disabled
+                />
+                <BotaoComp titulo="Editar" tamanho="p" />
+              </div>
             </div>
+          </div>
+
+          <!-- Botões -->
+          <div>
+            <BotaoComp
+              @click="salvarAlteracoes"
+              titulo="Salvar alterações"
+              tamanho="g"
+              class="mb-3"
+            />
           </div>
         </div>
       </div>
@@ -158,7 +194,6 @@ input {
   width: 300px;
 }
 </style>
-
 
 <!-- <script setup>
 import { ref, onMounted } from 'vue';
@@ -204,9 +239,9 @@ onMounted(async () => {
             <h4>{{ orientador ? orientador.prontuario : "Carregando..." }}</h4>
             <h4>{{ orientador ? orientador.email : "Carregando..." }}</h4>
 
-           
+
             <h4 class="mb-5">{{ orientador ? orientador.telefone : "Carregando..." }}</h4>
-            
+
             <BotaoComp titulo="Editar dados cadastrados" tamanho="g"/>
           </div>
         </div>
