@@ -9,33 +9,45 @@ body {
   background-color: var(--bs-body-bg-tertiary);
 }
 
+.conteudo {
+  min-height: 100vh;
+}
+
 header {
   background-color: #01400b;
   display: flex;
-  justify-content: center;
+  justify-content: center; /* Centraliza o título */
   align-items: center;
+  position: relative; /* Para permitir posicionamento absoluto dos botões */
   width: 100%;
-  padding: 10px 0;
+  padding: 5px;
+  box-sizing: border-box; /* Inclui padding no cálculo da largura */
 }
 
 .titulo {
   font-family: 'Amaranth', sans-serif;
   font-weight: 400;
   font-style: normal;
-
   margin: 0;
   color: white;
 }
 
 .botoesHeader {
-  position: absolute;
-  right: 20px;
   display: flex;
   gap: 10px;
-  align-items: center; /* Centraliza verticalmente */
-  justify-content: center;
+  align-items: center;
+  position: absolute; /* Para posicionar os botões à direita */
+  right: 20px;
 }
 
-.conteudo {
-  min-height: 100vh;
+@media (max-width: 768px) {
+  header {
+    flex-direction: column; /* Empilha o conteúdo no responsivo */
+    gap: 10px;
+  }
+
+  .botoesHeader {
+    position: static; /* Remove o posicionamento absoluto no responsivo */
+    justify-content: center; /* Centraliza os botões no layout empilhado */
+  }
 }
