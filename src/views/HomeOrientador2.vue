@@ -283,22 +283,245 @@ right;vertical-align:baseline'><span style='color:null;'><span class='normaltext
 }
 
 function getDespachoFinal() {
+
   const estagio = selectedEstagio.value;
   const aluno = estagio.aluno;
   const empresa = estagio.empresa || "Não definido"; // Caso não tenha empresa
+  let estagioNaoObrigatorio = ""
+  let estagioObrigatorio = ""
 
+if (estagio.obrigatorio)
+{
+  estagioObrigatorio = "X"
+} else{
+  estagioNaoObrigatorio = "X"
+}
   console.log("Copiando pra área de transferência");
   const texto = `
-    DESPACHO INICIAL
-    Nome do Aluno: ${aluno.nome}
-    Prontuário: ${aluno.prontuario}
-    Empresa: ${empresa}
-    Período do Estágio: ${formatarDataSimples(estagio.dataInicio)} a ${formatarDataSimples(estagio.dataTermino)}
-    Estágio Obrigatório: ${estagio.obrigatorio ? 'SIM' : 'NÃO'}
-    Validado: ${estagio.validado ? 'SIM' : 'NÃO'}
-    Nome do Orientador: ${estagio.orientador?.nome || 'Não definido'}
-    E-mail do Orientador: ${estagio.orientador?.email || 'Não definido'}
-    Data de Emissão: ${formatarDataExtenso()}
+    "<p style='text-align: justify;'><span style='color:null;'><span style='font-size:12pt; font-family:&quot;Arial&quot;,sans-serif;'>&Agrave; Coordenadoria de Integra&ccedil;&atilde;o Escola-Empresa - CEE-SPO</span></span></p>
+
+<p style='text-align: justify;'>&nbsp;</p>
+
+<p style=' text-align: justify;'><span style='color:null;'><span style='font-family: Arial, Sans Serif; text-align: justify;'><span style='font-size:11pt'><strong>ASSUNTO:</strong> Est&aacute;gio Supervisionado</span></span></span></p>
+
+<p style='text-align: justify;'><span style='color:null;'><span style='font-family: Arial, Sans Serif; text-align: justify;'><span style='font-size:11pt'><strong>INTERESSADO: </strong>Gustavo Henrique de Moraes (SP3072037)</span></span></span></p>
+
+<p style=' text-align: justify;'><span style='color:null;'><span style='font-family: Arial, Sans Serif; text-align: justify;'><span style='font-size:11pt'><strong>OBJETO: </strong>Despacho sobre est&aacute;gio</span></span></span></p>
+
+<p>&nbsp;</p>
+
+<p style='margin-left: 40px; text-align: justify; font-family: Arial, Sans Serif;'><span style='color:null;'>Venho, por meio deste, apresentar &agrave; Vossa Senhoria o DESPACHO a seguir, por mim emitido, que aprova os documentos de finaliza&ccedil;&atilde;o do Est&aacute;gio Supervisionado do(a) estudante Gustavo Henrique de Moraes (SP3072037), regularmente matriculado(a) no curso  desta institui&ccedil;&atilde;o.</span></p>
+
+<p>&nbsp;</p>
+
+<div class='WordSection1'>
+<p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span class='eopscxw231936548bcx0'><b><span style='font-size:14.0pt;font-family:&quot;Arial&quot;,sans-serif'>DESPACHO SOBRE EST&Aacute;GIO</span></b></span></span></p>
+
+<p>&nbsp;</p>
+
+<div align='center'>
+<table border='1' cellpadding='0' cellspacing='0' class='MsoNormalTable' style='width:100.0%;border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
+ mso-yfti-tbllook:160;mso-padding-alt:0cm 3.5pt 0cm 3.5pt;mso-border-insideh:
+ .5pt solid windowtext;mso-border-insidev:.5pt solid windowtext' width='100%'>
+        <tbody>
+                <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;height:21.4pt'>
+                        <td colspan='2' nowrap='nowrap' style='width:244.45pt;border:solid windowtext 1.0pt;
+  border-right:none;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:
+  solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;padding:
+  0cm 3.5pt 0cm 3.5pt;height:21.4pt' width='326'>
+                        <p class='MsoNormal'><span style='color:null;'><b><span style='font-size: 11pt; font-family: &quot;Arial&quot;, sans-serif;'>Aluno: </span></b>Gustavo Henrique de Moraes</span></p>
+                        </td>
+                        <td colspan='6' style='width:244.5pt;border:solid windowtext 1.0pt;
+  border-left:none;mso-border-top-alt:solid windowtext .5pt;mso-border-bottom-alt:
+  solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
+  0cm 3.5pt 0cm 3.5pt;height:21.4pt' width='326'>
+                        <p align='right' class='MsoNormal' style='text-align:right'><span style='color:null;'><b><span style='font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif'>Matr&iacute;cula n&ordm;: </span></b><span style='font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif'>SP3072037</span></span></p>
+                        </td>
+                </tr>
+                <tr style='mso-yfti-irow:1;height:21.4pt'>
+                        <td colspan='8' nowrap='nowrap' style='width:488.95pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:21.4pt' width='652'>
+                        <p class='MsoNormal'><span style='color:null;'><b><span style='font-size: 11pt; font-family: &quot;Arial&quot;, sans-serif;'>Nome da Unidade Concedente: </span></b>IFSP - Campus São Paulo</span></p>
+                        </td>
+                </tr>
+                <tr style='mso-yfti-irow:2;height:23.75pt'>
+                        <td nowrap='nowrap' style='width:140.05pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  background:#E7E6E6;padding:0cm 3.5pt 0cm 3.5pt;height:23.75pt' width='187'>
+                        <p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><b><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>DOCUMENTO DE EST&Aacute;GIO</span></b></span></p>
+                        </td>
+                        <td colspan='2' nowrap='nowrap' style='width:107.25pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;background:#E7E6E6;padding:0cm 3.5pt 0cm 3.5pt;
+  height:23.75pt' width='143'>
+                        <p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><b><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>PER&Iacute;ODO DO DOCUMENTO</span></b></span></p>
+                        </td>
+                        <td colspan='2' nowrap='nowrap' style='width:87.55pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;background:#E7E6E6;padding:0cm 3.5pt 0cm 3.5pt;
+  height:23.75pt' width='117'>
+                        <p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><b><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>VALIDADO?</span></b></span></p>
+                        </td>
+                        <td colspan='2' style='width:91.65pt;border-top:none;border-left:
+  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;background:#E7E6E6;padding:0cm 3.5pt 0cm 3.5pt;
+  height:23.75pt' width='122'>
+                        <p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><b><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>EST&Aacute;GIO OBRIGAT&Oacute;RIO?</span></b></span></p>
+                        </td>
+                        <td style='width:62.45pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;background:#E7E6E6;padding:0cm 3.5pt 0cm 3.5pt;
+  height:23.75pt' width='83'>
+                        <p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><b><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>TOTAL DE HORAS V&Aacute;LIDAS PARA REGISTRO</span></b></span></p>
+                        </td>
+                </tr>
+                <tr style='mso-yfti-irow:3;mso-yfti-lastrow:yes;height:14.25pt'>
+                        <td nowrap='nowrap' style='width:140.05pt;border:solid windowtext 1.0pt;
+  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+  padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='187'>
+                        <p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span style='font-size:9.0pt'><span style='font-family:&quot;Arial&quot;,sans-serif'>Plano de Atividades de Est&aacute;gio</span></span></span></p>
+                        </td>
+                        <td colspan='2' nowrap='nowrap' style='width:107.25pt;border-top:none;
+  border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='143'>
+                        <p class='MsoNormal' style='text-align: center;'><span style='color:null;'><span style='font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif'>18/11/2024 a 30/12/2024</span></span></p>
+                        </td>
+                        <td nowrap='nowrap' style='width:44.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='60'>
+                        <p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>(X) sim</span></span></p>
+                        </td>
+                        <td nowrap='nowrap' style='width:44.85pt;border-top:none;border-left:none;
+                        border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                        mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+                        mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='57'>
+                        <p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span class='GramE'><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>(&nbsp; )</span></span><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'> n&atilde;o</span></span></p>
+                        </td>
+                        <td nowrap='nowrap' style='width:44.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='59'><p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span class='GramE'><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>(X)</span></span><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'> sim</span></span></p></td><td style='width:47.7pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='64'><p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>( ) n&atilde;o</span></span></p></td>
+                        <td style='width:62.45pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='83'>
+                        <p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'>-</span></p>
+                        </td>
+                </tr>
+                <tr>
+                        <td nowrap='nowrap' style='border-bottom:1px solid black; width:187px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:1px solid black'>
+                        <p align='center' style='text-align:center'><span style='color:null'><span style='font-size:9.0pt'><span style='font-family:&quot;Arial&quot;,sans-serif'>Relat&oacute;rio Mensal</span></span></span></p>
+                        </td>
+                        <td colspan='2' nowrap='nowrap' style='border-bottom:1px solid black; width:143px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
+                        <p style='text-align:center'><span style='color:null'><span style='font-size:9.0pt'><span style='font-family:&quot;Arial&quot;,sans-serif'>XX/XX/XXXX a XX/XX/XXXX</span></span></span></p>
+                        </td>
+                        <td nowrap='nowrap' style='border-bottom:1px solid black; width:60px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
+                        <p align='center' style='text-align:center'><span style='color:null'><span style='font-size:9pt'><span style='font-family:&quot;Arial&quot;, sans-serif'>(X) sim</span></span></span></p>
+                        </td>
+                        <td nowrap='nowrap' style='width:44.85pt;border-top:none;border-left:none;
+                        border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                        mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+                        mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' style='width:57px'>
+                        <p align='center' style='text-align:center'><span style='color:null'><span style='font-size:9pt'><span style='font-family:&quot;Arial&quot;, sans-serif'>(&nbsp; )</span></span><span style='font-size:9pt'><span style='font-family:&quot;Arial&quot;, sans-serif'> n&atilde;o</span></span></span></p>
+                        </td>
+                        <td nowrap='nowrap' style='width:44.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='59'><p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span class='GramE'><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>(X)</span></span><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'> sim</span></span></p></td><td style='width:47.7pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='64'><p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>( ) n&atilde;o</span></span></p></td>
+                        <td style='border-bottom:1px solid black; width:83px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
+                        <p align='center' style='text-align:center'>0</p>
+                        </td>
+                </tr>
+                <tr>
+                        <td nowrap='nowrap' style='border-bottom:1px solid black; width:187px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:1px solid black'>
+                        <p align='center' style='text-align:center'><span style='color:null'><span style='font-size:9.0pt'><span style='font-family:&quot;Arial&quot;,sans-serif'>Termo de Realiza&ccedil;&atilde;o</span></span></span></p>
+                        </td>
+                        <td colspan='2' nowrap='nowrap' style='border-bottom:1px solid black; width:143px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
+                        <p style='text-align:center'><span style='color:null'><span style='font-size:9.0pt'><span style='font-family:&quot;Arial&quot;,sans-serif'>18/11/2024 a 30/12/2024</span></span></span></p>
+                        </td>
+                        <td nowrap='nowrap' style='border-bottom:1px solid black; width:60px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
+                        <p align='center' style='text-align:center'><span style='color:null'><span style='font-size:9pt'><span style='font-family:&quot;Arial&quot;, sans-serif'>(X) sim</span></span></span></p>
+                        </td>
+                        <td nowrap='nowrap' style='width:44.85pt;border-top:none;border-left:none;
+                        border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+                        mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+                        mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' style='width:57px'>
+                        <p align='center' style='text-align:center'><span style='color:null'><span style='font-size:9pt'><span style='font-family:&quot;Arial&quot;, sans-serif'>(&nbsp; )</span></span><span style='font-size:9pt'><span style='font-family:&quot;Arial&quot;, sans-serif'> n&atilde;o</span></span></span></p>
+                        </td>
+                        <td nowrap='nowrap' style='width:44.85pt;border-top:none;border-left:none;
+  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+  mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='59'><p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span class='GramE'><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>(X)</span></span><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'> sim</span></span></p></td><td style='width:47.7pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='64'><p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>( ) n&atilde;o</span></span></p></td>
+                        <td style='border-bottom:1px solid black; width:83px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
+                        <p align='center' style='text-align:center'>360</p>
+                        </td>
+                </tr>
+        </tbody>
+</table>
+</div>
+
+<p class='MsoNormal'><span style='color:null;'><b><span style='font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif'>Parecer:</span></b></span></p>
+
+<div style='mso-element:para-border-div;border:solid windowtext 1.0pt;
+mso-border-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 1.0pt 4.0pt;
+background:#F2F2F2'><span style='color:null;'>Os documentos apresentados pelo(a) estudante estagi&aacute;rio(a) e pela empresa concedente se encontram adequados para a finaliza&ccedil;&atilde;o do Est&aacute;gio Supervisionado Obrigatório, no contexto do curso  desta institui&ccedil;&atilde;o, motivo pelo qual eu o aprovo enquanto professor orientador de est&aacute;gio do referido curso.</span></div>
+
+<p align='right' class='paragraphscxw76620377bcx0' style='margin:0cm;text-align:
+right;vertical-align:baseline'>&nbsp;</p>
+
+<p align='right' class='paragraphscxw76620377bcx0' style='margin:0cm;text-align:
+right;vertical-align:baseline'>&nbsp;</p>
+
+<p align='right' class='paragraphscxw76620377bcx0' style='margin:0cm;text-align:
+right;vertical-align:baseline'><span style='color:null;'><span class='normaltextrunscxw76620377bcx0'><span style='font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif'>S&atilde;o Paulo,&nbsp;</span></span><span class='normaltextrunscxw76620377bcx0'><span style='font-size: 11pt; font-family: &quot;Arial&quot;, sans-serif; background: rgb(225, 227, 230) none repeat scroll 0% 0%;'> 21 de novembro de 2024<span class='eopscxw76620377bcx0'><span style='font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif'>.</span></span></span></span></span></p>
+
+<p class='MsoNormal' style='text-align:justify'>&nbsp;</p>
+
+<div align='center'>
+<table border='0' cellpadding='0' cellspacing='6' class='MsoTableGrid' style='width:100.0%;mso-cellspacing:4.2pt;border:none;mso-yfti-tbllook:1184;
+ mso-padding-alt:0cm 0cm 0cm 0cm;mso-border-insideh:none;mso-border-insidev:
+ none' width='100%'>
+        <tbody>
+                <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+                        <td style='width:6.0cm;padding:0cm 0cm 0cm 0cm' valign='top' width='227'>
+                        <p align='right' class='MsoNormal' style='text-align:right'><span style='color:null;'><span class='normaltextrunscxw246734469bcx0'><span style='font-size:11.0pt;
+  font-family:&quot;Arial&quot;,sans-serif'>Professor Orientador dos Cursos:</span></span></span></p>
+                        </td>
+                        <td style='width:11.0cm;padding:0cm 0cm 0cm 0cm' valign='top' width='416'>
+                        <p class='MsoNormal' style='text-align:justify'><span style='color:null;'><span style='font-size:11.0pt'><span style='background:#e1e3e6'><span style='font-family:&quot;Arial&quot;,sans-serif'><b>Tecnologia em An&aacute;lise e Desenvolvimento de Sistemas e T&eacute;cnico em Inform&aacute;tica Integrado ao Ensino M&eacute;dio</b></span></span></span></span></p>
+                        </td>
+                </tr>
+                <tr style='mso-yfti-irow:1'>
+                        <td style='width:6.0cm;padding:0cm 0cm 0cm 0cm' valign='top' width='227'>
+                        <p align='right' class='MsoNormal' style='text-align:right'><span style='color:null;'><span class='normaltextrunscxw246734469bcx0'><span style='font-size:11.0pt;
+  font-family:&quot;Arial&quot;,sans-serif'>Nome:</span></span></span></p>
+                        </td>
+                        <td style='width:11.0cm;padding:0cm 0cm 0cm 0cm' valign='top' width='416'>
+                        <p class='MsoNormal' style='text-align:justify'><span style='color:null;'><span class='normaltextrunscxw246734469bcx0'><span style='font-size: 11pt; font-family: &quot;Arial&quot;, sans-serif; background: rgb(225, 227, 230) none repeat scroll 0% 0%;'><b>&nbsp;Igor de Moraes Sampaio&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</b></span></span></span></p>
+                        </td>
+                </tr>
+                <tr style='mso-yfti-irow:2;mso-yfti-lastrow:yes'>
+                        <td style='width:6.0cm;padding:0cm 0cm 0cm 0cm' valign='top' width='227'>
+                        <p align='right' class='MsoNormal' style='text-align:right'><span style='color:null;'><span class='normaltextrunscxw246734469bcx0'><span style='font-size:11.0pt;
+  font-family:&quot;Arial&quot;,sans-serif'>E-mail institucional:</span></span></span></p>
+                        </td>
+                        <td style='width:11.0cm;padding:0cm 0cm 0cm 0cm' valign='top' width='416'>
+                        <p class='MsoNormal' style='text-align:justify'><span style='color:null;'><span class='normaltextrunscxw246734469bcx0'><span style='font-size: 11pt; font-family: &quot;Arial&quot;, sans-serif; background: rgb(225, 227, 230) none repeat scroll 0% 0%;'><b>&nbsp;igor.sampaio@ifsp.edu.br&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b> </span></span></span></p>
+                        </td>
+                </tr>
+        </tbody>
+</table>
+</div>
+</div>
+
+<p style='text-align:center'>&nbsp;</p>"
   `;
   copiarParaAreaDeTransferencia(texto);
 }
