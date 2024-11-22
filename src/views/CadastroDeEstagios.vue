@@ -20,6 +20,7 @@ const dataInicio = ref('')
 const dataTermino = ref('')
 const prontuarioAluno = ref('')
 const prontuarioCoordenador = ref('')
+const errorMessage = ref('')
 
 axios.defaults.withCredentials = true
 
@@ -50,8 +51,8 @@ async function handleSubmit(event) {
       cargaDiaria: parseInt(cargaDiaria.value),
       dataInicio: dataInicio.value,
       dataTermino: dataTermino.value,
-      prontuarioAluno: prontuarioAluno.value,
-      prontuarioCoordenador: prontuarioCoordenador.value,
+      prontuarioAluno: prontuarioAluno.value.toLowerCase(),
+      prontuarioCoordenador: prontuarioCoordenador.value.toLowerCase(),
     }
 
     const response = await axios.post(
@@ -60,11 +61,11 @@ async function handleSubmit(event) {
     )
     console.log(response)
     alert('Estágio cadastrado com sucesso!')
+    router.push('/homeOrientador')
   } catch (error) {
     console.error('Erro ao cadastrar estágio:', error.response?.data || error.message)
-    alert('Erro ao cadastrar estágio.')
+    errorMessage.value = error.response?.data || error.message
   }
-  router.push('/homeOrientador')
 }
 </script>
 
@@ -73,7 +74,7 @@ async function handleSubmit(event) {
 
   <main class="conteudo mb-5">
     <h2 class="text-center mt-4">Cadastro de Estágio</h2>
-
+    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
     <div class="form-container">
       <form @submit="handleSubmit">
         <div class="form-group">
@@ -118,6 +119,12 @@ h2 {
   color: #01400b;
   text-align: center;
   margin-top: 1.5rem;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
 }
 
 main {

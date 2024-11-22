@@ -22,6 +22,7 @@ axios.defaults.withCredentials = true
 const orientador = ref(null)
 const editando = ref(false)
 const imagemAleatoria = ref('')
+const errorMessage = ref('')
 
 const imagens = [user1, user2, user3, user4, user5, user6, user7, user8, user9]
 
@@ -40,6 +41,7 @@ onMounted(async () => {
 
     escolherImagemAleatoria()
   } catch (error) {
+    errorMessage.value = error.response?.data?.message
     console.error('Erro ao buscar orientador:', error)
   }
 })
@@ -57,6 +59,7 @@ const salvarAlteracoes = async () => {
 
     orientador.value = response.data
   } catch (error) {
+    errorMessage.value = error.response?.data || error.message
     console.error('Erro ao salvar alterações:', error)
   }
 }
@@ -88,7 +91,7 @@ const editarInput = event => {
             width="20%"
             class="mb-3 mt-4"
           />
-
+          <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
           <!-- Inputs -->
           <div>
             <!-- Nome -->
@@ -193,6 +196,12 @@ const editarInput = event => {
 <style scoped>
 input {
   width: 300px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
 }
 </style>
 

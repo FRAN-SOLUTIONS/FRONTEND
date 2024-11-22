@@ -17,36 +17,36 @@ const prontuario = ref('')
 const senha = ref('')
 const email = ref('') // Para capturar o email no modal de redefinição de senha
 const showResetModal = ref(false) // Controla se o modal de redefinição está visível
+const errorMessage = ref('')
+
 
 function validarProntuario(prontuario) {
-  const regex = /^[A-Za-z]{2}\d{7}$/
+    const regex = /^[A-Za-z]{0,3}\d{6,8}$/
   return regex.test(prontuario)
-}
-
-function validarSenha(senha) {
-  return senha.length >= 6
 }
 
 async function handleSubmit() {
   if (!prontuario.value) {
     alert('Por favor, preencha o prontuário.')
+    return
   } else if (!validarProntuario(prontuario.value)) {
     alert('Prontuário inválido!')
+    return
   } else if (!senha.value) {
     alert('Por favor, digite sua senha.')
-  } else if (!validarSenha(senha.value)) {
-    alert('A senha deve ter pelo menos 6 caracteres.')
+    return
   }
 
   try {
     const orientador = {
-      prontuario: prontuario.value,
+      prontuario: prontuario.value.toLowerCase(),
       password: senha.value
     }
     const response = await axios.post('http://localhost:8082/FRAN/orientadores/login', orientador)
     router.push({ name: 'HomeOrientador' })
     console.log(response.data)
   } catch (error) {
+    errorMessage.value = error.response?.data || error.message
     console.log('Erro ao fazer login: ' + (error.response?.data || error.message))
   }
 }
@@ -74,7 +74,7 @@ async function sendResetEmail() {
 
   <main class="conteudo">
     <h2>Faça login para entrar</h2>
-
+    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
     <div class="form-container">
       <form @submit.prevent="handleSubmit">
         <div class="form-row">
@@ -135,6 +135,12 @@ h2 {
   text-align: center;
   margin-top: 5%;
   margin-bottom: 3%;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
 }
 
 .form-container {

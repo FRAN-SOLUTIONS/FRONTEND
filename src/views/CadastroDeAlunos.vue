@@ -21,6 +21,8 @@ const prontuario = ref('');
 const telefone = ref('');
 const email = ref('');
 const curso = ref('');
+const errorMessage = ref('')
+
 
 // Estados de validação
 const touched = reactive({
@@ -81,8 +83,8 @@ async function handleSubmit(event) {
   try {
     const aluno = {
       nome: nome.value,
-      prontuario: prontuario.value,
-      telefone: telefone.value,  // Permite telefone vazio
+      prontuario: prontuario.value.toLowerCase(),
+      telefone: telefone.value,
       email: email.value,
       curso: curso.value,
     };
@@ -91,6 +93,7 @@ async function handleSubmit(event) {
     alert('Aluno cadastrado com sucesso!');
     router.push('/homeOrientador');
   } catch (error) {
+    errorMessage.value = error.response?.data || error.message
     console.error('Erro ao cadastrar aluno:', error);
   }
 }
@@ -103,7 +106,7 @@ async function handleSubmit(event) {
   <main class="conteudo mb-5">
     <div>
       <h2 class="text-center mt-4">Informe os dados do aluno:</h2>
-
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
       <div class="form-container">
         <form id="cadastroForm" @submit.prevent="handleSubmit">
           <div class="row">
@@ -214,6 +217,12 @@ async function handleSubmit(event) {
   background-color: transparent !important;
   border-color: #ced4da; /* Cor padrão para borda */
   transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
 }
 
 /* Verde para válido */

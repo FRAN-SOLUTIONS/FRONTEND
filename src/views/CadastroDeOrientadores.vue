@@ -19,6 +19,8 @@ const telefone = ref('')
 const email = ref('')
 const senha = ref('')
 const confirmarSenha = ref('')
+const errorMessage = ref('')
+
 
 const touched = ref({
   nome: false,
@@ -93,10 +95,10 @@ async function handleSubmit(event) {
     )
     
     console.log(response)
-    alert('Cadastro realizado com sucesso!')
     router.push('/login')
     
   } catch (error) {
+    errorMessage.value = error.response?.data || error.message
     console.log('Erro ao cadastrar orientador: ' + (error.response?.data || error.message))
   }
 }
@@ -108,7 +110,7 @@ async function handleSubmit(event) {
   <main class="conteudo">
     <div>
       <h2 class="text-center mt-4">Primeira vez aqui, orientador? Cadastre-se:</h2>
-
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
       <div class="form-container">
         <BForm @submit.prevent="handleSubmit">
           <BFormGroup label="Nome Completo:">
@@ -184,6 +186,12 @@ h2 {
   color: #01400b;
   text-align: center;
   margin-top: 1.5rem !important;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
 }
 
 main {
