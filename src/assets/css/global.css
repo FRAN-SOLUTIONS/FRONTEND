@@ -16,12 +16,27 @@ body {
 header {
   background-color: #01400b;
   display: flex;
-  justify-content: center; /* Centraliza o título */
+  justify-content: space-between; /* Espaça os itens para as extremidades */
   align-items: center;
-  position: relative; /* Para permitir posicionamento absoluto dos botões */
   width: 100%;
-  padding: 5px;
-  box-sizing: border-box; /* Inclui padding no cálculo da largura */
+  padding: 5px 20px; /* Adiciona espaçamento horizontal */
+  box-sizing: border-box;
+  position: relative;
+}
+
+.titulo-container {
+  position: absolute; /* Permite posicionamento relativo ao header */
+  left: 50%; /* Move para o centro horizontal */
+  top: 50%; /* Ajusta verticalmente */
+  transform: translate(-50%, -50%); /* Centraliza perfeitamente */
+  text-align: center;
+}
+
+.botoesHeader {
+  display: flex;
+  gap: 10px; /* Espaçamento entre os botões */
+  align-items: center;
+  margin-left: auto; /* Garante que os botões fiquem à direita */
 }
 
 .titulo {
@@ -30,24 +45,4 @@ header {
   font-style: normal;
   margin: 0;
   color: white;
-}
-
-.botoesHeader {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  position: absolute; /* Para posicionar os botões à direita */
-  right: 20px;
-}
-
-@media (max-width: 768px) {
-  header {
-    flex-direction: column; /* Empilha o conteúdo no responsivo */
-    gap: 10px;
-  }
-
-  .botoesHeader {
-    position: static; /* Remove o posicionamento absoluto no responsivo */
-    justify-content: center; /* Centraliza os botões no layout empilhado */
-  }
 }

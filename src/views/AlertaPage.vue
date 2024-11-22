@@ -1,7 +1,7 @@
 <script setup>
 import HeaderLogado from '@/components/HeaderLogado.vue';
 import FooterComp from '@/components/FooterComp.vue';
-import FileNavComp from '@/components/FileNavComp.vue';
+/* import FileNavComp from '@/components/FileNavComp.vue'; */
 
 import { ref } from 'vue'
 
@@ -54,7 +54,7 @@ msgAlerta.value.push('O relatório deve ser enviado');
 <template>
     <HeaderLogado />
     <main class="conteudo">
-        <FileNavComp />
+        <!-- <FileNavComp /> -->
 
         <div class="container">
             <div class="row row-cols-3 row-cols-sm-2 row-cols-lg-4 row-cols-xl-5 justify-content-center">

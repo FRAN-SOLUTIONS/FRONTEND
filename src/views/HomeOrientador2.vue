@@ -4,7 +4,7 @@ import axios from 'axios';
 import BotaoComp from '@/components/BotaoComp.vue';
 import HeaderLogado from '@/components/HeaderLogado.vue';
 import FooterComp from '@/components/FooterComp.vue';
-import FileNavComp from '@/components/FileNavComp.vue';
+/* import FileNavComp from '@/components/FileNavComp.vue'; */
 import '@/assets/css/global.css'
 
 const estagios = ref([]); // Novo array para armazenar os estágios
@@ -549,7 +549,7 @@ function formatarDataExtenso() {
 <template>
   <HeaderLogado />
   <main class="conteudo">
-    <FileNavComp />
+    <!-- <FileNavComp /> -->
 
     <div class="p-3">
       <h2>Meus Estágios: </h2>

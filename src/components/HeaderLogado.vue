@@ -34,7 +34,7 @@ function fecharNav() {
 }
 
 function removerAluno(index) {
-  alunos.value.splice(index, 1); // Remove o aluno da lista
+  alunos.value.splice(index, 1) // Remove o aluno da lista
 }
 
 const alunos = ref([
@@ -79,17 +79,54 @@ const alunos = ref([
 
 <template>
   <header>
-    <router-link
-      to="homeOrientador"
-      style="text-decoration: none; color: inherit"
-    >
-      <h1 class="titulo">Orienta +</h1>
-    </router-link>
+    <ul class="nav">
+      <li class="nav-item">
+        <router-link
+          to="homeOrientador"
+          class="nav-link"
+          :class="{ active: $route.name === 'HomeOrientador' }"
+          aria-current="page"
+          style="color: inherit; text-decoration: none"
+        >
+          DashBoard
+        </router-link>
+      </li>
+      <li class="nav-item">
+        <router-link
+          to="perfil"
+          class="nav-link"
+          :class="{ active: $route.name === 'Perfil' }"
+          style="color: inherit; text-decoration: none"
+        >
+          Perfil
+        </router-link>
+      </li>
+      <li class="nav-item">
+        <router-link
+          to="notificacoes"
+          class="nav-link"
+          :class="{ active: $route.name === 'NotificacoesPage' }"
+          aria-current="page"
+          style="color: inherit; text-decoration: none"
+        >
+          Alertas
+        </router-link>
+      </li>
+    </ul>
+
+    <div class="titulo-container">
+      <router-link
+        to="homeOrientador"
+        style="text-decoration: none; color: inherit"
+      >
+        <h1 class="titulo">Orienta +</h1>
+      </router-link>
+    </div>
 
     <div class="botoesHeader">
       <div id="principal">
-        <span style="cursor: pointer;" @click="abrirNav()">
-          <i class="bi bi-bell-fill notify" style="margin-right: 10px;"></i>
+        <span style="cursor: pointer" @click="abrirNav()">
+          <i class="bi bi-bell-fill notify" style="margin-right: 10px"></i>
         </span>
       </div>
       <BotaoBrancoComp titulo="Sair" tamanho="p" @click="logout" />
@@ -133,7 +170,9 @@ const alunos = ref([
             class="accordion-collapse collapse"
             :data-bs-parent="'#accordionExample'"
           >
-            <div class="accordion-body d-flex justify-content-between align-items-center">
+            <div
+              class="accordion-body d-flex justify-content-between align-items-center"
+            >
               <router-link
                 to="notificacoes"
                 class="card-link"
@@ -148,19 +187,55 @@ const alunos = ref([
       </div>
     </aside>
   </header>
-  
+
   <!-- Alerta de alunos atrasados -->
-  <div v-for="(aluno, index) in alunos" :key="index">
-    <div v-if="aluno.tipoAlerta === 'atrasado'" class="alert alert-danger d-flex justify-content-between" role="alert">
+  <!-- <div v-for="(aluno, index) in alunos" :key="index">
+    <div
+      v-if="aluno.tipoAlerta === 'atrasado'"
+      class="alert alert-danger d-flex justify-content-between"
+      role="alert"
+    >
       <span>
-        <strong>{{ aluno.nome }}</strong>: {{ aluno.msgAlerta }} - Vencimento: {{ aluno.vencimento.toLocaleDateString() }}
+        <strong>{{ aluno.nome }}</strong
+        >: {{ aluno.msgAlerta }} - Vencimento:
+        {{ aluno.vencimento.toLocaleDateString() }}
       </span>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style scoped>
+.nav-container {
+  display: flex;
+  align-items: center;
+}
+
+.nav-link {
+  background-color: transparent; /* Sem fundo para abas inativas */
+  color: white !important;
+  transition:
+    color 0.3s,
+    background-color 0.3s; /* Suaviza a transição */
+}
+
+.nav-link.active {
+  background-color: transparent !important;
+  color: white !important;
+  border-bottom: 1px solid white;
+  box-sizing: border-box;
+}
+
+.nav-link:hover {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
 .notify {
   font-size: 1.5rem;
   color: white;

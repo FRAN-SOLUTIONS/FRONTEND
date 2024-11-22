@@ -2,10 +2,11 @@
 import { onMounted, ref } from 'vue'
 import HeaderLogado from '@/components/HeaderLogado.vue'
 import FooterComp from '@/components/FooterComp.vue'
-import FileNavComp from '@/components/FileNavComp.vue'
+/* import FileNavComp from '@/components/FileNavComp.vue' */
 import BotaoComp from '@/components/BotaoComp.vue'
+
 import axios from 'axios'
-import '@/assets/css/global.css'
+
 import user1 from '@/assets/images/user1.png'
 import user2 from '@/assets/images/user2.png'
 import user3 from '@/assets/images/user3.png'
@@ -77,7 +78,7 @@ const editarInput = event => {
   <div>
     <HeaderLogado />
     <main class="conteudo mt-0">
-      <FileNavComp />
+      <!-- <FileNavComp /> -->
       <div class="container text-center">
         <div class="col d-flex flex-column align-items-center">
           <!-- Imagem aleatória -->
