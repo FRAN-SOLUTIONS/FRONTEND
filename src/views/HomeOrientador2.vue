@@ -620,6 +620,11 @@ function formatarDataExtenso() {
               <h5 class="fw-bold">Status do Estágio: <span class="fw-normal">{{ selectedEstagio?.status }}</span></h5>
               <h5 class="fw-bold">Estágio Obrigatório: <span class="fw-normal">{{ selectedEstagio?.obrigatorio ? 'SIM' : 'NÃO' }}</span></h5>
               <h5 class="fw-bold mb-0">Carga Horária Diária: <span class="fw-normal">{{ selectedEstagio?.cargaDiaria }} horas</span></h5>
+              <h5 class="fw-bold mb-0">Nome fantasia da empresa: <span class="fw-normal">{{ selectedEstagio?.empresa.nomeFantasia }}</span></h5>
+              <h5 class="fw-bold mb-0">Razão social da empresa: <span class="fw-normal">{{ selectedEstagio?.empresa.razaoSocial }}</span></h5>
+              <h5 class="fw-bold mb-0">CNPJ da empresa: <span class="fw-normal">{{ selectedEstagio?.empresa.cnpj }}</span></h5>
+              <h5 class="fw-bold mb-0">E-mail da empresa: <span class="fw-normal">{{ selectedEstagio?.empresa.email }}</span></h5>
+              <h5 class="fw-bold mb-0">Telefone da empresa: <span class="fw-normal">{{ selectedEstagio?.empresa.telefone }}</span></h5>
             </div>
 
             <div id="botoes" class="col ps-5">

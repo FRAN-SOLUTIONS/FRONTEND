@@ -19,8 +19,13 @@ const cargaDiaria = ref('')
 const dataInicio = ref('')
 const dataTermino = ref('')
 const prontuarioAluno = ref('')
-const prontuarioCoordenador = ref('')
+const nomeFantasia = ref('')
+const razaoSocial = ref('')
+const cnpj = ref('')
+const email = ref('')
+const telefone = ref('')
 const errorMessage = ref('')
+
 
 axios.defaults.withCredentials = true
 
@@ -48,18 +53,25 @@ async function handleSubmit(event) {
   try {
     const estagio = {
       obrigatorio: obrigatorio.value === 'sim',
-      cargaDiaria: parseInt(cargaDiaria.value),
+      cargaDiaria: cargaDiaria.value,
       dataInicio: dataInicio.value,
       dataTermino: dataTermino.value,
+      status: 'Em tramite',
       prontuarioAluno: prontuarioAluno.value.toLowerCase(),
-      prontuarioCoordenador: prontuarioCoordenador.value.toLowerCase(),
-    }
-
+      empresa: {
+        nomeFantasia: nomeFantasia.value,
+        razaoSocial: razaoSocial.value,
+        cnpj: cnpj.value,
+        email: email.value,
+        telefone: telefone.value,
+      },
+    };
     const response = await axios.post(
       'http://localhost:8082/FRAN/estagios/create',
       estagio
     )
     console.log(response)
+    console.log(estagio)
     alert('Estágio cadastrado com sucesso!')
     router.push('/homeOrientador')
   } catch (error) {
@@ -103,7 +115,32 @@ async function handleSubmit(event) {
         <div class="form-group">
           <label for="prontuarioAluno">Prontuário do Aluno:</label>
           <input v-model="prontuarioAluno" id="prontuarioAluno" class="form-control" type="text" required />
-        </div>  
+        </div>
+
+        <div class="form-group">
+          <label for="prontuarioAluno">Nome fantasia da empresa:</label>
+          <input v-model="nomeFantasia" id="nomeFantasia" class="form-control" type="text" required />
+        </div>
+
+        <div class="form-group">
+          <label for="prontuarioAluno">Razão social da empresa:</label>
+          <input v-model="razaoSocial" id="razaoSocial" class="form-control" type="text" required />
+        </div>
+
+        <div class="form-group">
+          <label for="prontuarioAluno">CNPJ da empresa:</label>
+          <input v-model="cnpj" id="cnpj" class="form-control" type="text" required />
+        </div>
+
+        <div class="form-group">
+          <label for="prontuarioAluno">E-mail da empresa:</label>
+          <input v-model="email" id="email" class="form-control" type="text" required />
+        </div>
+
+        <div class="form-group">
+          <label for="prontuarioAluno">Telefone da empresa:</label>
+          <input v-model="telefone" id="telefone" class="form-control" type="text" required />
+        </div>
         <!-- <button type="submit" class="btn-custom mt-2">Cadastrar Estágio</button> -->
 
         <BotaoComp titulo="Cadastrar Estágio" tamanho="g" type="submit"/>
