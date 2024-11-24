@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, onMounted} from 'vue';
 import axios from 'axios';
 import { useAuth } from '@/services/useAuth';
 import router from '@/router';
@@ -21,6 +21,7 @@ const prontuario = ref('');
 const telefone = ref('');
 const email = ref('');
 const curso = ref('');
+const cursosDisponiveis = ref([]);
 const errorMessage = ref('')
 
 
@@ -46,7 +47,7 @@ const validateNome = () => /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/.test(nome.value);
 const validateProntuario = () => /^[a-zA-Z]{0,3}[0-9]{6,8}$/.test(prontuario.value);
 const validateTelefone = () => telefone.value === '' || /^\d{2}\d{5}-\d{4}$/.test(telefone.value); // Telefone vazio é válido
 const validateEmail = () => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*ifsp\.edu\.br$/.test(email.value);
-const validateCurso = () => /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/.test(curso.value);
+const validateCurso = () => curso.value != '';
 
 function handleBlur(field) {
   touched[field] = true;
@@ -64,8 +65,21 @@ function handleBlur(field) {
   }
 }
 
+onMounted(async () => {
+  console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSS: "+curso.value)
+  try {
+    const response = await axios.get('http://localhost:8082/FRAN/estagios/cursos');
+    cursosDisponiveis.value = response.data;
+    console.log(cursosDisponiveis)
+  } catch (error) {
+    console.error('Erro ao carregar os cursos:', error);
+    errorMessage.value = 'Erro ao carregar os cursos disponíveis.';
+  }
+});
+
 async function handleSubmit(event) {
   event.preventDefault();
+  console.log("curso escoljifosdf"+curso.value)
 
   const allFieldsValid = [
     validateNome(),
@@ -186,17 +200,21 @@ async function handleSubmit(event) {
             <!-- Curso -->
             <div class="form-group col-12">
               <label for="curso">Curso:</label>
-              <b-form-input
+              <select
                 v-model="curso"
                 id="curso"
                 class="form-control"
-                type="text"
-                :state="touched.curso ? !errors.curso : null"
+                :class="{ 'is-invalid': touched.curso && errors.curso }"
                 @blur="handleBlur('curso')"
                 required
-              />
+              >
+                <option value="" disabled selected>Selecione um curso</option>
+                <option v-for="cursoDisponivel in cursosDisponiveis" :key="cursoDisponivel.id" :value="cursoDisponivel.nome">
+                  {{ cursoDisponivel.nomeCurso }}
+                </option>
+              </select>
               <b-form-invalid-feedback>
-                O curso deve conter apenas letras e espaços.
+                Por favor, selecione um curso válido.
               </b-form-invalid-feedback>
             </div>
           </div>
