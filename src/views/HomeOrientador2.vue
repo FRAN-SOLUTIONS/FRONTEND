@@ -601,43 +601,88 @@ function formatarDataSimples(data) {
   <FooterComp />
 
   <!-- Modal de Estágio -->
-  <div v-show="showModal" class="modal-overlay" @click.self="closeModal">
-    <div class="modal-content">
-      <div class="card container my-5 shadow-sm card_container">
+  <div v-if="showModal" v-show="showModal" class="modal-overlay" @click.self="closeModal">
+      <div class="card container my-5">
         <div class="card-body py-4 px-5">
           <div id="Infos" class="row">
             <div id="alunoInfo" class="col pe-0 d-flex flex-column align-items-center justify-content-center">
-              <h5 class="fw-bold">Nome do Aluno: <span class="fw-normal">{{ selectedEstagio?.aluno?.nome }}</span></h5>
-              <h5 class="fw-bold">Prontuário: <span class="fw-normal">{{ selectedEstagio?.aluno?.prontuario }}</span></h5>
-              <h5 class="fw-bold">Curso: <span class="fw-normal">{{ selectedEstagio?.aluno?.curso }}</span></h5>
-              <h5 class="fw-bold mb-0">E-mail: <span class="fw-normal">{{ selectedEstagio?.aluno?.email }}</span></h5>
-              <h5 class="fw-bold mb-0">Telefone: <span class="fw-normal">{{ selectedEstagio?.aluno?.telefone }}</span></h5>
+              <!-- Informações do Aluno -->
+              <div>
+                <h5 class="fw-bold">Nome do Aluno: </h5>
+                <h5 class="fw-normal">{{ selectedEstagio?.aluno?.nome }}</h5>
+              </div>
+              <div>
+                <h5 class="fw-bold">Prontuário: </h5>
+                <h5 class="fw-normal">{{ selectedEstagio?.aluno?.prontuario }}</h5>
+              </div>
+              <div>
+                <h5 class="fw-bold">Curso: </h5>
+                <h5 class="fw-normal">{{ selectedEstagio?.aluno?.curso }}</h5>
+              </div>
+              <div>
+                <h5 class="fw-bold">E-mail: </h5>
+                <h5 class="fw-normal">{{ selectedEstagio?.aluno?.email }}</h5>
+              </div>
+              <div v-if="selectedEstagio?.aluno.telefone">
+                <h5 class="fw-bold">Telefone: </h5>
+                <h5 class="fw-normal">{{ selectedEstagio?.aluno?.telefone }}</h5>
+              </div>
             </div>
 
             <div class="vr p-0"></div>
 
             <div id="estagioInfo" class="col ps-5">
-              <h5 class="fw-bold">Período de Estágio: <span class="fw-normal">{{ selectedEstagio?.dataInicio }} a {{ selectedEstagio?.dataTermino }}</span></h5>
-              <h5 class="fw-bold">Status do Estágio: <span class="fw-normal">{{ selectedEstagio?.status }}</span></h5>
-              <h5 class="fw-bold">Estágio Obrigatório: <span class="fw-normal">{{ selectedEstagio?.obrigatorio ? 'SIM' : 'NÃO' }}</span></h5>
-              <h5 class="fw-bold mb-0">Carga Horária Diária: <span class="fw-normal">{{ selectedEstagio?.cargaDiaria }} horas</span></h5>
-              <h5 class="fw-bold mb-0">Nome fantasia da empresa: <span class="fw-normal">{{ selectedEstagio?.empresa.nomeFantasia }}</span></h5>
-              <h5 class="fw-bold mb-0">Razão social da empresa: <span class="fw-normal">{{ selectedEstagio?.empresa.razaoSocial }}</span></h5>
-              <h5 class="fw-bold mb-0">CNPJ da empresa: <span class="fw-normal">{{ selectedEstagio?.empresa.cnpj }}</span></h5>
-              <h5 class="fw-bold mb-0">E-mail da empresa: <span class="fw-normal">{{ selectedEstagio?.empresa.email }}</span></h5>
-              <h5 class="fw-bold mb-0">Telefone da empresa: <span class="fw-normal">{{ selectedEstagio?.empresa.telefone }}</span></h5>
+              <!-- Informações do Estágio -->
+              <div>
+                <h5 class="fw-bold">Período de Estágio: </h5>
+                <h5 class="fw-normal">{{ formatarDataSimples(selectedEstagio?.dataInicio) }} a {{ formatarDataSimples(selectedEstagio?.dataTermino) }}</h5>
+              </div>
+              <div>
+                <h5 class="fw-bold">Status do Estágio: </h5>
+                <h5 class="fw-normal"> {{ selectedEstagio?.status }}</h5>
+              </div>
+              <div>
+                <h5 class="fw-bold">Estágio Obrigatório: </h5>
+                <h5 class="fw-normal">{{ selectedEstagio?.obrigatorio ? 'SIM' : 'NÃO' }}</h5>
+              </div>
+              <div>
+                <h5 class="fw-bold">Carga Horária Diária: </h5>
+                <h5 class="fw-normal">{{ selectedEstagio?.cargaDiaria }} horas</h5>
+              </div>
+              <div>
+                <h5 class="fw-bold">Nome fantasia da empresa: </h5>
+                <h5 class="fw-normal">{{ selectedEstagio?.empresa.nomeFantasia }}</h5>
+              </div>
+              <div>
+                <h5 class="fw-bold">Razão social da empresa: </h5>
+                <h5 class="fw-normal">{{ selectedEstagio?.empresa.razaoSocial }}</h5>
+              </div>
+              <div>
+                <h5 class="fw-bold">CNPJ da empresa: </h5>
+                <h5 class="fw-normal">{{ selectedEstagio?.empresa.cnpj }}</h5>
+              </div>
+              <div>
+                <h5 class="fw-bold">E-mail da empresa: </h5>
+                <h5 class="fw-normal">{{ selectedEstagio?.empresa.email }}</h5>
+              </div>
+              <div class="mb-3">
+                <h5 class="fw-bold">Telefone da empresa: </h5>
+                <h5 class="fw-normal">{{ selectedEstagio?.empresa.telefone }}</h5>
+              </div>
             </div>
 
+            <div class="vr p-0"></div>
+
             <div id="botoes" class="col ps-5">
-              <h5 class="fw-bold mb-3">Ações Rápidas</h5>
-              <BotaoComp titulo="Gerar despacho inicial" tamanho="g" @click="getDespachoInicial"/>
-              <BotaoComp titulo="Gerar despacho final" tamanho="g" @click="getDespachoFinal"/>
-              <BotaoComp titulo="Iniciar estágio automático" tamanho="g" />
-              <BotaoComp titulo="Finalizar estágio automático" tamanho="g" />
+              <h5 class="fw-bold mb-3 text-center">Ações Rápidas</h5>
+              <BotaoComp class="mb-3" titulo="Gerar despacho inicial" tamanho="g" @click="getDespachoInicial"/>
+              <BotaoComp class="mb-3" titulo="Gerar despacho final" tamanho="g" @click="getDespachoFinal"/>
+              <BotaoComp class="mb-3" titulo="Iniciar estágio automático" tamanho="g" />
+              <BotaoComp class="mb-3" titulo="Finalizar estágio automático" tamanho="g" />
             </div>
           </div>
           <hr class="m-0" />
-          <div class="table-responsive mt-5">
+          <div class="table-responsive mt-5 d-flex justify-content-center">
             <table class="table table-bordered w-75">
               <thead>
                 <tr>
@@ -686,7 +731,6 @@ function formatarDataSimples(data) {
           <button class="btn btn-secondary" @click="closeModal">Fechar</button>
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -696,14 +740,6 @@ h2 {
   text-align: left;
   margin-bottom: 20px;
   color: #01400b;
-}
-
-.card_container{
-    width: 100%;
-}
-
-.card_body{
-    width: 100%;
 }
 
 .actions {
@@ -718,6 +754,9 @@ h2 {
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   margin-bottom: 20px;
+  & div{
+    cursor: pointer;
+  }
 }
 
 .card {
@@ -725,9 +764,9 @@ h2 {
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
   padding: 20px;
   transition: transform 0.3s ease;
+  width: 100%;
 }
 
 .modal-overlay {
@@ -743,18 +782,24 @@ h2 {
   z-index: 1000;
 }
 
-.modal-content {
-  background: white;
-  border-radius: 10px;
-  width: 80%;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+#botoes{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.estagioInfo{
-    display: flex;
-    align-items: center;
-    justify-content: center
+#alunoInfo>div, #estagioInfo>div{
+  margin: 10px 0;
+  text-align: center;
+
+  & *{
+    margin: 0;
+    display: inline-block;
+  }
+  & h5:first-of-type + h5{
+    margin-left: 5px !important;
+  }
 }
 
 </style>
