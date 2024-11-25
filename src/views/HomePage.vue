@@ -94,13 +94,12 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
               </RouterLink>
             </h5> -->
             <br />
-            <h5>
+            <!-- <h5>
               Se você é um orientador de estágios do IFSP e vai começar a
               orientar um aluno adicione-o à lista de seus orientandos e começa
               a acompanhá-lo já.
             </h5>
-            <br />
-            <RouterLink to="/login"><h3>Entre e comece!</h3></RouterLink>
+            <br />-->
           </div>
         </div>
       </div>
