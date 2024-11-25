@@ -66,7 +66,6 @@ function handleBlur(field) {
 }
 
 onMounted(async () => {
-  console.log("SSSSSSSSSSSSSSSSSSSSSSSSSSSS: "+curso.value)
   try {
     const response = await axios.get('http://localhost:8082/FRAN/estagios/cursos');
     cursosDisponiveis.value = response.data;
@@ -79,7 +78,6 @@ onMounted(async () => {
 
 async function handleSubmit(event) {
   event.preventDefault();
-  console.log("curso escoljifosdf"+curso.value)
 
   const allFieldsValid = [
     validateNome(),
@@ -209,7 +207,7 @@ async function handleSubmit(event) {
                 required
               >
                 <option value="" disabled selected>Selecione um curso</option>
-                <option v-for="cursoDisponivel in cursosDisponiveis" :key="cursoDisponivel.id" :value="cursoDisponivel.nome">
+                <option v-for="cursoDisponivel in cursosDisponiveis" :key="cursoDisponivel.id" :value="cursoDisponivel.nomeCurso">
                   {{ cursoDisponivel.nomeCurso }}
                 </option>
               </select>
