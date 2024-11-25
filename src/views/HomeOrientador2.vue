@@ -539,7 +539,7 @@ function formatarDataExtenso() {
     return `${dia} de ${mes} de ${ano}`;
   }
 
-  function formatarDataSimples(data) {
+function formatarDataSimples(data) {
   const [ano, mes, dia] = data.split('-'); // Divide a data no formato yyyy-mm-dd
   return `${String(dia).padStart(2, '0')}/${String(mes).padStart(2, '0')}/${ano}`;
 }
@@ -557,19 +557,20 @@ function formatarDataExtenso() {
       <div class="actions">
         <nav>
           <div class="container-fluid">
-            <form class="d-flex" @submit.prevent>
-              <input v-model="searchValue" placeholder="Pesquisar Estágio" aria-label="Search" />
-              <i class="bi bi-search"></i>
+            <form class="d-flex input-group" @submit.prevent>
+              <input v-model="searchValue" class="form-control" placeholder="Pesquisar Estágio" aria-label="Search" />
+              <i class="bi bi-search input-group-text"></i>
             </form>
           </div>
         </nav>
-
-        <router-link to="cadastroEstagio">
-          <BotaoComp titulo="Adicionar Estágio" tamanho="m" type="submit"/>
-        </router-link>
-        <router-link to="cadastroAlunos">
-          <BotaoComp titulo="Adicionar Aluno" tamanho="m" type="submit"/>
-        </router-link>
+        <div class="d-flex">
+          <router-link class="me-3" to="cadastroEstagio">
+            <BotaoComp titulo="Adicionar Estágio" tamanho="m" type="submit"/>
+          </router-link>
+          <router-link class="ms-3" to="cadastroAlunos">
+            <BotaoComp titulo="Adicionar Aluno" tamanho="m" type="submit"/>
+          </router-link>
+        </div>
       </div>
 
       <div class="estagiario-container">
@@ -581,7 +582,7 @@ function formatarDataExtenso() {
         </div>
       </div>
 
-      <nav aria-label="Page navigation">
+      <nav v-if="estagios" aria-label="Page navigation">
         <ul class="pagination">
           <li class="page-item" :class="{ disabled: currentPage === 1 }">
             <a class="page-link" href="#" @click.prevent="goToPage(currentPage - 1)" aria-label="Previous">&laquo;</a>
