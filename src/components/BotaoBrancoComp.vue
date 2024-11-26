@@ -41,7 +41,7 @@ const buttonWidth = computed(() => {
   border: 1px solid white;
   color: white;
   transition: 0.3s;
-  background-color: #01400b !important;
+  background-color: transparent !important;
 }
 
 .custom-btn:hover {
