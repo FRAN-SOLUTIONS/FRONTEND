@@ -3,13 +3,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Toast } from 'bootstrap';
 import { ref, onMounted, computed } from 'vue';
 
-// Definição das props
 const props = defineProps({
   mensagem: {
     type: String,
     required: true,
     default: 'Mensagem padrão do Toast',
   },
+  //tipos de alerta sucesso (verde), alerta (amarelo), perigo (vermelho)
   tipo: {
     type: String,
     required: true,
