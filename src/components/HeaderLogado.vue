@@ -126,7 +126,7 @@ function formatarData(data) {
 
     <div class="titulo-container">
       <router-link
-        to="homeOrientador"
+        to="HomeOrientador"
         style="text-decoration: none; color: inherit"
       >
         <h1 class="titulo">Orienta +</h1>
