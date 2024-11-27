@@ -21,7 +21,6 @@ const senha = ref('')
 const confirmarSenha = ref('')
 const errorMessage = ref('')
 
-
 const touched = ref({
   nome: false,
   prontuario: false,
@@ -42,7 +41,7 @@ function validateForm() {
   const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/; // Permite letras com acento e espaços
   const prontuarioRegex = /^[a-zA-Z]{0,3}[0-9]{6,8}$/; // De 0 a 3 letras seguidas de 6 a 8 números
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*ifsp\.edu\.br$/;
-  const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/; // Pelo menos uma letra, um número e 8 caracteres
 
   errors.value = {
     nome: !nomeRegex.test(nome.value),
@@ -57,9 +56,9 @@ function validateForm() {
 
 function handleBlur(field) {
   const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/;
-  const prontuarioRegex = /^[a-zA-Z]{0,3}[0-9]{6,8}$/; // De 0 a 3 letras seguidas de 6 a 8 números
+  const prontuarioRegex = /^[a-zA-Z]{0,3}[0-9]{6,8}$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*ifsp\.edu\.br$/;
-  const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+  const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/; // Pelo menos uma letra, um número e 8 caracteres
 
   touched.value[field] = true;
   if (field === "nome") {
@@ -150,7 +149,9 @@ async function handleSubmit(event) {
               :state="touched.senha ? !errors.senha : null" 
               @blur="handleBlur('senha')"
             />
-            <BFormInvalidFeedback v-if="errors.senha">Senha deve ter pelo menos 8 caracteres, incluindo letras e números.</BFormInvalidFeedback>
+            <BFormInvalidFeedback v-if="errors.senha">
+              Senha deve conter pelo menos 8 caracteres, incluindo letras e números.
+            </BFormInvalidFeedback>
           </BFormGroup>
 
           <BFormGroup label="Confirmar Senha:">
@@ -179,6 +180,8 @@ async function handleSubmit(event) {
 
   <FooterComp />
 </template>
+
+
 
 
 <style scoped>
