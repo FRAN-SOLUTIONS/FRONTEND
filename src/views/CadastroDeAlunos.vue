@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive, onMounted} from 'vue';
+import { ref, reactive, onMounted } from 'vue';
 import axios from 'axios';
 import { useAuth } from '@/services/useAuth';
 import router from '@/router';
@@ -24,7 +24,6 @@ const curso = ref('');
 const cursosDisponiveis = ref([]);
 const errorMessage = ref('')
 
-
 // Estados de validação
 const touched = reactive({
   nome: false,
@@ -44,9 +43,9 @@ const errors = reactive({
 
 // Funções de validação para cada campo
 const validateNome = () => /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/.test(nome.value);
-const validateProntuario = () => /^[a-zA-Z]{0,3}[0-9]{6,8}$/.test(prontuario.value);
+const validateProntuario = () => /^[a-zA-Z]{2,3}[0-9]{6,8}$/.test(prontuario.value);
 const validateTelefone = () => telefone.value === '' || /^\d{2}\d{5}-\d{4}$/.test(telefone.value); // Telefone vazio é válido
-const validateEmail = () => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*ifsp\.edu\.br$/.test(email.value);
+const validateEmail = () => /^[a-zA-Z0-9._%+-]+@aluno\.ifsp\.edu\.br$/.test(email.value); // Alteração para permitir apenas @aluno.ifsp.edu.br
 const validateCurso = () => curso.value != '';
 
 function handleBlur(field) {
@@ -59,7 +58,7 @@ function handleBlur(field) {
   } else if (field === 'telefone') {
     errors.telefone = !validateTelefone();
   } else if (field === 'email') {
-    errors.email = !validateEmail();
+    errors.email = !validateEmail();  // Atualização da validação do e-mail
   } else if (field === 'curso') {
     errors.curso = !validateCurso();
   }
@@ -154,7 +153,7 @@ async function handleSubmit(event) {
                 required
               />
               <b-form-invalid-feedback>
-                O prontuário deve seguir o formato: XX1234567.
+                O prontuário deve conter de 2 a 3 letras seguidas de 6 a 8 números.
               </b-form-invalid-feedback>
             </div>
 
