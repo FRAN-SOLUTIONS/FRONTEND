@@ -75,6 +75,16 @@ const alunos = ref([
     vencimento: new Date('2024-11-30'),
   },
 ])
+
+function formatarData(data) {
+  const dataObj = new Date(data);
+  return new Intl.DateTimeFormat('pt-BR', {
+    weekday: 'long', // Nome completo do dia da semana
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  }).format(dataObj);
+}
 </script>
 
 <template>
@@ -116,7 +126,7 @@ const alunos = ref([
 
     <div class="titulo-container">
       <router-link
-        to="homeOrientador"
+        to="HomeOrientador"
         style="text-decoration: none; color: inherit"
       >
         <h1 class="titulo">Orienta +</h1>
@@ -149,7 +159,7 @@ const alunos = ref([
         id="accordionExample"
       >
         <div
-          class="accordion-item"
+          class="accordion-item m-3"
           :class="aluno.tipoAlerta.replace(' ', '-')"
           v-show="aluno.tipoAlerta === 'atrasado'"
         >
@@ -162,7 +172,7 @@ const alunos = ref([
               aria-expanded="false"
               :aria-controls="'accordion-nome-' + index"
             >
-              {{ aluno.nome }} - {{ aluno.tipoAlerta }}
+              {{ aluno.nome }} - <strong>{{ aluno.tipoAlerta }}</strong>
             </button>
           </h2>
           <div
@@ -173,14 +183,28 @@ const alunos = ref([
             <div
               class="accordion-body d-flex justify-content-between align-items-center"
             >
-              <router-link
-                to="notificacoes"
-                class="card-link"
-                style="color: #01400b; display: block; color: #01400b"
-              >
-                <strong>Mais informações</strong>
-              </router-link>
-              <i class="bi bi-trash trash" @click="removerAluno(index)"></i>
+              <div class="container">
+                <div class="row ">
+                  <div class="col d-flex flex-column">
+                    <div class="flex-fill">
+                      <p style="color: #01400b; display: block; margin-bottom: 0;">Vencimento:</p>
+                      <strong>{{ formatarData(aluno.vencimento) }}</strong>
+                    </div>
+                    <div class="flex-fill">
+                      <router-link
+                        to="notificacoes"
+                        class="card-link"
+                        style="color: #01400b; display: block; color: #01400b"
+                      >
+                        <strong>Mais informações</strong>
+                      </router-link>
+                    </div>
+                  </div>
+                  <div class="col-2 d-flex align-items-center justify-content-center">
+                    <i class="bi bi-trash trash" @click="removerAluno(index)"></i>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -239,6 +263,17 @@ const alunos = ref([
 .notify {
   font-size: 1.5rem;
   color: white;
+}
+
+.accordion-button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #fcb9b9; /* Substitua pelo tom desejado */
+  color: #01400c; /* Opcional: ajuste a cor do texto */
+  border-color: #01400b; /* Opcional: ajuste a cor da borda */
 }
 
 .trash {

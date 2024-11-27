@@ -7,7 +7,7 @@ import BotaoBrancoComp from './BotaoBrancoComp.vue'
   <header>
     <div class="titulo-container">
       <router-link
-        to="homeOrientador"
+        to="home"
         style="text-decoration: none; color: inherit"
       >
         <h1 class="titulo">Orienta +</h1>

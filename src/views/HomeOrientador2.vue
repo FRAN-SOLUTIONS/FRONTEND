@@ -14,11 +14,9 @@ const searchValue = ref('');
 const cardsPerPage = 10;
 const currentPage = ref(1);
 
-
-
 function openModal(estagio) {
-    selectedEstagio.value = estagio;
-    showModal.value = true;
+  selectedEstagio.value = estagio;
+  showModal.value = true;
 }
 
 function closeModal() {
@@ -26,39 +24,39 @@ function closeModal() {
 }
 
 function normalizeText(text) {
-    return text.toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, ''); // Remover acentos e espaços extras
+  return text.toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, ''); // Remover acentos e espaços extras
 }
 
 const filteredEstagios = computed(() => {
-    const normalizedSearch = normalizeText(searchValue.value);
-    return estagios.value.filter(estagio =>
-        normalizeText(estagio.aluno.nome).includes(normalizedSearch)
-    );
+  const normalizedSearch = normalizeText(searchValue.value);
+  return estagios.value.filter(estagio =>
+      normalizeText(estagio.aluno.nome).includes(normalizedSearch)
+  );
 });
 
 const paginatedEstagios = computed(() => {
-    const start = (currentPage.value - 1) * cardsPerPage;
-    const end = start + cardsPerPage;
-    return filteredEstagios.value.slice(start, end);
+  const start = (currentPage.value - 1) * cardsPerPage;
+  const end = start + cardsPerPage;
+  return filteredEstagios.value.slice(start, end);
 });
 
 const totalPages = computed(() => Math.ceil(filteredEstagios.value.length / cardsPerPage));
 
 function goToPage(page) {
-    if (page >= 1 && page <= totalPages.value) {
-        currentPage.value = page;
-    }
+  if (page >= 1 && page <= totalPages.value) {
+      currentPage.value = page;
+  }
 }
 
 onMounted(async () => {
-    try {
-        const response = await axios.get('http://localhost:8082/FRAN/estagios/orientador/estagios');
-        estagios.value = response.data;
-    } catch (error) {
-        console.error("Erro ao buscar os estágios:", error);
-    }
+  try {
+    const response = await axios.get('http://localhost:8082/FRAN/estagios/orientador/estagios');
+    estagios.value = response.data;
+  } catch (error) {
+    console.error("Erro ao buscar os estágios:", error);
+  }
 });
 
 async function copiarParaAreaDeTransferencia(texto) {
@@ -552,49 +550,53 @@ function formatarDataSimples(data) {
     <!-- <FileNavComp /> -->
 
     <div class="p-3">
-      <h2>Meus Estágios: </h2>
+  
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="me-auto">Meus Estágios:</h2>
+        <div class="d-flex gap-3">
+          <router-link to="cadastroEstagio">
+            <BotaoComp titulo="Adicionar Estágio" tamanho="m" type="submit" />
+          </router-link>
+          <router-link to="cadastroAlunos">
+            <BotaoComp titulo="Adicionar Aluno" tamanho="m" type="submit" />
+          </router-link>
+        </div>
+      </div>
 
-      <div class="actions">
-        <nav>
-          <div class="container-fluid">
-            <form class="d-flex input-group" @submit.prevent>
-              <input v-model="searchValue" class="form-control" placeholder="Pesquisar Estágio" aria-label="Search" />
-              <i class="bi bi-search input-group-text"></i>
-            </form>
+      <div v-if="estagios.length > 0">
+        <div class="actions">
+          <nav>
+              <form class="d-flex input-group" @submit.prevent>
+                <input v-model="searchValue" class="form-control m-0 p-0" placeholder="Pesquisar Estágio" aria-label="Search" />
+                <i class="bi bi-search input-group-text"></i>
+              </form>
+          </nav>
+        </div>
+
+        <div class="estagiario-container">
+          <div v-for="estagio in paginatedEstagios" :key="estagio.id" class="card" @click="openModal(estagio)">
+            <p><strong>Nome do aluno:</strong> {{ estagio.aluno.nome }}</p>
+            <p><strong>Prontuário:</strong> {{ estagio.aluno.prontuario }}</p>
+            <p><strong>Curso:</strong> {{ estagio.aluno.curso }}</p>
+            <p><strong>Status:</strong> {{ estagio.status }}</p>
           </div>
+        </div>
+
+        <nav v-if="estagios" aria-label="Page navigation">
+          <ul class="pagination">
+            <li class="page-item" :class="{ disabled: currentPage === 1 }">
+              <a class="page-link" href="#" @click.prevent="goToPage(currentPage - 1)" aria-label="Previous">&laquo;</a>
+            </li>
+            <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
+              <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+              <a class="page-link" href="#" @click.prevent="goToPage(currentPage + 1)" aria-label="Next">&raquo;</a>
+            </li>
+          </ul>
         </nav>
-        <div class="d-flex">
-          <router-link class="me-3" to="cadastroEstagio">
-            <BotaoComp titulo="Adicionar Estágio" tamanho="m" type="submit"/>
-          </router-link>
-          <router-link class="ms-3" to="cadastroAlunos">
-            <BotaoComp titulo="Adicionar Aluno" tamanho="m" type="submit"/>
-          </router-link>
-        </div>
       </div>
 
-      <div class="estagiario-container">
-        <div v-for="estagio in paginatedEstagios" :key="estagio.id" class="card" @click="openModal(estagio)">
-          <p><strong>Nome do aluno:</strong> {{ estagio.aluno.nome }}</p>
-          <p><strong>Prontuário:</strong> {{ estagio.aluno.prontuario }}</p>
-          <p><strong>Curso:</strong> {{ estagio.aluno.curso }}</p>
-          <p><strong>Status:</strong> {{ estagio.status }}</p>
-        </div>
-      </div>
-
-      <nav v-if="estagios" aria-label="Page navigation">
-        <ul class="pagination">
-          <li class="page-item" :class="{ disabled: currentPage === 1 }">
-            <a class="page-link" href="#" @click.prevent="goToPage(currentPage - 1)" aria-label="Previous">&laquo;</a>
-          </li>
-          <li v-for="page in totalPages" :key="page" class="page-item" :class="{ active: page === currentPage }">
-            <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
-          </li>
-          <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-            <a class="page-link" href="#" @click.prevent="goToPage(currentPage + 1)" aria-label="Next">&raquo;</a>
-          </li>
-        </ul>
-      </nav>
     </div>
   </main>
 
