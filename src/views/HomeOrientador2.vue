@@ -13,7 +13,6 @@ const selectedEstagio = ref(null); // Armazena o estágio selecionado
 const searchValue = ref('');
 const cardsPerPage = 10;
 const currentPage = ref(1);
-const relatorios = ref([]);
 let relatorioString = "";
 
 
@@ -81,7 +80,7 @@ function getDespachoInicial() {
 
 const estagio = selectedEstagio.value;
 const aluno = estagio.aluno;
-const empresa = estagio.empresa || "Não definido"; // Caso não tenha empresa
+const empresa = estagio.empresa.nomeFantasia || "Não definido"; // Caso não tenha empresa
 let estagioNaoObrigatorio = ""
 let estagioObrigatorio = ""
 
@@ -293,22 +292,24 @@ function getDespachoFinal() {
   const aluno = estagio.aluno;
   const empresa = estagio.empresa.nomeFantasia || "Não definido"; // Caso não tenha empresa
 
-const criarRelatoriosMensais = (estagio) => {
+  const criarRelatoriosMensais = (estagio) => {
   const inicio = new Date(estagio.dataInicio); // Copiar para evitar modificar a data original
   const fim = new Date(estagio.dataTermino); // Copiar para evitar modificar a data original
-  const relatorios = [];
+  const relatorios = []; // Lista para armazenar os períodos dos relatórios mensais
 
-  let mesAtual = new Date(inicio);
+  let mesAtual = new Date(inicio); // Começa no mês de início do estágio
 
+  // Percorrer os meses até o fim do estágio
   while (mesAtual <= fim) {
     const inicioMes = mesAtual.getTime() === inicio.getTime() 
-      ? new Date(mesAtual) // Se for o primeiro mês, começa na data de início do estágio
-      : new Date(mesAtual.getFullYear(), mesAtual.getMonth(), 1);
+      ? new Date(mesAtual) // Primeiro mês: começa na data de início do estágio
+      : new Date(mesAtual.getFullYear(), mesAtual.getMonth(), 1); // Começa no primeiro dia do mês
 
     const fimMes = mesAtual.getMonth() === fim.getMonth() && mesAtual.getFullYear() === fim.getFullYear() 
-      ? new Date(fim) // Se for o último mês, termina na data de término do estágio
+      ? new Date(fim) // Último mês: termina na data de término do estágio
       : new Date(mesAtual.getFullYear(), mesAtual.getMonth() + 1, 0); // Último dia do mês
 
+    // Adiciona o período do relatório à lista
     relatorios.push({
       inicio: inicioMes,
       fim: fimMes
@@ -318,7 +319,15 @@ const criarRelatoriosMensais = (estagio) => {
     mesAtual.setMonth(mesAtual.getMonth() + 1);
   }
 
-  return relatorios;
+  // Se o último mês não foi incluído, adicionar ele manualmente
+  if (relatorios[relatorios.length - 1].fim.getTime() !== fim.getTime()) {
+    relatorios.push({
+      inicio: new Date(fim.getFullYear(), fim.getMonth(), 1), // Primeiro dia do último mês
+      fim: fim // Data final do estágio
+    });
+  }
+
+  return relatorios; // Retorna os períodos mensais
 };
 
 const dataRelatorios = criarRelatoriosMensais(estagio);
@@ -521,7 +530,7 @@ if (estagio.obrigatorio)
                         <p align='center' style='text-align:center'><span style='color:null'><span style='font-size:9.0pt'><span style='font-family:&quot;Arial&quot;,sans-serif'>Termo de Realiza&ccedil;&atilde;o</span></span></span></p>
                         </td>
                         <td colspan='2' nowrap='nowrap' style='border-bottom:1px solid black; width:143px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
-                        <p style='text-align:center'><span style='color:null'><span style='font-size:9.0pt'><span style='font-family:&quot;Arial&quot;,sans-serif'>18/11/2024 a 30/12/2024</span></span></span></p>
+                        <p style='text-align:center'><span style='color:null'><span style='font-size:9.0pt'><span style='font-family:&quot;Arial&quot;,sans-serif'>${formatarDataSimples(estagio.dataInicio)} a ${formatarDataSimples(estagio.dataTermino)}</span></span></span></p>
                         </td>
                         <td nowrap='nowrap' style='border-bottom:1px solid black; width:60px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
                         <p align='center' style='text-align:center'><span style='color:null'><span style='font-size:9pt'><span style='font-family:&quot;Arial&quot;, sans-serif'>(X) sim</span></span></span></p>
