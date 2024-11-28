@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, watch, toRaw  } from 'vue';
 import axios from 'axios';
 import BotaoComp from '@/components/BotaoComp.vue';
 import HeaderLogado from '@/components/HeaderLogado.vue';
@@ -13,6 +13,11 @@ const selectedEstagio = ref(null); // Armazena o estágio selecionado
 const searchValue = ref('');
 const cardsPerPage = 10;
 const currentPage = ref(1);
+const relatorios = ref([]);
+let relatorioString = "";
+
+
+
 
 function openModal(estagio) {
   selectedEstagio.value = estagio;
@@ -58,11 +63,73 @@ onMounted(async () => {
     console.error("Erro ao buscar os estágios:", error);
   }
 });
+onMounted(async () => {
+  // Inicializa os relatórios quando o selectedEstagio for definido
+  watch(selectedEstagio, async (newEstagioId) => {
+    console.log("selectedEstagio mudou:", newEstagioId); // Verifique se o ID é válido
+
+    // Acesse o objeto bruto com toRaw()
+    const estagioBruto = toRaw(newEstagioId);
+
+    // Verifique se a estrutura do objeto contém o ID correto
+    const idEstagio = estagioBruto?.aluno?.id || estagioBruto?.id; // Ajuste conforme a estrutura real
+
+    if (idEstagio) {
+      await buscarRelatorios(idEstagio);
+      atualizarRelatorioString();
+    } else {
+      console.error("ID do estágio não encontrado.");
+    }
+  });
+});
+
+async function buscarRelatorios(estagioId) {
+  try {
+    // Verifique se estagioId é válido antes de fazer a requisição
+    if (!estagioId) {
+      console.error("ID do estágio inválido.");
+      return;
+    }
+
+    const response = await axios.get(`http://localhost:8082/FRAN/relatorios/${estagioId}/relatorios`);
+    console.log("Resposta da API:", response.data); // Verifique o que a API retorna
+    relatorios.value = response.data;
+  } catch (error) {
+    console.error("Erro ao buscar os relatórios:", error);
+  }
+}
+
+function atualizarRelatorioString() {
+  if (!relatorios.value.length) {
+    console.warn("Nenhum relatório encontrado."); // Log para depuração
+    return;
+  }
+
+  // Continue com a manipulação da string dos relatórios
+}
+
+
+  relatorioString = ""; // Certifique-se de reiniciar a string
+  relatorios.value.forEach((relatorio) => {
+    relatorioString += `
+      <tr>
+        <td nowrap='nowrap' style='border-bottom:1px solid black; width:187px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:1px solid black'>
+          <p align='center' style='text-align:center'>${relatorio.titulo || 'N/A'}</p>
+        </td>
+        <td colspan='2' nowrap='nowrap' style='border-bottom:1px solid black; width:143px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
+          <p align='center' style='text-align:center'>${relatorio.periodo || 'N/A'}</p>
+        </td>
+        <td nowrap='nowrap' style='border-bottom:1px solid black; width:60px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
+          <p align='center' style='text-align:center'>0</p>
+        </td>
+      </tr>`;
+  });
+  console.log("Relatórios gerados:", relatorioString); // Valide a string
+
 
 async function copiarParaAreaDeTransferencia(texto) {
   try {
     // Usa Clipboard API para copiar o texto
-    alert(`Copiado para a área de transferência: ${texto}`);
     await navigator.clipboard.writeText(texto);
   } catch (err) {
     console.error("Erro ao copiar para a área de transferência:", err);
@@ -284,7 +351,8 @@ function getDespachoFinal() {
 
   const estagio = selectedEstagio.value;
   const aluno = estagio.aluno;
-  const empresa = estagio.empresa || "Não definido"; // Caso não tenha empresa
+  const empresa = estagio.empresa.nomeFantasia || "Não definido"; // Caso não tenha empresa
+
   let estagioNaoObrigatorio = ""
   let estagioObrigatorio = ""
 
@@ -295,20 +363,27 @@ if (estagio.obrigatorio)
   estagioNaoObrigatorio = "X"
 }
   console.log("Copiando pra área de transferência");
-  const texto = `
+
+
+
+  console.log("Relatorios: "+relatorioString)
+
+
+
+  const despachoFinal = `
     "<p style='text-align: justify;'><span style='color:null;'><span style='font-size:12pt; font-family:&quot;Arial&quot;,sans-serif;'>&Agrave; Coordenadoria de Integra&ccedil;&atilde;o Escola-Empresa - CEE-SPO</span></span></p>
 
 <p style='text-align: justify;'>&nbsp;</p>
 
 <p style=' text-align: justify;'><span style='color:null;'><span style='font-family: Arial, Sans Serif; text-align: justify;'><span style='font-size:11pt'><strong>ASSUNTO:</strong> Est&aacute;gio Supervisionado</span></span></span></p>
 
-<p style='text-align: justify;'><span style='color:null;'><span style='font-family: Arial, Sans Serif; text-align: justify;'><span style='font-size:11pt'><strong>INTERESSADO: </strong>Gustavo Henrique de Moraes (SP3072037)</span></span></span></p>
+<p style='text-align: justify;'><span style='color:null;'><span style='font-family: Arial, Sans Serif; text-align: justify;'><span style='font-size:11pt'><strong>INTERESSADO: </strong>${aluno.nome} (${aluno.prontuario})</span></span></span></p>
 
 <p style=' text-align: justify;'><span style='color:null;'><span style='font-family: Arial, Sans Serif; text-align: justify;'><span style='font-size:11pt'><strong>OBJETO: </strong>Despacho sobre est&aacute;gio</span></span></span></p>
 
 <p>&nbsp;</p>
 
-<p style='margin-left: 40px; text-align: justify; font-family: Arial, Sans Serif;'><span style='color:null;'>Venho, por meio deste, apresentar &agrave; Vossa Senhoria o DESPACHO a seguir, por mim emitido, que aprova os documentos de finaliza&ccedil;&atilde;o do Est&aacute;gio Supervisionado do(a) estudante Gustavo Henrique de Moraes (SP3072037), regularmente matriculado(a) no curso  desta institui&ccedil;&atilde;o.</span></p>
+<p style='margin-left: 40px; text-align: justify; font-family: Arial, Sans Serif;'><span style='color:null;'>Venho, por meio deste, apresentar &agrave; Vossa Senhoria o DESPACHO a seguir, por mim emitido, que aprova os documentos de finaliza&ccedil;&atilde;o do Est&aacute;gio Supervisionado do(a) estudante ${aluno.nome} (${aluno.prontuario}), regularmente matriculado(a) no curso  desta institui&ccedil;&atilde;o.</span></p>
 
 <p>&nbsp;</p>
 
@@ -327,20 +402,20 @@ if (estagio.obrigatorio)
   border-right:none;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:
   solid windowtext .5pt;mso-border-bottom-alt:solid windowtext .5pt;padding:
   0cm 3.5pt 0cm 3.5pt;height:21.4pt' width='326'>
-                        <p class='MsoNormal'><span style='color:null;'><b><span style='font-size: 11pt; font-family: &quot;Arial&quot;, sans-serif;'>Aluno: </span></b>Gustavo Henrique de Moraes</span></p>
+                        <p class='MsoNormal'><span style='color:null;'><b><span style='font-size: 11pt; font-family: &quot;Arial&quot;, sans-serif;'>Aluno: </span></b>${aluno.nome}</span></p>
                         </td>
                         <td colspan='6' style='width:244.5pt;border:solid windowtext 1.0pt;
   border-left:none;mso-border-top-alt:solid windowtext .5pt;mso-border-bottom-alt:
   solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:
   0cm 3.5pt 0cm 3.5pt;height:21.4pt' width='326'>
-                        <p align='right' class='MsoNormal' style='text-align:right'><span style='color:null;'><b><span style='font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif'>Matr&iacute;cula n&ordm;: </span></b><span style='font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif'>SP3072037</span></span></p>
+                        <p align='right' class='MsoNormal' style='text-align:right'><span style='color:null;'><b><span style='font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif'>Matr&iacute;cula n&ordm;: </span></b><span style='font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif'>${aluno.prontuario}</span></span></p>
                         </td>
                 </tr>
                 <tr style='mso-yfti-irow:1;height:21.4pt'>
                         <td colspan='8' nowrap='nowrap' style='width:488.95pt;border:solid windowtext 1.0pt;
   border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
   padding:0cm 3.5pt 0cm 3.5pt;height:21.4pt' width='652'>
-                        <p class='MsoNormal'><span style='color:null;'><b><span style='font-size: 11pt; font-family: &quot;Arial&quot;, sans-serif;'>Nome da Unidade Concedente: </span></b>IFSP - Campus São Paulo</span></p>
+                        <p class='MsoNormal'><span style='color:null;'><b><span style='font-size: 11pt; font-family: &quot;Arial&quot;, sans-serif;'>Nome da Unidade Concedente: </span></b>${empresa}</span></p>
                         </td>
                 </tr>
                 <tr style='mso-yfti-irow:2;height:23.75pt'>
@@ -388,7 +463,7 @@ if (estagio.obrigatorio)
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='143'>
-                        <p class='MsoNormal' style='text-align: center;'><span style='color:null;'><span style='font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif'>18/11/2024 a 30/12/2024</span></span></p>
+                        <p class='MsoNormal' style='text-align: center;'><span style='color:null;'><span style='font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif'>${formatarDataSimples(estagio.dataInicio)} a ${formatarDataSimples(estagio.dataInicio)}</span></span></p>
                         </td>
                         <td nowrap='nowrap' style='width:44.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
@@ -413,32 +488,14 @@ if (estagio.obrigatorio)
                         <p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'>-</span></p>
                         </td>
                 </tr>
-                <tr>
-                        <td nowrap='nowrap' style='border-bottom:1px solid black; width:187px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:1px solid black'>
-                        <p align='center' style='text-align:center'><span style='color:null'><span style='font-size:9.0pt'><span style='font-family:&quot;Arial&quot;,sans-serif'>Relat&oacute;rio Mensal</span></span></span></p>
-                        </td>
-                        <td colspan='2' nowrap='nowrap' style='border-bottom:1px solid black; width:143px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
-                        <p style='text-align:center'><span style='color:null'><span style='font-size:9.0pt'><span style='font-family:&quot;Arial&quot;,sans-serif'>XX/XX/XXXX a XX/XX/XXXX</span></span></span></p>
-                        </td>
-                        <td nowrap='nowrap' style='border-bottom:1px solid black; width:60px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
-                        <p align='center' style='text-align:center'><span style='color:null'><span style='font-size:9pt'><span style='font-family:&quot;Arial&quot;, sans-serif'>(X) sim</span></span></span></p>
-                        </td>
-                        <td nowrap='nowrap' style='width:44.85pt;border-top:none;border-left:none;
-                        border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-                        mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-                        mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' style='width:57px'>
-                        <p align='center' style='text-align:center'><span style='color:null'><span style='font-size:9pt'><span style='font-family:&quot;Arial&quot;, sans-serif'>(&nbsp; )</span></span><span style='font-size:9pt'><span style='font-family:&quot;Arial&quot;, sans-serif'> n&atilde;o</span></span></span></p>
-                        </td>
-                        <td nowrap='nowrap' style='width:44.85pt;border-top:none;border-left:none;
-  border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='59'><p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span class='GramE'><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>(X)</span></span><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'> sim</span></span></p></td><td style='width:47.7pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='64'><p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>( ) n&atilde;o</span></span></p></td>
-                        <td style='border-bottom:1px solid black; width:83px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
-                        <p align='center' style='text-align:center'>0</p>
-                        </td>
-                </tr>
-                <tr>
-                        <td nowrap='nowrap' style='border-bottom:1px solid black; width:187px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:1px solid black'>
+
+
+
+
+               ` + relatorioString + `
+
+
+  <td nowrap='nowrap' style='border-bottom:1px solid black; width:187px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:1px solid black'>
                         <p align='center' style='text-align:center'><span style='color:null'><span style='font-size:9.0pt'><span style='font-family:&quot;Arial&quot;,sans-serif'>Termo de Realiza&ccedil;&atilde;o</span></span></span></p>
                         </td>
                         <td colspan='2' nowrap='nowrap' style='border-bottom:1px solid black; width:143px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
@@ -456,11 +513,13 @@ if (estagio.obrigatorio)
                         <td nowrap='nowrap' style='width:44.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='59'><p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span class='GramE'><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>(X)</span></span><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'> sim</span></span></p></td><td style='width:47.7pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='64'><p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>( ) n&atilde;o</span></span></p></td>
+  mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='59'><p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span class='GramE'><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>(${estagioObrigatorio})</span></span><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'> sim</span></span></p></td><td style='width:47.7pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='64'><p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span style='font-size: 9pt; font-family: &quot;Arial&quot;, sans-serif;'>(${estagioNaoObrigatorio} ) n&atilde;o</span></span></p></td>
                         <td style='border-bottom:1px solid black; width:83px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
                         <p align='center' style='text-align:center'>360</p>
                         </td>
                 </tr>
+
+
         </tbody>
 </table>
 </div>
@@ -478,7 +537,7 @@ right;vertical-align:baseline'>&nbsp;</p>
 right;vertical-align:baseline'>&nbsp;</p>
 
 <p align='right' class='paragraphscxw76620377bcx0' style='margin:0cm;text-align:
-right;vertical-align:baseline'><span style='color:null;'><span class='normaltextrunscxw76620377bcx0'><span style='font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif'>S&atilde;o Paulo,&nbsp;</span></span><span class='normaltextrunscxw76620377bcx0'><span style='font-size: 11pt; font-family: &quot;Arial&quot;, sans-serif; background: rgb(225, 227, 230) none repeat scroll 0% 0%;'> 21 de novembro de 2024<span class='eopscxw76620377bcx0'><span style='font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif'>.</span></span></span></span></span></p>
+right;vertical-align:baseline'><span style='color:null;'><span class='normaltextrunscxw76620377bcx0'><span style='font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif'>S&atilde;o Paulo,&nbsp;</span></span><span class='normaltextrunscxw76620377bcx0'><span style='font-size: 11pt; font-family: &quot;Arial&quot;, sans-serif; background: rgb(225, 227, 230) none repeat scroll 0% 0%;'> ${formatarDataExtenso()}<span class='eopscxw76620377bcx0'><span style='font-size:11.0pt;font-family:&quot;Arial&quot;,sans-serif'>.</span></span></span></span></span></p>
 
 <p class='MsoNormal' style='text-align:justify'>&nbsp;</p>
 
@@ -502,7 +561,7 @@ right;vertical-align:baseline'><span style='color:null;'><span class='normaltext
   font-family:&quot;Arial&quot;,sans-serif'>Nome:</span></span></span></p>
                         </td>
                         <td style='width:11.0cm;padding:0cm 0cm 0cm 0cm' valign='top' width='416'>
-                        <p class='MsoNormal' style='text-align:justify'><span style='color:null;'><span class='normaltextrunscxw246734469bcx0'><span style='font-size: 11pt; font-family: &quot;Arial&quot;, sans-serif; background: rgb(225, 227, 230) none repeat scroll 0% 0%;'><b>&nbsp;Igor de Moraes Sampaio&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</b></span></span></span></p>
+                        <p class='MsoNormal' style='text-align:justify'><span style='color:null;'><span class='normaltextrunscxw246734469bcx0'><span style='font-size: 11pt; font-family: &quot;Arial&quot;, sans-serif; background: rgb(225, 227, 230) none repeat scroll 0% 0%;'><b>&nbsp;${estagio.orientador?.nome|| 'Não definido'}&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</b></span></span></span></p>
                         </td>
                 </tr>
                 <tr style='mso-yfti-irow:2;mso-yfti-lastrow:yes'>
@@ -511,7 +570,7 @@ right;vertical-align:baseline'><span style='color:null;'><span class='normaltext
   font-family:&quot;Arial&quot;,sans-serif'>E-mail institucional:</span></span></span></p>
                         </td>
                         <td style='width:11.0cm;padding:0cm 0cm 0cm 0cm' valign='top' width='416'>
-                        <p class='MsoNormal' style='text-align:justify'><span style='color:null;'><span class='normaltextrunscxw246734469bcx0'><span style='font-size: 11pt; font-family: &quot;Arial&quot;, sans-serif; background: rgb(225, 227, 230) none repeat scroll 0% 0%;'><b>&nbsp;igor.sampaio@ifsp.edu.br&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b> </span></span></span></p>
+                        <p class='MsoNormal' style='text-align:justify'><span style='color:null;'><span class='normaltextrunscxw246734469bcx0'><span style='font-size: 11pt; font-family: &quot;Arial&quot;, sans-serif; background: rgb(225, 227, 230) none repeat scroll 0% 0%;'><b>&nbsp;${estagio.orientador?.email|| 'Não definido'}&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</b> </span></span></span></p>
                         </td>
                 </tr>
         </tbody>
@@ -521,7 +580,7 @@ right;vertical-align:baseline'><span style='color:null;'><span class='normaltext
 
 <p style='text-align:center'>&nbsp;</p>"
   `;
-  copiarParaAreaDeTransferencia(texto);
+  copiarParaAreaDeTransferencia(despachoFinal);
 }
 
 
@@ -550,7 +609,7 @@ function formatarDataSimples(data) {
     <!-- <FileNavComp /> -->
 
     <div class="p-3">
-  
+
       <div class="d-flex justify-content-between align-items-center">
         <h2 class="me-auto">Meus Estágios:</h2>
         <div class="d-flex gap-3">
