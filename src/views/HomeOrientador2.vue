@@ -63,68 +63,8 @@ onMounted(async () => {
     console.error("Erro ao buscar os estágios:", error);
   }
 });
-onMounted(async () => {
-  // Inicializa os relatórios quando o selectedEstagio for definido
-  watch(selectedEstagio, async (newEstagioId) => {
-    console.log("selectedEstagio mudou:", newEstagioId); // Verifique se o ID é válido
-
-    // Acesse o objeto bruto com toRaw()
-    const estagioBruto = toRaw(newEstagioId);
-
-    // Verifique se a estrutura do objeto contém o ID correto
-    const idEstagio = estagioBruto?.aluno?.id || estagioBruto?.id; // Ajuste conforme a estrutura real
-
-    if (idEstagio) {
-      await buscarRelatorios(idEstagio);
-      atualizarRelatorioString();
-    } else {
-      console.error("ID do estágio não encontrado.");
-    }
-  });
-});
-
-async function buscarRelatorios(estagioId) {
-  try {
-    // Verifique se estagioId é válido antes de fazer a requisição
-    if (!estagioId) {
-      console.error("ID do estágio inválido.");
-      return;
-    }
-
-    const response = await axios.get(`http://localhost:8082/FRAN/relatorios/${estagioId}/relatorios`);
-    console.log("Resposta da API:", response.data); // Verifique o que a API retorna
-    relatorios.value = response.data;
-  } catch (error) {
-    console.error("Erro ao buscar os relatórios:", error);
-  }
-}
-
-function atualizarRelatorioString() {
-  if (!relatorios.value.length) {
-    console.warn("Nenhum relatório encontrado."); // Log para depuração
-    return;
-  }
-
-  // Continue com a manipulação da string dos relatórios
-}
 
 
-  relatorioString = ""; // Certifique-se de reiniciar a string
-  relatorios.value.forEach((relatorio) => {
-    relatorioString += `
-      <tr>
-        <td nowrap='nowrap' style='border-bottom:1px solid black; width:187px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:1px solid black'>
-          <p align='center' style='text-align:center'>${relatorio.titulo || 'N/A'}</p>
-        </td>
-        <td colspan='2' nowrap='nowrap' style='border-bottom:1px solid black; width:143px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
-          <p align='center' style='text-align:center'>${relatorio.periodo || 'N/A'}</p>
-        </td>
-        <td nowrap='nowrap' style='border-bottom:1px solid black; width:60px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
-          <p align='center' style='text-align:center'>0</p>
-        </td>
-      </tr>`;
-  });
-  console.log("Relatórios gerados:", relatorioString); // Valide a string
 
 
 async function copiarParaAreaDeTransferencia(texto) {
@@ -353,6 +293,41 @@ function getDespachoFinal() {
   const aluno = estagio.aluno;
   const empresa = estagio.empresa.nomeFantasia || "Não definido"; // Caso não tenha empresa
 
+const criarRelatoriosMensais = (estagio) => {
+  const inicio = new Date(estagio.dataInicio); // Copiar para evitar modificar a data original
+  const fim = new Date(estagio.dataTermino); // Copiar para evitar modificar a data original
+  const relatorios = [];
+
+  let mesAtual = new Date(inicio);
+
+  while (mesAtual <= fim) {
+    const inicioMes = mesAtual.getTime() === inicio.getTime() 
+      ? new Date(mesAtual) // Se for o primeiro mês, começa na data de início do estágio
+      : new Date(mesAtual.getFullYear(), mesAtual.getMonth(), 1);
+
+    const fimMes = mesAtual.getMonth() === fim.getMonth() && mesAtual.getFullYear() === fim.getFullYear() 
+      ? new Date(fim) // Se for o último mês, termina na data de término do estágio
+      : new Date(mesAtual.getFullYear(), mesAtual.getMonth() + 1, 0); // Último dia do mês
+
+    relatorios.push({
+      inicio: inicioMes,
+      fim: fimMes
+    });
+
+    // Avançar para o próximo mês
+    mesAtual.setMonth(mesAtual.getMonth() + 1);
+  }
+
+  return relatorios;
+};
+
+const dataRelatorios = criarRelatoriosMensais(estagio);
+dataRelatorios.forEach((relatorio, index) => {
+  console.log(`Relatório ${index + 1}:`);
+  console.log(`Início: ${relatorio.inicio.toLocaleDateString()}`);
+  console.log(`Fim: ${relatorio.fim.toLocaleDateString()}`);
+});
+
   let estagioNaoObrigatorio = ""
   let estagioObrigatorio = ""
 
@@ -364,6 +339,48 @@ if (estagio.obrigatorio)
 }
   console.log("Copiando pra área de transferência");
 
+  
+
+
+  relatorioString = ""; // Certifique-se de reiniciar a string
+  dataRelatorios.forEach((relatorio) => {
+    // Extrai as datas formatadas
+    const dataInicio = relatorio.inicio.toLocaleDateString("pt-BR");
+    const dataFim = relatorio.fim.toLocaleDateString("pt-BR");
+
+    // Concatena a string com a linha do relatório
+    relatorioString += ` <tr>
+      <td nowrap='nowrap' style='border-bottom:1px solid black; width:187px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:1px solid black'>
+        <p align='center' style='text-align:center'><span style='color:null'><span style='font-size:9.0pt'><span style='font-family:"Arial",sans-serif'>Relat&oacute;rio Mensal</span></span></span></p>
+      </td>
+      <td colspan='2' nowrap='nowrap' style='border-bottom:1px solid black; width:143px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
+        <p style='text-align:center'><span style='color:null'><span style='font-size:9.0pt'><span style='font-family:"Arial",sans-serif'>${dataInicio} a ${dataFim}</span></span></span></p>
+      </td>
+      <td nowrap='nowrap' style='border-bottom:1px solid black; width:60px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
+        <p align='center' style='text-align:center'><span style='color:null'><span style='font-size:9pt'><span style='font-family:"Arial", sans-serif'>(X) sim</span></span></span></p>
+      </td>
+      <td nowrap='nowrap' style='width:44.85pt;border-top:none;border-left:none;
+        border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+        mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+        mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' style='width:57px'>
+        <p align='center' style='text-align:center'><span style='color:null'><span style='font-size:9pt'><span style='font-family:"Arial", sans-serif'>(&nbsp; )</span></span><span style='font-size:9pt'><span style='font-family:"Arial", sans-serif'> n&atilde;o</span></span></span></p>
+      </td>
+      <td nowrap='nowrap' style='width:44.85pt;border-top:none;border-left:none;
+        border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+        mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+        mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='59'>
+        <p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span class='GramE'><span style='font-size: 9pt; font-family: "Arial", sans-serif;'>(${estagioObrigatorio})</span></span><span style='font-size: 9pt; font-family: "Arial", sans-serif;'> sim</span></span></p>
+      </td>
+      <td style='width:47.7pt;border-top:none;border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='64'>
+        <p align='center' class='MsoNormal' style='text-align:center'><span style='color:null;'><span style='font-size: 9pt; font-family: "Arial", sans-serif;'>(${estagioNaoObrigatorio}) n&atilde;o</span></span></p>
+      </td>
+      <td style='border-bottom:1px solid black; width:83px; padding:0cm 5px 0cm 5px; height:19px; border-top:none; border-right:1px solid black; border-left:none'>
+        <p align='center' style='text-align:center'>0</p>
+      </td>
+    </tr>`;
+  });
+
+  console.log("Relatórios gerados:", relatorioString); // Valide a string
 
 
   console.log("Relatorios: "+relatorioString)
@@ -371,7 +388,7 @@ if (estagio.obrigatorio)
 
 
   const despachoFinal = `
-    "<p style='text-align: justify;'><span style='color:null;'><span style='font-size:12pt; font-family:&quot;Arial&quot;,sans-serif;'>&Agrave; Coordenadoria de Integra&ccedil;&atilde;o Escola-Empresa - CEE-SPO</span></span></p>
+    <p style='text-align: justify;'><span style='color:null;'><span style='font-size:12pt; font-family:&quot;Arial&quot;,sans-serif;'>&Agrave; Coordenadoria de Integra&ccedil;&atilde;o Escola-Empresa - CEE-SPO</span></span></p>
 
 <p style='text-align: justify;'>&nbsp;</p>
 
@@ -463,8 +480,13 @@ if (estagio.obrigatorio)
   border-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
   mso-border-alt:solid windowtext .5pt;padding:0cm 3.5pt 0cm 3.5pt;height:14.25pt' width='143'>
-                        <p class='MsoNormal' style='text-align: center;'><span style='color:null;'><span style='font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif'>${formatarDataSimples(estagio.dataInicio)} a ${formatarDataSimples(estagio.dataInicio)}</span></span></p>
-                        </td>
+<p class='MsoNormal' style='text-align: center;'>
+    <span style='color:null;'>
+        <span style='font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif'>
+            ${new Date(estagio.dataInicio).toLocaleDateString("pt-BR")} a ${new Date(estagio.dataTermino).toLocaleDateString("pt-BR")}
+        </span>
+    </span>
+</p>                        </td>
                         <td nowrap='nowrap' style='width:44.85pt;border-top:none;border-left:none;
   border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
   mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
@@ -578,7 +600,7 @@ right;vertical-align:baseline'><span style='color:null;'><span class='normaltext
 </div>
 </div>
 
-<p style='text-align:center'>&nbsp;</p>"
+<p style='text-align:center'>&nbsp;</p>
   `;
   copiarParaAreaDeTransferencia(despachoFinal);
 }
