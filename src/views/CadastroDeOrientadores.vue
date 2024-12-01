@@ -38,46 +38,52 @@ const errors = ref({
 })
 
 function validateForm() {
-  const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/; // Permite letras com acento e espaços
-  const prontuarioRegex = /^[a-zA-Z]{0,3}[0-9]{6,8}$/; // De 0 a 3 letras seguidas de 6 a 8 números
+  const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:\s[a-zA-ZÀ-ÖØ-öø-ÿ]+)+$/;
+  const prontuarioRegex = /^[a-zA-Z]{2,3}[0-9]{6,8}$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*ifsp\.edu\.br$/;
-  const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/; // Pelo menos uma letra, um número e 8 caracteres
+  const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 
   errors.value = {
     nome: !nomeRegex.test(nome.value),
     prontuario: !prontuarioRegex.test(prontuario.value),
     email: !emailRegex.test(email.value),
     senha: !senhaRegex.test(senha.value),
-    confirmarSenha: senha.value !== confirmarSenha.value,
+    confirmarSenha: !confirmarSenha.value || senha.value !== confirmarSenha.value, 
   };
 
   return !Object.values(errors.value).some(error => error);
 }
 
 function handleBlur(field) {
-  const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/;
-  const prontuarioRegex = /^[a-zA-Z]{0,3}[0-9]{6,8}$/;
+  const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:\s[a-zA-ZÀ-ÖØ-öø-ÿ]+)+$/;
+  const prontuarioRegex = /^[a-zA-Z]{1,3}[0-9]{6,8}$/;  
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*ifsp\.edu\.br$/;
-  const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/; // Pelo menos uma letra, um número e 8 caracteres
+  const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 
   touched.value[field] = true;
+
   if (field === "nome") {
     errors.value.nome = !nomeRegex.test(nome.value);
   } else if (field === "prontuario") {
-    errors.value.prontuario = !prontuarioRegex.test(prontuario.value);
+    errors.value.prontuario = !prontuarioRegex.test(prontuario.value);  
   } else if (field === "email") {
     errors.value.email = !emailRegex.test(email.value);
   } else if (field === "senha") {
     errors.value.senha = !senhaRegex.test(senha.value);
   } else if (field === "confirmarSenha") {
-    errors.value.confirmarSenha = senha.value !== confirmarSenha.value;
+    errors.value.confirmarSenha = !confirmarSenha.value || senha.value !== confirmarSenha.value;
   }
 }
 
 async function handleSubmit(event) {
-  event.preventDefault()
+  event.preventDefault();
+
+  Object.keys(touched.value).forEach((field) => {
+    touched.value[field] = true;
+  });
+
   if (!validateForm()) {
-    return
+    return;
   }
 
   try {
@@ -87,18 +93,17 @@ async function handleSubmit(event) {
       email: email.value,
       telefone: telefone.value,
       password: senha.value,
-    }
+    };
     const response = await axios.post(
       'http://localhost:8082/FRAN/orientadores/signup',
       orientador
-    )
-    
-    console.log(response)
-    router.push('/login')
-    
+    );
+
+    console.log(response);
+    router.push('/login');
   } catch (error) {
-    errorMessage.value = error.response?.data || error.message
-    console.log('Erro ao cadastrar orientador: ' + (error.response?.data || error.message))
+    errorMessage.value = error.response?.data || error.message;
+    console.log('Erro ao cadastrar orientador: ' + (error.response?.data || error.message));
   }
 }
 </script>
@@ -113,14 +118,16 @@ async function handleSubmit(event) {
       <div class="form-container">
         <BForm @submit.prevent="handleSubmit">
           <BFormGroup label="Nome Completo:">
-            <BFormInput 
-              v-model="nome" 
-              type="text" 
-              :state="touched.nome ? !errors.nome : null" 
-              @blur="handleBlur('nome')"
-            />
-            <BFormInvalidFeedback v-if="errors.nome">Nome deve conter apenas letras e espaços.</BFormInvalidFeedback>
-          </BFormGroup>
+          <BFormInput 
+            v-model="nome" 
+            type="text" 
+            :state="touched.nome ? !errors.nome : null" 
+            @blur="handleBlur('nome')"
+          />
+          <BFormInvalidFeedback v-if="errors.nome">
+            Nome deve conter apenas letras e pelo menos um espaço.
+          </BFormInvalidFeedback>
+        </BFormGroup>
 
           <BFormGroup label="Prontuário:">
             <BFormInput 
@@ -161,7 +168,9 @@ async function handleSubmit(event) {
               :state="touched.confirmarSenha ? !errors.confirmarSenha : null" 
               @blur="handleBlur('confirmarSenha')"
             />
-            <BFormInvalidFeedback v-if="errors.confirmarSenha">As senhas não coincidem.</BFormInvalidFeedback>
+            <BFormInvalidFeedback v-if="errors.confirmarSenha">
+              Confirmação de senha é obrigatória e deve coincidir com a senha.
+            </BFormInvalidFeedback>
           </BFormGroup>
 
           <div class="form-check form-check-custom">
@@ -180,9 +189,6 @@ async function handleSubmit(event) {
 
   <FooterComp />
 </template>
-
-
-
 
 <style scoped>
 h2 {
