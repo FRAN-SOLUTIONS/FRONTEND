@@ -251,12 +251,11 @@ function formatarData(data) {
 .nav-link.active {
   background-color: transparent !important;
   color: white !important;
-  border-bottom: 1px solid white;
+  border-bottom: 2px solid white;
   box-sizing: border-box;
 }
 
 .nav-link:hover {
-  font-size: 1.2rem;
   font-weight: bold;
 }
 

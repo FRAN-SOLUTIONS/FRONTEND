@@ -39,7 +39,8 @@ async function handleSubmit(event) {
     !cargaDiaria.value ||
     !dataInicio.value ||
     !dataTermino.value ||
-    !prontuarioAluno.value
+    !prontuarioAluno.value ||
+    !razaoSocial.value
   ) {
     alert('Por favor, preencha todos os campos obrigatórios.')
     return
@@ -118,8 +119,8 @@ async function handleSubmit(event) {
         </div>
 
         <div class="form-group">
-          <label for="prontuarioAluno">Nome fantasia da empresa:</label>
-          <input v-model="nomeFantasia" id="nomeFantasia" class="form-control" type="text" required />
+          <label for="prontuarioAluno">Nome fantasia da empresa(opcional):</label>
+          <input v-model="nomeFantasia" id="nomeFantasia" class="form-control" type="text"/>
         </div>
 
         <div class="form-group">
@@ -128,18 +129,18 @@ async function handleSubmit(event) {
         </div>
 
         <div class="form-group">
-          <label for="prontuarioAluno">CNPJ da empresa:</label>
-          <input v-model="cnpj" id="cnpj" class="form-control" type="text" required />
+          <label for="prontuarioAluno">CNPJ da empresa(opcional):</label>
+          <input v-model="cnpj" id="cnpj" class="form-control" type="text"/>
         </div>
 
         <div class="form-group">
-          <label for="prontuarioAluno">E-mail da empresa:</label>
-          <input v-model="email" id="email" class="form-control" type="text" required />
+          <label for="prontuarioAluno">E-mail da empresa(opcional):</label>
+          <input v-model="email" id="email" class="form-control" type="text"/>
         </div>
 
         <div class="form-group">
-          <label for="prontuarioAluno">Telefone da empresa:</label>
-          <input v-model="telefone" id="telefone" class="form-control" type="text" required />
+          <label for="prontuarioAluno">Telefone da empresa(opcional):</label>
+          <input v-model="telefone" id="telefone" class="form-control" type="text"/>
         </div>
         <!-- <button type="submit" class="btn-custom mt-2">Cadastrar Estágio</button> -->
 

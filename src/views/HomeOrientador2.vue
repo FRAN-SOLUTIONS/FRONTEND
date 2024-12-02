@@ -36,7 +36,8 @@ function normalizeText(text) {
 const filteredEstagios = computed(() => {
   const normalizedSearch = normalizeText(searchValue.value);
   return estagios.value.filter(estagio =>
-      normalizeText(estagio.aluno.nome).includes(normalizedSearch)
+  normalizeText(estagio.aluno.nome).includes(normalizedSearch) ||
+  normalizeText(estagio.aluno.prontuario).includes(normalizedSearch)
   );
 });
 
@@ -657,7 +658,7 @@ function formatarDataSimples(data) {
         <div class="actions">
           <nav>
               <form class="d-flex input-group" @submit.prevent>
-                <input v-model="searchValue" class="form-control m-0 p-0" placeholder="Pesquisar Estágio" aria-label="Search" />
+                <input v-model="searchValue" class="form-control m-0 p-0" placeholder="Pesquisar Estágio" aria-label="Search" style=" text-align: center"/>
                 <i class="bi bi-search input-group-text"></i>
               </form>
           </nav>
@@ -892,6 +893,22 @@ h2 {
   & h5:first-of-type + h5{
     margin-left: 5px !important;
   }
+}
+
+.page-link.active, .active > .page-link {
+    background-color: #01400b;
+    border-color: #01400b;
+}
+
+.input-group-text {
+    background-color: #01400b;
+    color: white;
+    border: 2px solid #01400b;
+}
+
+.input-group > .form-control, .input-group > .form-select, .input-group > .form-floating {
+    border: 2px solid #01400b;
+    font-weight: bold;
 }
 
 </style>

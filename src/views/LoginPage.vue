@@ -51,17 +51,17 @@ async function handleSubmit() {
   }
 }
 
-// Função para enviar o e-mail de redefinição de senha
+
 async function sendResetEmail() {
-  if (!email.value) {
-    alert('Por favor, preencha o e-mail.')
+  if (!prontuario.value) {
+    alert('Por favor, preencha o prontuario.')
     return
   }
 
   try {
-    await axios.post('http://localhost:8082/FRAN/orientadores/forgot-password', { email: email.value })
+    await axios.post('http://localhost:8082/FRAN/orientadores/forgot-password', { prontuario: prontuario.value })
     alert('E-mail de redefinição de senha enviado! Verifique sua caixa de entrada.')
-    showResetModal.value = false // Fecha o modal após o envio
+    showResetModal.value = false 
   } catch (error) {
     console.log('Erro ao enviar o e-mail: ' + (error.response?.data || error.message))
   }
@@ -111,12 +111,11 @@ async function sendResetEmail() {
     <div class="modal">
       <h3>Redefinir Senha</h3>
       <div class="form-group">
-        <label for="email">E-mail:</label>
+        <label for="email">prontuario</label>
         <input
-          v-model="email"
-          id="email"
+          v-model="prontuario"
+          id="prontuario"
           class="form-control"
-          type="email"
           required
         />
       </div>
