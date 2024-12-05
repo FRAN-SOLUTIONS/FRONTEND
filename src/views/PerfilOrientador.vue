@@ -6,7 +6,6 @@ import FooterComp from '@/components/FooterComp.vue'
 import BotaoComp from '@/components/BotaoComp.vue'
 
 import axios from 'axios'
-axios.defaults.withCredentials = true
 
 import user1 from '@/assets/images/user1.png'
 import user2 from '@/assets/images/user2.png'
@@ -17,9 +16,14 @@ import user6 from '@/assets/images/user6.png'
 import user7 from '@/assets/images/user7.png'
 import user8 from '@/assets/images/user8.png'
 import user9 from '@/assets/images/user9.png'
-import { BForm, BFormGroup, BFormInput, BFormInvalidFeedback } from 'bootstrap-vue-3'
+import {
+  BForm,
+  BFormGroup,
+  BFormInput,
+  BFormInvalidFeedback,
+} from 'bootstrap-vue-3'
 
-
+axios.defaults.withCredentials = true
 
 const orientador = ref(null)
 const showModal = ref(false)
@@ -27,19 +31,21 @@ const editando = ref(false)
 const imagemAleatoria = ref('')
 const imagens = [user1, user2, user3, user4, user5, user6, user7, user8, user9]
 
-const senha = ref('')
-const senhaAtual = ref('')
+const atualSenha = ref('')
+const novaSenha = ref('')
 const confirmarSenha = ref('')
 const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 const errorMessage = ref('')
 
 const touched = ref({
-  senha: false,
+  atualSenha: false,
+  novaSenha: false,
   confirmarSenha: false,
 })
 
 const errors = ref({
-  senha: false,
+  atualSenha: false,
+  novaSenha: false,
   confirmarSenha: false,
 })
 
@@ -93,7 +99,7 @@ const editarInput = event => {
     input.disabled = !input.disabled
   }
 
-  if(botaoClicado.innerText === 'Editar') {
+  if (botaoClicado.innerText === 'Editar') {
     botaoClicado.innerText = 'Salvar';
   } else {
     botaoClicado.innerText = 'Editar';
@@ -101,47 +107,52 @@ const editarInput = event => {
 }
 
 function showingModal() {
-  if(showModal.value){
-    errors.value.senha = false;
-    errors.value.confirmarSenha = false;
-    touched.value.senha = false;
-    touched.value.confirmarSenha = false;
+  if (showModal.value) {
+    errors.value.atualSenha = false
+    errors.value.novaSenha = false
+    errors.value.confirmarSenha = false
+    touched.value.atualSenha = false
+    touched.value.novaSenha = false
+    touched.value.confirmarSenha = false
     errorMessage.value = ''
   }
-  showModal.value = !showModal.value;
+  showModal.value = !showModal.value
 }
 
 function handleBlur(field) {
-  touched.value[field] = true;
-  if (field === "senha") {
-    errors.value.senha = !senhaRegex.test(senha.value);
-  } else if (field === "confirmarSenha") {
-    errors.value.confirmarSenha = senha.value !== confirmarSenha.value;
+  touched.value[field] = true
+  if (field === 'atualSenha') {
+    errors.value.atualSenha = !senhaRegex.test(atualSenha.value)
+  } else if(field === 'novaSenha') {
+    errors.value.novaSenha = !senhaRegex.test(novaSenha.value)
+  } if (field === 'confirmarSenha') {
+    errors.value.confirmarSenha = novaSenha.value !== confirmarSenha.value
   }
 }
 
 function validateFormPassword() {
   errors.value = {
-    senha: !senhaRegex.test(senha.value),
-    confirmarSenha: senha.value !== confirmarSenha.value,
-  };
-  console.log(errors.value)
-  return Object.values(errors.value).some(error => error);
+    atualSenha: !senhaRegex.test(atualSenha.value),
+    novaSenha: !senhaRegex.test(novaSenha.value),
+    confirmarSenha: novaSenha.value !== confirmarSenha.value,
+  }
+
+  return Object.values(errors.value).some(error => error)
 }
 
 async function handleSubmitPassword() {
-  if(!senha.value || !confirmarSenha.value) return errorMessage.value = 'Preencha Todos os Campos!';
-  else if(validateFormPassword()) return;
+  if (!atualSenha.value || !novaSenha.value || !confirmarSenha.value)
+    return (errorMessage.value = 'Preencha Todos os Campos!')
+  else if (validateFormPassword()) return
 
   try {
-    console.log("entre no try")
-    const orientador = {
-      novaSenha: senha.value,
-      senhaAtual: senhaAtual.value
+    const submitSenha = {
+      senhaAtual: atualSenha.value,
+      novaSenha: novaSenha.value
     }
     const response = await axios.put(
-      'http://localhost:8082/FRAN/orientadores/editPassword', // Ta faltando colocar a URL correta
-      orientador
+      'http://localhost:8082/FRAN/orientadores/editPassword',
+      submitSenha,
     )
 
     console.log(response)
@@ -149,7 +160,7 @@ async function handleSubmitPassword() {
 
   } catch (error) {
     errorMessage.value = error.response?.data || error.message
-    console.log('Erro ao atualizar a senhafront: ' + (error.response?.data || error.message))
+    console.log('Erro ao atualizar a senha: ' + (error.response?.data || error.message))
   }
 }
 
@@ -160,109 +171,144 @@ async function handleSubmitPassword() {
     <HeaderLogado />
     <main class="conteudo mt-0">
       <!-- <FileNavComp /> -->
-      <div class="container text-center">
-        <div class="col d-flex flex-column align-items-center">
-          <!-- Imagem aleatória -->
-          <img
-            :src="imagemAleatoria"
-            alt="Imagem do orientador"
-            width="20%"
-            class="my-5"
-          />
-
-          <!-- Inputs -->
-          <div>
-            <!-- Nome -->
-            <div
-              v-if="orientador"
-              class="row g-3 align-items-center justify-content-between mb-3"
-            >
-              <div class="col-auto">
-                <label for="inputNome" class="col-form-label"> Nome: </label>
-              </div>
-              <div class="col-auto input-group w-75">
-                <input
-                  type="text"
-                  v-model="orientador.nome"
-                  class="form-control"
-                  id="inputNome"
-                  disabled
-                />
-                <BotaoComp @click="editarInput" titulo="Editar" tamanho="p" />
-              </div>
-            </div>
-
-            <!-- Prontuário -->
-            <div
-              v-if="orientador"
-              class="row g-3 align-items-center justify-content-between mb-3"
-            >
-              <div class="col-auto">
-                <label for="inputProntuario" class="col-form-label">
-                  Prontuário:
-                </label>
-              </div>
-              <div class="col-auto input-group w-75">
-                <input
-                  type="text"
-                  v-model="orientador.prontuario"
-                  class="form-control"
-                  id="inputProntuario"
-                  disabled
-                />
-                <BotaoComp @click="editarInput" titulo="Editar" tamanho="p" />
-              </div>
-            </div>
-
-            <!-- Email -->
-            <div
-              v-if="orientador"
-              class="row g-3 align-items-center justify-content-between mb-3"
-            >
-              <div class="col-auto">
-                <label for="inputEmail" class="col-form-label"> E-mail: </label>
-              </div>
-              <div class="col-auto input-group w-75">
-                <input
-                  type="email"
-                  v-model="orientador.email"
-                  class="form-control"
-                  id="inputEmail"
-                  disabled
-                />
-                <BotaoComp @click="editarInput" titulo="Editar" tamanho="p" />
-              </div>
-            </div>
-
-            <!-- Senha -->
-            <div
-              v-if="orientador"
-              class="row g-3 align-items-center justify-content-between mb-5"
-            >
-              <div class="col-auto">
-                <label for="inputSenha" class="col-form-label"> Senha: </label>
-              </div>
-              <div class="col-auto input-group w-75">
-                <input
-                  type="password"
-                  placeholder="*********"
-                  class="form-control"
-                  id="inputSenha"
-                  disabled
-                />
-                <BotaoComp @click="showingModal" titulo="Editar" tamanho="p" />
-              </div>
-            </div>
-          </div>
-
-          <!-- Botões -->
-          <div>
-            <BotaoComp
-              @click="salvarAlteracoes"
-              titulo="Salvar alterações"
-              tamanho="g"
-              class="mb-3"
+      <div class="container vh-100 text-center">
+        <div class="col d-flex justify-content-center align-items-center h-100">
+          <div class="card flex-row justify-content-between w-75">
+            <!-- Imagem aleatória -->
+            <img
+              :src="imagemAleatoria"
+              alt="Imagem do orientador"
+              height="30%"
+              width="30%"
+              class="my-5"
             />
+            <div class="vr p-0"></div>
+
+            <form>
+            <div class="d-flex flex-column justify-content-center">
+              <!-- Inputs -->
+              <div id="formInputs">
+                <!-- Nome -->
+                <div
+                  v-if="orientador"
+                  class="row g-3 align-items-center justify-content-between mb-3"
+                >
+                  <div class="col-auto">
+                    <label for="inputNome" class="col-form-label">
+                      Nome:
+                    </label>
+                  </div>
+                  <div class="col-auto input-group w-75">
+                    <input
+                      type="text"
+                      v-model="orientador.nome"
+                      class="form-control"
+                      id="inputNome"
+                      on
+                      disabled
+                    />
+                    <BotaoComp
+                      @click="editarInput"
+                      titulo="Editar"
+                      tamanho="p"
+                      type="button"
+                    />
+                  </div>
+                </div>
+
+                <!-- Prontuário -->
+                <div
+                  v-if="orientador"
+                  class="row g-3 align-items-center justify-content-between mb-3"
+                >
+                  <div class="col-auto">
+                    <label for="inputProntuario" class="col-form-label">
+                      Prontuário:
+                    </label>
+                  </div>
+                  <div class="col-auto input-group w-75">
+                    <input
+                      type="text"
+                      v-model="orientador.prontuario"
+                      class="form-control"
+                      id="inputProntuario"
+                      disabled
+                    />
+                    <BotaoComp
+                      @click="editarInput"
+                      titulo="Editar"
+                      tamanho="p"
+                      type="button"
+                    />
+                  </div>
+                </div>
+
+                <!-- Email -->
+                <div
+                  v-if="orientador"
+                  class="row g-3 align-items-center justify-content-between mb-3"
+                >
+                  <div class="col-auto">
+                    <label for="inputEmail" class="col-form-label">
+                      E-mail:
+                    </label>
+                  </div>
+                  <div class="col-auto input-group w-75">
+                    <input
+                      type="email"
+                      v-model="orientador.email"
+                      class="form-control"
+                      id="inputEmail"
+                      disabled
+                    />
+                    <BotaoComp
+                      @click="editarInput"
+                      titulo="Editar"
+                      tamanho="p"
+                      type="button"
+                    />
+                  </div>
+                </div>
+
+                <!-- Senha -->
+                <div
+                  v-if="orientador"
+                  class="row g-3 align-items-center justify-content-between mb-5"
+                >
+                  <div class="col-auto">
+                    <label for="inputSenha" class="col-form-label">
+                      Senha:
+                    </label>
+                  </div>
+                  <div class="col-auto input-group w-75">
+                    <input
+                      type="password"
+                      placeholder="*********"
+                      class="form-control"
+                      id="inputSenha"
+                      disabled
+                    />
+                    <BotaoComp
+                      @click="showingModal"
+                      titulo="Editar"
+                      tamanho="p"
+                      type="button"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Botão -->
+              <div>
+                <BotaoComp
+                  @click="salvarAlteracoes"
+                  titulo="Salvar alterações"
+                  tamanho="g"
+                  type="submit"
+                />
+              </div>
+            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -270,25 +316,37 @@ async function handleSubmitPassword() {
     <FooterComp />
 
     <!-- Modal de Senha -->
-    <div v-if="showModal" v-show="showModal" class="modal-overlay" @click.self="showingModal">
+    <div
+      v-if="showModal"
+      v-show="showModal"
+      class="modal-overlay"
+      @click.self="showingModal"
+    >
       <div class="form-container">
         <BForm @submit.prevent="handleSubmitPassword">
-          <BFormGroup label="Senha atual:">
+          <BFormGroup label="Senha Atual:">
             <BFormInput
-              v-model="senhaAtual"
+              v-model="atualSenha"
               type="password"
-              :state="touched.senhaAtual ? !errors.senhaAtual : null"
-              @blur="handleBlur('senhaAtual')"
+              :state="touched.atualSenha ? !errors.atualSenha : null"
+              @blur="handleBlur('atualSenha')"
             />
+            <BFormInvalidFeedback class="text-center" v-if="errors.atualSenha"
+            >Senha deve ter pelo menos 8 caracteres, incluindo letras e
+              números.
+            </BFormInvalidFeedback>
           </BFormGroup>
-          <BFormGroup label="Senha:">
+          <BFormGroup label="Nova Senha:">
             <BFormInput
-              v-model="senha"
+              v-model="novaSenha"
               type="password"
-              :state="touched.senha ? !errors.senha : null"
-              @blur="handleBlur('senha')"
+              :state="touched.novaSenha ? !errors.novaSenha : null"
+              @blur="handleBlur('novaSenha')"
             />
-            <BFormInvalidFeedback class="text-center" v-if="errors.senha">Senha deve ter pelo menos 8 caracteres, incluindo letras e números.</BFormInvalidFeedback>
+            <BFormInvalidFeedback class="text-center" v-if="errors.novaSenha"
+              >Senha deve ter pelo menos 8 caracteres, incluindo letras e
+              números.
+            </BFormInvalidFeedback>
           </BFormGroup>
           <BFormGroup label="Confirmar Senha:">
             <BFormInput
@@ -297,7 +355,11 @@ async function handleSubmitPassword() {
               :state="touched.confirmarSenha ? !errors.confirmarSenha : null"
               @blur="handleBlur('confirmarSenha')"
             />
-            <BFormInvalidFeedback class="text-center" v-if="errors.confirmarSenha">As senhas não coincidem.</BFormInvalidFeedback>
+            <BFormInvalidFeedback
+              class="text-center"
+              v-if="errors.confirmarSenha"
+              >As senhas não coincidem.
+            </BFormInvalidFeedback>
           </BFormGroup>
           <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
           <BotaoComp titulo="Salvar Senha" type="submit" />
@@ -309,8 +371,14 @@ async function handleSubmitPassword() {
 </template>
 
 <style scoped>
-input {
-  width: 300px;
+.card {
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  width: 100%;
 }
 
 .form-container {
@@ -322,27 +390,6 @@ input {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Remove o fundo azul nos campos */
-.form-control {
-  background-color: transparent !important;
-  border-color: #ced4da; /* Cor padrão para borda */
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-/* Verde para válido */
-.form-control.is-valid {
-  background-color: transparent !important;
-  border-color: #28a745 !important;
-  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
-}
-
-/* Vermelho para inválido */
-.form-control.is-invalid {
-  background-color: transparent !important;
-  border-color: #dc3545 !important;
-  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
 }
 
 .error-message {
