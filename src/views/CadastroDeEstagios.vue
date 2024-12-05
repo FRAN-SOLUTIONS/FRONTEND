@@ -172,7 +172,7 @@ main {
 }
 
 .form-container {
-  background-color: #fff;
+  background-color: #fff; /* Mantém o fundo branco do container */
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -193,23 +193,14 @@ main {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: #eaebee;
+  background-color: transparent;
 }
 
-/* .btn-custom {
-  display: block;
-  width: 50%;
-  padding: 10px;
-  background-color: #01400b;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: center;
-  margin: 0 auto;
+/* Remove o fundo azul e bordas coloridas nos campos válidos/inválidos */
+.form-control.is-valid,
+.form-control.is-invalid {
+  background-color: transparent !important;
+  border-color: #ccc !important;
+  box-shadow: none !important;
 }
-
-.btn-custom:hover {
-  background-color: #012d08;
-} */
 </style>
