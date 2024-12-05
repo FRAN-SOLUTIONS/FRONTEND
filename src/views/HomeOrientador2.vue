@@ -694,11 +694,11 @@ function formatarDataSimples(data) {
   <FooterComp />
 
   <!-- Modal de Estágio -->
-  <div v-if="showModal" v-show="showModal" class="modal-overlay" @click.self="closeModal">
-      <div class="card container my-5">
-        <div class="card-body py-4 px-5">
+  <div v-if="showModal" v-show="showModal" class="modal" @click.self="closeModal">
+      <div class="card container modal-content my-5">
+        <div class="card-body modal-body py-4 px-5">
           <div id="Infos" class="row">
-            <div id="alunoInfo" class="col pe-0 d-flex flex-column align-items-center justify-content-center">
+            <div id="alunoInfo" class="col pe-0 d-flex flex-column justify-content-center">
               <!-- Informações do Aluno -->
               <div>
                 <h5 class="fw-bold">Nome do Aluno: </h5>
@@ -724,7 +724,7 @@ function formatarDataSimples(data) {
 
             <div class="vr p-0"></div>
 
-            <div id="estagioInfo" class="col ps-5">
+            <div id="estagioInfo" class="col d-flex flex-column justify-content-start ps-5">
               <!-- Informações do Estágio -->
               <div>
                 <h5 class="fw-bold">Período de Estágio: </h5>
@@ -852,6 +852,23 @@ h2 {
   }
 }
 
+.modal{
+  overflow-y: clip;
+}
+
+.modal-content{
+  max-height: 95vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.modal-body {
+  padding: 20px;
+  flex: 1;
+  overflow-y: auto;
+}
+
 .card {
   background-color: #f9f9f9;
   border: 1px solid #e0e0e0;
@@ -860,19 +877,6 @@ h2 {
   padding: 20px;
   transition: transform 0.3s ease;
   width: 100%;
-}
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
 }
 
 #botoes{
@@ -884,7 +888,6 @@ h2 {
 
 #alunoInfo>div, #estagioInfo>div{
   margin: 10px 0;
-  text-align: center;
 
   & *{
     margin: 0;
@@ -895,7 +898,7 @@ h2 {
   }
 }
 
-.page-link.active, .active > .page-link {
+.active > .page-link {
     background-color: #01400b;
     border-color: #01400b;
 }
@@ -906,7 +909,7 @@ h2 {
     border: 2px solid #01400b;
 }
 
-.input-group > .form-control, .input-group > .form-select, .input-group > .form-floating {
+.input-group > .form-control {
     border: 2px solid #01400b;
     font-weight: bold;
 }
