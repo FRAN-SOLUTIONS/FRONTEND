@@ -6,6 +6,7 @@ import FooterComp from '@/components/FooterComp.vue'
 import BotaoComp from '@/components/BotaoComp.vue'
 
 import axios from 'axios'
+axios.defaults.withCredentials = true
 
 import user1 from '@/assets/images/user1.png'
 import user2 from '@/assets/images/user2.png'
@@ -18,7 +19,7 @@ import user8 from '@/assets/images/user8.png'
 import user9 from '@/assets/images/user9.png'
 import { BForm, BFormGroup, BFormInput, BFormInvalidFeedback } from 'bootstrap-vue-3'
 
-axios.defaults.withCredentials = true
+
 
 const orientador = ref(null)
 const showModal = ref(false)
@@ -27,6 +28,7 @@ const imagemAleatoria = ref('')
 const imagens = [user1, user2, user3, user4, user5, user6, user7, user8, user9]
 
 const senha = ref('')
+const senhaAtual = ref('')
 const confirmarSenha = ref('')
 const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 const errorMessage = ref('')
@@ -132,11 +134,13 @@ async function handleSubmitPassword() {
   else if(validateFormPassword()) return;
 
   try {
+    console.log("entre no try")
     const orientador = {
-      password: senha.value,
+      novaSenha: senha.value,
+      senhaAtual: senhaAtual.value
     }
-    const response = await axios.post(
-      'http://localhost:8082/FRAN/orientadores/', // Ta faltando colocar a URL correta
+    const response = await axios.put(
+      'http://localhost:8082/FRAN/orientadores/editPassword', // Ta faltando colocar a URL correta
       orientador
     )
 
@@ -145,7 +149,7 @@ async function handleSubmitPassword() {
 
   } catch (error) {
     errorMessage.value = error.response?.data || error.message
-    console.log('Erro ao atualizar a senha: ' + (error.response?.data || error.message))
+    console.log('Erro ao atualizar a senhafront: ' + (error.response?.data || error.message))
   }
 }
 
@@ -269,6 +273,14 @@ async function handleSubmitPassword() {
     <div v-if="showModal" v-show="showModal" class="modal-overlay" @click.self="showingModal">
       <div class="form-container">
         <BForm @submit.prevent="handleSubmitPassword">
+          <BFormGroup label="Senha atual:">
+            <BFormInput
+              v-model="senhaAtual"
+              type="password"
+              :state="touched.senhaAtual ? !errors.senhaAtual : null"
+              @blur="handleBlur('senhaAtual')"
+            />
+          </BFormGroup>
           <BFormGroup label="Senha:">
             <BFormInput
               v-model="senha"
