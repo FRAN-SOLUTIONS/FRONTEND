@@ -22,7 +22,8 @@ const telefone = ref('');
 const email = ref('');
 const curso = ref('');
 const cursosDisponiveis = ref([]);
-const errorMessage = ref('')
+const errorMessage = ref('');
+const successMessage = ref(''); // Estado para mensagem de sucesso
 
 // Estados de validação
 const touched = reactive({
@@ -42,7 +43,7 @@ const errors = reactive({
 });
 
 // Funções de validação para cada campo
-const validateNome = () => /^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/.test(nome.value);
+const validateNome = () => /^[A-Za-zÀ-ÖØ-öø-ÿ]+(\s[A-Za-zÀ-ÖØ-öø-ÿ]+)+$/.test(nome.value);
 const validateProntuario = () => /^[a-zA-Z]{2,3}[0-9]{6,8}$/.test(prontuario.value);
 const validateTelefone = () => telefone.value === '' || /^\d{2}\d{5}-\d{4}$/.test(telefone.value); // Telefone vazio é válido
 const validateEmail = () => /^[a-zA-Z0-9._%+-]+@aluno\.ifsp\.edu\.br$/.test(email.value); // Alteração para permitir apenas @aluno.ifsp.edu.br
@@ -58,7 +59,7 @@ function handleBlur(field) {
   } else if (field === 'telefone') {
     errors.telefone = !validateTelefone();
   } else if (field === 'email') {
-    errors.email = !validateEmail();  // Atualização da validação do e-mail
+    errors.email = !validateEmail(); // Atualização da validação do e-mail
   } else if (field === 'curso') {
     errors.curso = !validateCurso();
   }
@@ -68,7 +69,7 @@ onMounted(async () => {
   try {
     const response = await axios.get('http://localhost:8082/FRAN/estagios/cursos');
     cursosDisponiveis.value = response.data;
-    console.log(cursosDisponiveis)
+    console.log(cursosDisponiveis);
   } catch (error) {
     console.error('Erro ao carregar os cursos:', error);
     errorMessage.value = 'Erro ao carregar os cursos disponíveis.';
@@ -78,19 +79,31 @@ onMounted(async () => {
 async function handleSubmit(event) {
   event.preventDefault();
 
-  const allFieldsValid = [
-    validateNome(),
-    validateProntuario(),
-    validateTelefone(), // Verifica se o telefone é válido, mas não impede o envio se estiver vazio
-    validateEmail(),
-    validateCurso(),
-  ].every(Boolean);
+  // Limpar mensagens gerais antes de validar
+  errorMessage.value = ''; // Limpa alertas gerais antes de verificar validações
+  successMessage.value = ''; // Limpa mensagens de sucesso
+  
+  // Marcar todos os campos como "tocados" para exibir os erros individuais
+  Object.keys(touched).forEach((field) => {
+    touched[field] = true;
+  });
 
-  if (!allFieldsValid) {
-    alert('Por favor, preencha todos os campos corretamente!');
-    return;
+  // Validar todos os campos e atualizar os erros
+  errors.nome = !validateNome();
+  errors.prontuario = !validateProntuario();
+  errors.telefone = !validateTelefone();
+  errors.email = !validateEmail();
+  errors.curso = !validateCurso();
+
+  // Verificar se há erros no formulário
+  const hasErrors = Object.values(errors).some((error) => error);
+
+  if (hasErrors) {
+    console.log('Erro nos campos:', errors); // Depuração: verificar erros nos campos
+    return; // Interrompe o fluxo de envio, campos individuais mostram os erros
   }
 
+  // Submeter o formulário se tudo estiver válido
   try {
     const aluno = {
       nome: nome.value,
@@ -100,16 +113,20 @@ async function handleSubmit(event) {
       curso: curso.value,
     };
     const response = await axios.post('http://localhost:8082/FRAN/alunos/signup', aluno);
-    console.log(response);
-    alert('Aluno cadastrado com sucesso!');
+    console.log('Resposta da API:', response);
+
+    // Exibir mensagem de sucesso
+    successMessage.value = 'Aluno cadastrado com sucesso!';
+    errorMessage.value = ''; // Garantir que não há mensagens de erro restantes
     router.push('/homeOrientador');
   } catch (error) {
-    errorMessage.value = error.response?.data || error.message
     console.error('Erro ao cadastrar aluno:', error);
+    errorMessage.value = error.response?.data || 'Ocorreu um erro inesperado.';
+    successMessage.value = ''; // Limpar mensagens de sucesso em caso de erro
   }
 }
-</script>
 
+</script>
 
 <template>
   <component :is="isLoggedIn ? HeaderLogado : HeaderComp" />
@@ -117,7 +134,15 @@ async function handleSubmit(event) {
   <main class="conteudo mb-5">
     <div>
       <h2 class="text-center mt-4">Informe os dados do aluno:</h2>
-      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+    
+      <!-- Mensagem de sucesso -->
+      <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
+
+     <!-- Mensagem de erro geral -->
+      <p v-if="errorMessage && !Object.values(errors).some(e => e)" class="error-message">
+        {{ errorMessage }}
+      </p>
+      
       <div class="form-container">
         <form id="cadastroForm" @submit.prevent="handleSubmit">
           <div class="row">
@@ -215,7 +240,6 @@ async function handleSubmit(event) {
               </b-form-invalid-feedback>
             </div>
           </div>
-
           <BotaoComp :titulo="'Cadastrar'" type="submit" tamanho="g" />
         </form>
       </div>
@@ -232,6 +256,12 @@ async function handleSubmit(event) {
   background-color: transparent !important;
   border-color: #ced4da; /* Cor padrão para borda */
   transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.success-message {
+  color: green;
+  text-align: center;
+  margin-top: 10px;
 }
 
 .error-message {
