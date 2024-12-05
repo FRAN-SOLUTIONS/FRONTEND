@@ -23,7 +23,7 @@ const email = ref('');
 const curso = ref('');
 const cursosDisponiveis = ref([]);
 const errorMessage = ref('');
-const successMessage = ref(''); // Estado para mensagem de sucesso
+const successMessage = ref(''); 
 
 // Estados de validação
 const touched = reactive({
@@ -43,10 +43,10 @@ const errors = reactive({
 });
 
 // Funções de validação para cada campo
-const validateNome = () => /^[A-Za-zÀ-ÖØ-öø-ÿ]+(\s[A-Za-zÀ-ÖØ-öø-ÿ]+)+$/.test(nome.value);
-const validateProntuario = () => /^[a-zA-Z]{2,3}[0-9]{6,8}$/.test(prontuario.value);
+const validateNome = () => /^[A-Za-zÀ-ÖØ-öø-ÿ]+(\s[A-Za-zÀ-ÖØ-öø-ÿ]+)+$/.test(nome.value); // Apenas com letras e espaçamento 
+const validateProntuario = () => /^[a-zA-Z]{2,3}[0-9]{6,8}$/.test(prontuario.value); // Conter de 2 a 3 letras seguidas de 6 a 8 números
 const validateTelefone = () => telefone.value === '' || /^\d{2}\d{5}-\d{4}$/.test(telefone.value); // Telefone vazio é válido
-const validateEmail = () => /^[a-zA-Z0-9._%+-]+@aluno\.ifsp\.edu\.br$/.test(email.value); // Alteração para permitir apenas @aluno.ifsp.edu.br
+const validateEmail = () => /^[a-zA-Z0-9._%+-]+@aluno\.ifsp\.edu\.br$/.test(email.value); // Permitir apenas @aluno.ifsp.edu.br
 const validateCurso = () => curso.value != '';
 
 function handleBlur(field) {
@@ -59,7 +59,7 @@ function handleBlur(field) {
   } else if (field === 'telefone') {
     errors.telefone = !validateTelefone();
   } else if (field === 'email') {
-    errors.email = !validateEmail(); // Atualização da validação do e-mail
+    errors.email = !validateEmail();
   } else if (field === 'curso') {
     errors.curso = !validateCurso();
   }
@@ -223,21 +223,28 @@ async function handleSubmit(event) {
             <div class="form-group col-12">
               <label for="curso">Curso:</label>
               <select
-                v-model="curso"
-                id="curso"
-                class="form-control"
-                :class="{ 'is-invalid': touched.curso && errors.curso }"
-                @blur="handleBlur('curso')"
-                required
+              v-model="curso"
+              id="curso"
+              class="form-control"
+              :class="{
+                'is-valid': touched.curso && !errors.curso,
+                'is-invalid': touched.curso && errors.curso
+              }"
+              @blur="handleBlur('curso')"
+              required
+            >
+              <option value="" disabled selected>Selecione um curso</option>
+              <option
+                v-for="cursoDisponivel in cursosDisponiveis"
+                :key="cursoDisponivel.id"
+                :value="cursoDisponivel.nomeCurso"
               >
-                <option value="" disabled selected>Selecione um curso</option>
-                <option v-for="cursoDisponivel in cursosDisponiveis" :key="cursoDisponivel.id" :value="cursoDisponivel.nomeCurso">
-                  {{ cursoDisponivel.nomeCurso }}
-                </option>
-              </select>
-              <b-form-invalid-feedback>
-                Por favor, selecione um curso válido.
-              </b-form-invalid-feedback>
+                {{ cursoDisponivel.nomeCurso }}
+              </option>
+            </select>
+            <b-form-invalid-feedback>
+              Por favor, selecione um curso válido.
+            </b-form-invalid-feedback>
             </div>
           </div>
           <BotaoComp :titulo="'Cadastrar'" type="submit" tamanho="g" />
@@ -248,7 +255,6 @@ async function handleSubmit(event) {
 
   <FooterComp />
 </template>
-
 
 <style scoped>
 /* Remove o fundo azul nos campos */
