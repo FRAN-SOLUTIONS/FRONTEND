@@ -56,7 +56,7 @@ function validateForm() {
 
 function handleBlur(field) {
   const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:\s[a-zA-ZÀ-ÖØ-öø-ÿ]+)+$/;
-  const prontuarioRegex = /^[a-zA-Z]{1,3}[0-9]{6,8}$/;  
+  const prontuarioRegex = /^[a-zA-Z]{2,3}[0-9]{6,8}$/;
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*ifsp\.edu\.br$/;
   const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 
@@ -129,14 +129,16 @@ async function handleSubmit(event) {
           </BFormInvalidFeedback>
         </BFormGroup>
 
-          <BFormGroup label="Prontuário:">
+        <BFormGroup label="Prontuário:">
             <BFormInput 
               v-model="prontuario" 
               type="text" 
               :state="touched.prontuario ? !errors.prontuario : null" 
               @blur="handleBlur('prontuario')"
             />
-            <BFormInvalidFeedback v-if="errors.prontuario">Prontuário deve conter de 0 a 3 letras seguidas de 6 a 8 números.</BFormInvalidFeedback>
+            <BFormInvalidFeedback v-if="errors.prontuario">
+              Prontuário deve conter de 2 a 3 letras seguidas de 6 a 8 números.
+            </BFormInvalidFeedback>
           </BFormGroup>
 
           <BFormGroup label="Email:">
