@@ -247,11 +247,30 @@ Se você tiver dúvidas, encontrar problemas ou precisar de ajuda com este proje
 
  - João Guilherme Carvalho Novaes | joaoguilhermecarvalhonovaes@gmail.com | [JoaoGuiNovaes](https://github.com/JoaoGuiNovaes)
 
+ - Gustavo Henrique de Moraes | gustavomraes104@gmail.com | [GustavoMraes](https://github.com/GustavoMraes)
+
 # Status do projeto
 
 Em andamento:
  - Início em 18/07/2024.
+ - Término da primeira versão em 29/11/2024.
 
 # Telas
 
-//Para demonstração das telas do sistema.
+![cadastro de orientador](https://github.com/user-attachments/assets/e515da40-bcb0-431a-847c-bb11f15113a3)
+
+![login](https://github.com/user-attachments/assets/ec7a5648-50cc-4105-aeac-46184545156d)
+
+![Dashboard sem nada cadastrado](https://github.com/user-attachments/assets/d25a9b09-8cc7-40e3-a542-f2938fbdfaba)
+
+![Cadastrar aluno](https://github.com/user-attachments/assets/a52b7b3f-bc08-4b16-afc0-3668bcdc1c52)
+
+![cadastro aluno preenchido](https://github.com/user-attachments/assets/547fff64-16f9-4501-bcbc-7dba8f7c76ea)
+
+![cadastrar estagio](https://github.com/user-attachments/assets/662d92fb-aa2e-4812-b350-8fc019ae7648)
+
+![cadastrar estagio 2](https://github.com/user-attachments/assets/96f229f5-ee74-4e26-8490-649289247c9c)
+
+![Perfil](https://github.com/user-attachments/assets/d05654ea-76b0-435e-8814-5645ddc574e3)
+
+![alertas](https://github.com/user-attachments/assets/68ee97b3-e5f9-4e4d-a0ce-1e92493e4698)
