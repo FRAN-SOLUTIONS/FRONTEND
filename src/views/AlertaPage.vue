@@ -8,6 +8,8 @@ import { ref } from 'vue'
 /* const dataHoje = ref(new Date().toLocaleDateString('pt-BR')) */
 //const dataHoje = ref(new Date());
 
+//ESSA QUANTIDADE DE VETORES EXAGERADAS É APENAS PARA SIMULAR OS RELATÓRIOS DOS ALUNOS JÁ CADASTRADOS, DEVE SER DESCARTADA ASSIM QUE O PROCESSO DE ALERTAS ESTIVER FUNCIONANDO.
+
 const nome = ref([]);
 const email = ref([]);
 const prontuario = ref([]);
