@@ -1,32 +1,34 @@
 <script setup>
-import HeaderComp from '@/components/HeaderComp.vue'
-import FooterComp from '@/components/FooterComp.vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import HeaderComp from '@/components/HeaderComp.vue';
+import FooterComp from '@/components/FooterComp.vue';
+import '@/assets/css/global.css';
 </script>
 
 <template>
   <div>
     <HeaderComp />
-    <main class="d-flex flex-column align-items-center bg-body-tertiary">
+    <main class="d-flex flex-column align-items-center bg-body-tertiary conteudo">
       <div style="width: 95%">
         <div id="begin" class="d-flex flex-column align-items-center my-5">
           <h1 class="fw-bold text-center">
-            Seja Bem-Vindo à inovadora Aplicação Web
-          </h1>
+            Seja Bem-Vindo à uma inovadora Aplicação Web
+          </h1> 
+
           <div class="d-flex flex-column align-items-center w-75">
-            <h4 class="fw-light text-center">
+            <h5 class="fw-light text-center mt-4">
               Projetada especialmente para facilitar a coordenação dos processos
               de estágio entre orientadores e alunos.
-              <br />Com um ambiente intuitivo e funcional, nossa plataforma tem
-              como objetivo otimizar a gestão de estágios, proporcionando uma
+              <br /><br />
+              Com um ambiente intuitivo e funcional, nossa plataforma tem como
+              objetivo otimizar a gestão de estágios, proporcionando uma
               experiência mais fluida e eficaz para todos os envolvidos.
-            </h4>
+            </h5>
           </div>
         </div>
-        <br />
+        <!-- <br /> -->
         <div id="feature" class="my-4">
           <h2 class="display-6 fw-bold text-center mb-5">
-            Recursos Principais:
+            Principais Recursos:
           </h2>
           <div class="container-fluid w-75">
             <div id="row" class="row row-cols-md-2 g-5 text-center">
@@ -71,7 +73,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
             </div>
           </div>
         </div>
-        <br />
+        <!-- <br /> -->
         <div id="end" class="d-flex flex-column align-items-center mt-5">
           <div class="w-75">
             <h5>
@@ -81,7 +83,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
               orientadores, permitindo que eles se concentrem no que realmente
               importa: a orientação e o desenvolvimento dos alunos.
             </h5>
-            <h5>
+            <!-- <h5>
               Se você é um aluno do IFSP e está prestes a começar um estágio
               (obrigatório ou não) e já conversou com seu orientador,
               cadastre-se para que ele possa dar início ao acompanhamento das
@@ -90,14 +92,14 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
               <RouterLink to="/cadastroAlunos"
                 >Cadastre-se agora mesmo!
               </RouterLink>
-            </h5>
-            <h5>
+            </h5> -->
+            <br />
+            <!-- <h5>
               Se você é um orientador de estágios do IFSP e vai começar a
               orientar um aluno adicione-o à lista de seus orientandos e começa
               a acompanhá-lo já.
-              <br />
-              <RouterLink to="/login">Entre e comece!</RouterLink>
             </h5>
+            <br />-->
           </div>
         </div>
       </div>

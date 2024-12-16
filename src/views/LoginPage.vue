@@ -1,28 +1,31 @@
+<!-- eslint-disable no-unused-vars -->
 <script setup>
 import FooterComp from '@/components/FooterComp.vue'
 import HeaderComp from '@/components/HeaderComp.vue'
+import BotaoComp from '@/components/BotaoComp.vue'
+
 import '@/assets/css/global.css'
 
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from 'axios'
+axios.defaults.withCredentials = true;
 
 const router = useRouter()
 
 const prontuario = ref('')
 const senha = ref('')
+const email = ref('') // Para capturar o email no modal de redefinição de senha
+const showResetModal = ref(false) // Controla se o modal de redefinição está visível
+const errorMessage = ref('')
+
 
 function validarProntuario(prontuario) {
-  const regex = /^[A-Za-z]{2}\d{7}$/
+    const regex = /^[A-Za-z]{0,3}\d{6,8}$/
   return regex.test(prontuario)
 }
 
-function validarSenha(senha) {
-  return senha.length >= 6
-}
-
 async function handleSubmit() {
-  // Validação dos campos antes do envio
   if (!prontuario.value) {
     alert('Por favor, preencha o prontuário.')
     return
@@ -32,31 +35,46 @@ async function handleSubmit() {
   } else if (!senha.value) {
     alert('Por favor, digite sua senha.')
     return
-  } else if (!validarSenha(senha.value)) {
-    alert('A senha deve ter pelo menos 6 caracteres.')
-    return
   }
 
   try {
     const orientador = {
-      prontuario: prontuario.value,
+      prontuario: prontuario.value.toLowerCase(),
       password: senha.value
     }
     const response = await axios.post('http://localhost:8082/FRAN/orientadores/login', orientador)
-      router.push({ name: 'HomeOrientador'})
-      console.log(response.data)
+    router.push({ name: 'HomeOrientador' })
+    console.log(response.data)
   } catch (error) {
+    errorMessage.value = error.response?.data || error.message
     console.log('Erro ao fazer login: ' + (error.response?.data || error.message))
   }
 }
+
+
+async function sendResetEmail() {
+  if (!prontuario.value) {
+    alert('Por favor, preencha o prontuario.')
+    return
+  }
+
+  try {
+    await axios.post('http://localhost:8082/FRAN/orientadores/forgot-password', { prontuario: prontuario.value })
+    alert('E-mail de redefinição de senha enviado! Verifique sua caixa de entrada.')
+    showResetModal.value = false 
+  } catch (error) {
+    console.log('Erro ao enviar o e-mail: ' + (error.response?.data || error.message))
+  }
+}
 </script>
+
 
 <template>
   <HeaderComp />
 
   <main class="conteudo">
-    <h2 class="text-center mt-4">Faça login para entrar</h2>
-
+    <h2>Faça login para entrar</h2>
+    <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
     <div class="form-container">
       <form @submit.prevent="handleSubmit">
         <div class="form-row">
@@ -70,30 +88,58 @@ async function handleSubmit() {
               required
             />
           </div>
-
           <div class="form-group">
             <label for="senha">Senha:</label>
             <input v-model="senha" id="senha" class="form-control" type="password" required />
           </div>
         </div>
-        <button type="submit" class="btn-custom">Entrar</button>
+        <BotaoComp titulo="Entrar" tamanho="m" type="submit"/>
       </form>
-      <p class="text-center mt-3">Esqueceu a senha?<router-link to="redefinirSenha">Redefinir minha senha.</router-link></p>
+      <p class="text-center mt-3">
+        Esqueceu a senha? 
+        <button @click="showResetModal = true" class="link-button">
+          Redefinir minha senha.
+        </button>
+      </p>
     </div>
   </main>
 
   <FooterComp />
+
+  <!-- Modal de Redefinição de Senha -->
+  <div v-if="showResetModal" class="modal-backdrop">
+    <div class="modal">
+      <h3>Redefinir Senha</h3>
+      <div class="form-group">
+        <label for="email">prontuario</label>
+        <input
+          v-model="prontuario"
+          id="prontuario"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="modal-actions">
+        <BotaoComp titulo="Enviar E-mail" tamanho="m" @click="sendResetEmail" />
+        <BotaoComp titulo="Cancelar" tamanho="m" @click="showResetModal = false" />
+      </div>
+    </div>
+  </div>
 </template>
+
 
 <style scoped>
 h2 {
-  color: #01400b;
+  color: #01400b; /* Define a cor */
+  text-align: center;
+  margin-top: 5%;
+  margin-bottom: 3%;
 }
 
-main {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 20px;
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
 }
 
 .form-container {
@@ -101,6 +147,8 @@ main {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: auto;
 }
 
 .form-group {
@@ -117,10 +165,66 @@ main {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  background-color: #eaebee;
 }
 
-.btn-custom {
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 90%; /* Para garantir boa visualização em telas menores */
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: #01400b;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: #01400b;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.link-button:hover {
+  color: #012d08;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+/* .btn-custom {
   display: block;
   width: 50%;
   padding: 10px;
@@ -133,5 +237,5 @@ main {
 
 .btn-custom:hover {
   background-color: #012d08;
-}
+} */
 </style>

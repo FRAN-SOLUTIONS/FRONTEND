@@ -1,73 +1,61 @@
 <script setup>
 import '@/assets/css/global.css'
-import { ref } from 'vue'
+
 import HeaderComp from '@/components/HeaderComp.vue'
 import FooterComp from '@/components/FooterComp.vue'
-import validator from 'validator'
+import BotaoComp from '@/components/BotaoComp.vue'
 
-import { useRouter } from 'vue-router' // Importa o router
-const router = useRouter() // Inicializa o router
+import { ref } from 'vue'
 
-// Variáveis reativas
-const step = ref(1) // Controla qual etapa está ativa
+import { useRoute, useRouter } from 'vue-router'
 
-const enderecoEmail = ref('')
+
+const router = useRouter() 
+const route = useRoute();
+
 const novaSenha = ref('')
 const confirmaSenha = ref('')
+const token = ref(route.query.token || '');
 
-// Função para enviar o email e passar para a próxima etapa
-function sendEmail() {
-  if (!enderecoEmail.value) {
-    alert('Por favor, digite seu email.')
-    return
-  } else if (!validator.isEmail(enderecoEmail.value)) {
-    // Valida o e-mail
-    alert('Email válido')
-    return
-  }
-  // Lógica do backend mandar email
-
-  step.value = 2 // Avança para a etapa de redefinição de senha
-}
-
-// Função para validar e redefinir a senha
 function resetPassword() {
   if (novaSenha.value !== confirmaSenha.value) {
-    alert('As senhas não coincidem!')
-    return
+    alert('As senhas não coincidem!');
+    return;
   }
 
-  alert('Senha redefinida com sucesso!')
-
-  // Lógica do backend para enviar a nova senha ao servidor
-  router.push({ name: 'LoginPage' })
+  // Enviar a nova senha e o token para o backend
+  fetch('http://localhost:8082/FRAN/orientadores/change-password', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      password: novaSenha.value,
+      token: token.value,
+    }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        alert('Senha redefinida com sucesso!');
+        router.push({ name: 'LoginPage' });
+      } else {
+        alert('Erro ao redefinir a senha.');
+      }
+    })
+    .catch(() => alert('Erro ao conectar ao servidor.'));
 }
 </script>
 
 <template>
-  <HeaderComp />
+ <HeaderComp/>
 
   <main class="conteudo">
-    <h2 class="text-center mt-4">
+    
+    <h2 class="text-center">
       Preencha os campos a seguir para redefinir sua senha:
     </h2>
 
     <div class="form-container">
       <form>
-        <div v-if="step === 1">
-          <div class="form-group">
-            <label for="email" class="form-label">Email:</label>
-            <input
-              type="email"
-              v-model="enderecoEmail"
-              class="form-control"
-              required
-            />
-
-            <button @click="sendEmail" class="btn-custom">Enviar</button>
-          </div>
-        </div>
-        <div v-else-if="step === 2">
+        <div>
           <div class="form-group">
             <label for="nova-Senha" class="form-label">Nova Senha:</label>
             <input
@@ -87,9 +75,15 @@ function resetPassword() {
               required
             />
 
-            <button @click.prevent="resetPassword" class="btn-custom">
+            <BotaoComp
+              titulo="Redefinir"
+              tamanho="m"
+              type="submit"
+              @click.prevent="resetPassword"
+            />
+            <!-- <button @click.prevent="resetPassword" class="btn-custom">
               Redefinir
-            </button>
+            </button>  -->
           </div>
         </div>
       </form>
@@ -103,13 +97,8 @@ function resetPassword() {
 h2 {
   color: #01400b; /* Define a cor */
   text-align: center;
-  margin-top: 1.5rem !important;
-}
-
-main {
-  max-width: 100%; /* Aumenta a largura máxima do contêiner */
-  margin: 0 auto;
-  padding: 20px;
+  margin-top: 5%;
+  margin-bottom: 3%;
 }
 
 .form-container {
@@ -120,10 +109,6 @@ main {
   margin-top: 0;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.form-group {
-  margin-bottom: 15px;
 }
 
 .form-group label {
@@ -139,7 +124,7 @@ main {
   background-color: #eaebee; /* Cor de fundo das caixas de formulário */
 }
 
-.btn-custom {
+/* .btn-custom {
   display: block;
   width: 50%;
   padding: 10px;
@@ -151,6 +136,6 @@ main {
 }
 
 .btn-custom:hover {
-  background-color: #012d08; /* Cor do botão ao passar o mouse */
-}
+  background-color: #012d08; 
+} */
 </style>

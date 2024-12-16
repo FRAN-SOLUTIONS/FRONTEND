@@ -2,16 +2,47 @@
   font-family: 'Nunito', sans-serif;
   margin: 0;
   padding: 0;
-  /*background-color: #F2F2F2;*/
   text-decoration: none;
 }
 
-.conteudo {
-  /* display: flex;
-  flex-direction: column; */
-  min-height: 100vh; /* Garante altura mínima igual à tela */
+body {
+  background-color: var(--bs-body-bg-tertiary);
 }
 
-/* .conteudoFilho{
-    flex: 1; 
-} */
+.conteudo {
+  min-height: 100vh;
+}
+
+header {
+  background-color: #01400b;
+  display: flex;
+  justify-content: space-between; /* Espaça os itens para as extremidades */
+  align-items: center;
+  width: 100%;
+  padding: 5px 20px; /* Adiciona espaçamento horizontal */
+  box-sizing: border-box;
+  position: relative;
+}
+
+.titulo-container {
+  position: absolute; /* Permite posicionamento relativo ao header */
+  left: 50%; /* Move para o centro horizontal */
+  top: 50%; /* Ajusta verticalmente */
+  transform: translate(-50%, -50%); /* Centraliza perfeitamente */
+  text-align: center;
+}
+
+.botoesHeader {
+  display: flex;
+  gap: 10px; /* Espaçamento entre os botões */
+  align-items: center;
+  margin-left: auto; /* Garante que os botões fiquem à direita */
+}
+
+.titulo {
+  font-family: 'Amaranth', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin: 0;
+  color: white;
+}

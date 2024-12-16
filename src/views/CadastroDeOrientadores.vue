@@ -1,171 +1,270 @@
 <script setup>
-import FooterComp from '@/components/FooterComp.vue';
-import HeaderComp from '@/components/HeaderComp.vue';
-//import axios from 'axios';
-//import { ref } from 'vue'; // Importa 'ref' para criar variáveis reativas
+import FooterComp from '@/components/FooterComp.vue'
+import HeaderComp from '@/components/HeaderComp.vue'
+import BotaoComp from '@/components/BotaoComp.vue'
+
 import '@/assets/css/global.css'
 
-/* criação de orientadores no front
-const orientadores = ref([]);
-const nome = ref('');
-const prontuario = ref('');
-const email = ref('');
+import axios from 'axios'
 
-// Função para adicionar um orientador
-function addOrientador() {
-  if (!nome.value.trim() || !prontuario.value.trim() || !email.value.trim()) {
-    return; // Se algum campo estiver vazio, a função é interrompida.
+import { ref } from 'vue'
+import { BFormGroup, BFormInput, BFormInvalidFeedback, BForm } from 'bootstrap-vue-3'
+
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+const nome = ref('')
+const prontuario = ref('')
+const telefone = ref('')
+const email = ref('')
+const senha = ref('')
+const confirmarSenha = ref('')
+const errorMessage = ref('')
+
+const touched = ref({
+  nome: false,
+  prontuario: false,
+  email: false,
+  senha: false,
+  confirmarSenha: false,
+})
+
+const errors = ref({
+  nome: false,
+  prontuario: false,
+  email: false,
+  senha: false,
+  confirmarSenha: false,
+})
+
+function validateForm() {
+  const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:\s[a-zA-ZÀ-ÖØ-öø-ÿ]+)+$/;
+  const prontuarioRegex = /^[a-zA-Z]{2,3}[0-9]{6,8}$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*ifsp\.edu\.br$/;
+  const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+
+  errors.value = {
+    nome: !nomeRegex.test(nome.value),
+    prontuario: !prontuarioRegex.test(prontuario.value),
+    email: !emailRegex.test(email.value),
+    senha: !senhaRegex.test(senha.value),
+    confirmarSenha: !confirmarSenha.value || senha.value !== confirmarSenha.value, 
+  };
+
+  return !Object.values(errors.value).some(error => error);
+}
+
+function handleBlur(field) {
+  const nomeRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿ]+(?:\s[a-zA-ZÀ-ÖØ-öø-ÿ]+)+$/;
+  const prontuarioRegex = /^[a-zA-Z]{2,3}[0-9]{6,8}$/;
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]*ifsp\.edu\.br$/;
+  const senhaRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
+
+  touched.value[field] = true;
+
+  if (field === "nome") {
+    errors.value.nome = !nomeRegex.test(nome.value);
+  } else if (field === "prontuario") {
+    errors.value.prontuario = !prontuarioRegex.test(prontuario.value);  
+  } else if (field === "email") {
+    errors.value.email = !emailRegex.test(email.value);
+  } else if (field === "senha") {
+    errors.value.senha = !senhaRegex.test(senha.value);
+  } else if (field === "confirmarSenha") {
+    errors.value.confirmarSenha = !confirmarSenha.value || senha.value !== confirmarSenha.value;
   }
+}
 
-  // Adiciona o novo orientador à lista
-  orientadores.value.push({
-    nome: nome.value,
-    prontuario: prontuario.value,
-    email: email.value,
+async function handleSubmit(event) {
+  event.preventDefault();
+
+  Object.keys(touched.value).forEach((field) => {
+    touched.value[field] = true;
   });
 
-  // Limpa os campos de entrada após o cadastro
-  nome.value = '';
-  prontuario.value = '';
-  email.value = '';
+  if (!validateForm()) {
+    return;
+  }
+
+  try {
+    const orientador = {
+      nome: nome.value,
+      prontuario: prontuario.value,
+      email: email.value,
+      telefone: telefone.value,
+      password: senha.value,
+    };
+    const response = await axios.post(
+      'http://localhost:8082/FRAN/orientadores/signup',
+      orientador
+    );
+
+    console.log(response);
+    router.push('/login');
+  } catch (error) {
+    errorMessage.value = error.response?.data || error.message;
+    console.log('Erro ao cadastrar orientador: ' + (error.response?.data || error.message));
+  }
 }
-
-// Função para remover um orientador da lista
-function removeOrientador(index) {
-  orientadores.value.splice(index, 1); // Remove o orientador pelo índice.
-}
-*/
-
-/* async function handleSubmit(event) {
-    event.preventDefault();
-    try {
-        const orientador = {
-            nome: nome.value,
-            prontuario: prontuario.value,
-            email: email.value,
-            password: senha.value,
-        };
-        const response = await axios.post('http://localhost:8082/FRAN/orientadores/signup', orientador);
-        console.log(response)
-    } catch (error) {
-        // Exibe erro se houver falha no cadastro
-        console.log('Erro ao cadastrar orientador: ' + (error.response?.data || error.message));
-    }
-
-} */
 </script>
 
 <template>
-    <HeaderComp />
-    <main class="conteudo">
-        <div>
-            <h1>Esta é a página de cadastro dos orientadores.</h1>
-            
-            <!-- <div>
-                <div class="divDoFormulario">
-                    <form class="formulario" @submit="handleSubmit">
-                        <hr /> 
-                        
-                        <h1 class="tituloFormulario">Cadastrar novo orientador de estágio</h1>
-                        <br>
-                        
-                        <input placeholder="Nome" type="text" v-model="nome" id="nome">
-                        <input placeholder="Prontuário" type="text" v-model="prontuario" id="prontuario">
-                        <input placeholder="Email" type="email" v-model="email" id="email">
-                        <input placeholder="senha" type="senha" v-model="senha" id="senha">
-                
-                        <button @click="addOrientador" type="submit" class="enviar">Cadastrar</button>
-                    </form>
-                    <br>
-                </div> -->
+  <HeaderComp />
 
-                <!--
-                 <div class="divDaLista">
-                    <div class="lista" v-for="(orientador, index) in orientadores" :key="index">
-                        <span class="orientador__nome">Nome: <strong>{{ orientador.nome }}</strong></span>
-                        <p>{{ orientador.prontuario }}</p>
-                        <p>{{ orientador.email }}</p>
-                        <br><hr /><br>
-                        <div>
-                            <a href="#" @click.prevent="removeOrientador(index)">Excluir</a>
-                        </div>
-                    </div>
-                    -->
-                <!-- </div>      --> 
-        </div>
-    </main>
-    <FooterComp />
+  <main class="conteudo">
+    <div>
+      <h2 class="text-center mt-4">Primeira vez aqui, orientador? Cadastre-se:</h2>
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+      <div class="form-container">
+        <BForm @submit.prevent="handleSubmit">
+          <BFormGroup label="Nome Completo:">
+          <BFormInput 
+            v-model="nome" 
+            type="text" 
+            :state="touched.nome ? !errors.nome : null" 
+            @blur="handleBlur('nome')"
+          />
+          <BFormInvalidFeedback v-if="errors.nome">
+            Nome deve conter apenas letras e pelo menos um espaço.
+          </BFormInvalidFeedback>
+        </BFormGroup>
+
+        <BFormGroup label="Prontuário:">
+            <BFormInput 
+              v-model="prontuario" 
+              type="text" 
+              :state="touched.prontuario ? !errors.prontuario : null" 
+              @blur="handleBlur('prontuario')"
+            />
+            <BFormInvalidFeedback v-if="errors.prontuario">
+              Prontuário deve conter de 2 a 3 letras seguidas de 6 a 8 números.
+            </BFormInvalidFeedback>
+          </BFormGroup>
+
+          <BFormGroup label="Email:">
+            <BFormInput 
+              v-model="email" 
+              type="email" 
+              :state="touched.email ? !errors.email : null" 
+              @blur="handleBlur('email')"
+            />
+            <BFormInvalidFeedback v-if="errors.email">Email deve conter "@ifsp.edu.br".</BFormInvalidFeedback>
+          </BFormGroup>
+
+          <BFormGroup label="Senha:">
+            <BFormInput 
+              v-model="senha" 
+              type="password" 
+              :state="touched.senha ? !errors.senha : null" 
+              @blur="handleBlur('senha')"
+            />
+            <BFormInvalidFeedback v-if="errors.senha">
+              Senha deve conter pelo menos 8 caracteres, incluindo letras e números.
+            </BFormInvalidFeedback>
+          </BFormGroup>
+
+          <BFormGroup label="Confirmar Senha:">
+            <BFormInput 
+              v-model="confirmarSenha" 
+              type="password" 
+              :state="touched.confirmarSenha ? !errors.confirmarSenha : null" 
+              @blur="handleBlur('confirmarSenha')"
+            />
+            <BFormInvalidFeedback v-if="errors.confirmarSenha">
+              Confirmação de senha é obrigatória e deve coincidir com a senha.
+            </BFormInvalidFeedback>
+          </BFormGroup>
+
+          <div class="form-check form-check-custom">
+            <input type="checkbox" class="form-check-input" id="termos" name="termos" required />
+            <label for="termos" class="form-check-label">Eu concordo que li os <a href="#">termos de uso</a>.</label>
+          </div>
+
+          <BotaoComp titulo="Criar Conta" tamanho="g" type="submit" />
+        </BForm>
+        <p class="text-center mt-3">
+          Já tem uma conta? <router-link to="login">Faça login.</router-link>
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <FooterComp />
 </template>
 
-
-
 <style scoped>
-.divDoFormulario{
-    margin: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+h2 {
+  color: #01400b;
+  text-align: center;
+  margin-top: 1.5rem !important;
 }
 
-.divDaLista{
-    margin: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.error-message {
+  color: red;
+  text-align: center;
+  margin-top: 10px;
 }
 
-.formulario{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    background-color: #fff; /* Cor de fundo do formulário */
-    padding: 20px;
-    margin: 10px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+main {
+  max-width: 700px;
+  margin: 0 auto;
 }
 
-.lista{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    background-color: #fff; /* Cor de fundo do formulário */
-    padding: 20px;
-    margin: 10px;
-    border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.form-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.tituloFormulario{
-    text-align: center;
+.form-check-custom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
-label{
-    align-self: flex-start;
+.text-center {
+  text-align: center;
 }
 
-input[type="text"], input[type="email"], input[type="password"]{
-    border: 1px solid #ccc;
-    border-radius: 8px;
+.mt-3 {
+  margin-top: 1rem;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+.mt-5 {
+  margin-top: 3rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .header-logo {
+    height: 60px;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  .container {
+    padding: 10px;
+  }
+
+  .form-container {
+    padding: 15px;
+  }
+
+  .form-row .form-group {
     margin-bottom: 10px;
-    height: 25px;
-    display: block;
-}
+  }
 
-.enviar{
-    align-items: center;
-    cursor: pointer;
-    border-radius: 8px;
-    background-color: #33b83a;
-    height: 30px;
-    width: 90px;
-}
-
-.enviar:hover {
-    background-color: rgb(0, 255, 0);
-    border: 1px solid rgb(0, 255, 0);
-    box-shadow: 0 0 10px rgb(0, 255, 0);
+  .btn-custom {
+    padding: 8px;
+  }
 }
 </style>

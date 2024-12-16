@@ -1,51 +1,41 @@
 <script setup>
 import '../assets/css/global.css'
+import BotaoBrancoComp from './BotaoBrancoComp.vue'
 </script>
 
 <template>
-  <header class="py-3 d-flex align-items-center justify-content-between">
-    <div class="d-flex align-items-center">
-      <img
-        src="../assets/images/if_logo_2.png"
-        alt="Logo"
-        class="header-logo"
-      />
-    </div>
-    <div>
-      <h1>// Nome do sistema</h1>
-    </div>
-    <div>
-      <router-link to="/cadastroOrientadores">
-        <button
-          class="btn btn-outline-success mr-2"
-          style="margin: 10px; border: 1px solid white; color: white"
-        >
-          Cadastro
-        </button>
+  <header>
+    <div class="titulo-container">
+      <router-link
+        to="home"
+        style="text-decoration: none; color: inherit"
+      >
+        <h1 class="titulo">Orienta +</h1>
       </router-link>
+    </div>
 
-      <router-link to="/login">
-        <button
-          class="btn btn-outline-success mr-2"
-          style="margin: 10px; border: 1px solid white; color: white"
-        >
-          Login
-        </button>
-      </router-link>
+    <div class="botoesHeader">
+      <router-link to="/login"
+        ><BotaoBrancoComp titulo="Login" tamanho="p"
+      /></router-link>
+      <router-link to="/cadastro"
+        ><BotaoBrancoComp titulo="Cadastro" tamanho="p"
+      /></router-link>
     </div>
   </header>
 </template>
 
 <style scoped>
-header {
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  background-color: #01400b;
-  color: white;
+.titulo,
+.titulo::after,
+.titulo::before {
+  text-decoration: none !important;
+  outline: none;
 }
 
-.header-logo {
-  height: 60px;
+a {
+  text-decoration: none;
+  color: inherit;
+  outline: none;
 }
 </style>

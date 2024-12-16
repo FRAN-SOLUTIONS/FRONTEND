@@ -1,116 +1,290 @@
 <script setup>
-import '@/assets/css/global.css'
+import '../assets/css/global.css'
+import BotaoBrancoComp from './BotaoBrancoComp.vue'
+import axios from 'axios'
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 
-function abrirMenu() {
-  document.getElementById('menuOculto').style.width = '300px'
-  document.getElementById('principal').style.marginRight = '300px'
+axios.defaults.withCredentials = true
+
+const router = useRouter()
+
+const logout = async () => {
+  try {
+    const response = await axios.post(
+      'http://localhost:8082/FRAN/orientadores/logout',
+    )
+    if (response.status === 200) {
+      router.push({ name: 'LoginPage' })
+    }
+  } catch (error) {
+    console.error('Erro ao fazer logout:', error)
+    alert('Erro ao desconectar. Tente novamente mais tarde.')
+  }
 }
 
-function fecharMenu() {
-  document.getElementById('menuOculto').style.width = '0'
-  document.getElementById('principal').style.marginRight = '0'
+const menuAberto = ref(false)
+
+function abrirNav() {
+  menuAberto.value = true
 }
 
-function abrirNotificacao() {
-  document.getElementById('notificacaoOculta').style.width = '300px'
-  document.getElementById('principal').style.marginRight = '300px'
+function fecharNav() {
+  menuAberto.value = false
 }
 
-function fecharNotificacao() {
-  document.getElementById('notificacaoOculta').style.width = '0'
-  document.getElementById('principal').style.marginRight = '0'
+function removerAluno(index) {
+  alunos.value.splice(index, 1) // Remove o aluno da lista
+}
+
+const alunos = ref([
+  {
+    nome: 'Maria',
+    email: 'maria@email.com',
+    prontuario: 'SP123456',
+    nomeEmpresa: 'Google',
+    tipoAlerta: 'atrasado',
+    msgAlerta: 'O relatório está atrasado',
+    vencimento: new Date('2024-10-30'),
+  },
+  {
+    nome: 'João',
+    email: 'joao@email.com',
+    prontuario: 'SP123457',
+    nomeEmpresa: 'Microsoft',
+    tipoAlerta: 'atrasado',
+    msgAlerta: 'O relatório está atrasado',
+    vencimento: new Date('2024-10-30'),
+  },
+  {
+    nome: 'Gustavo',
+    email: 'gustavo@email.com',
+    prontuario: 'SP123458',
+    nomeEmpresa: 'Kiman',
+    tipoAlerta: 'entregue',
+    msgAlerta: 'O relatório foi entregue',
+    vencimento: new Date('2024-11-30'),
+  },
+  {
+    nome: 'Luiza',
+    email: 'luiza@email.com',
+    prontuario: 'SP123459',
+    nomeEmpresa: 'IFSP',
+    tipoAlerta: 'a entregar',
+    msgAlerta: 'O relatório deve ser enviado',
+    vencimento: new Date('2024-11-30'),
+  },
+])
+
+function formatarData(data) {
+  const dataObj = new Date(data);
+  return new Intl.DateTimeFormat('pt-BR', {
+    weekday: 'long', // Nome completo do dia da semana
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  }).format(dataObj);
 }
 </script>
 
 <template>
-  <header class="py-3 d-flex align-items-center justify-content-between">
-    <div class="d-flex align-items-center">
-      <img
-        src="../assets/images/if_logo_2.png"
-        alt="Logo"
-        class="header-logo"
-      />
+  <header>
+    <ul class="nav">
+      <li class="nav-item">
+        <router-link
+          to="homeOrientador"
+          class="nav-link"
+          :class="{ active: $route.name === 'HomeOrientador' }"
+          aria-current="page"
+          style="color: inherit; text-decoration: none"
+        >
+          DashBoard
+        </router-link>
+      </li>
+      <li class="nav-item">
+        <router-link
+          to="perfil"
+          class="nav-link"
+          :class="{ active: $route.name === 'Perfil' }"
+          style="color: inherit; text-decoration: none"
+        >
+          Perfil
+        </router-link>
+      </li>
+      <li class="nav-item">
+        <router-link
+          to="notificacoes"
+          class="nav-link"
+          :class="{ active: $route.name === 'NotificacoesPage' }"
+          aria-current="page"
+          style="color: inherit; text-decoration: none"
+        >
+          Alertas
+        </router-link>
+      </li>
+    </ul>
+
+    <div class="titulo-container">
+      <router-link
+        to="HomeOrientador"
+        style="text-decoration: none; color: inherit"
+      >
+        <h1 class="titulo">Orienta +</h1>
+      </router-link>
     </div>
-    <div>
-      <h2>// Nome do sistema</h2>
+
+    <div class="botoesHeader">
+      <div id="principal">
+        <span style="cursor: pointer" @click="abrirNav()">
+          <i class="bi bi-bell-fill notify" style="margin-right: 10px"></i>
+        </span>
+      </div>
+      <BotaoBrancoComp titulo="Sair" tamanho="p" @click="logout" />
     </div>
-    <div>
-      <span @click="abrirNotificacao()" style="cursor: pointer">
-        <font-awesome-icon class="icon-redondo" :icon="['far', 'bell']" />
-      </span>
-      <span @click="abrirMenu()" style="cursor: pointer">
-        <font-awesome-icon class="icon-redondo" :icon="['far', 'user']" />
-      </span>
 
-      <aside id="menuOculto" class="menuOculto">
-        <a href="" class="btnFechar" @click="fecharMenu()">&times;</a>
-        <a href="#">Perfil</a>
-        <a href="#">Alunos</a>
-        <a href="#">Configurações</a>
-        <a href="#">Sair</a>
-      </aside>
+    <aside
+      id="menuOculto"
+      class="menuOculto"
+      :style="{ width: menuAberto ? '300px' : '0' }"
+    >
+      <a href="javascript:void(0)" class="btnFechar" @click="fecharNav()">
+        &times;
+      </a>
 
-      <aside id="notificacaoOculta" class="menuOculto">
-        <a href="" class="btnFechar" @click="fecharNotificacao()">&times;</a>
-
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-auto cartao d-flex">
-              <div class="d-flex align-items-center justify-content-center">
-                <font-awesome-icon :icon="['far', 'calendar']" />
+      <!-- Foreach para cada aluno -->
+      <div
+        v-for="(aluno, index) in alunos"
+        :key="index"
+        class="accordion"
+        id="accordionExample"
+      >
+        <div
+          class="accordion-item m-3"
+          :class="aluno.tipoAlerta.replace(' ', '-')"
+          v-show="aluno.tipoAlerta === 'atrasado'"
+        >
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button"
+              type="button"
+              :data-bs-toggle="'collapse'"
+              :data-bs-target="'#accordion-nome-' + index"
+              aria-expanded="false"
+              :aria-controls="'accordion-nome-' + index"
+            >
+              {{ aluno.nome }} - <strong>{{ aluno.tipoAlerta }}</strong>
+            </button>
+          </h2>
+          <div
+            :id="'accordion-nome-' + index"
+            class="accordion-collapse collapse"
+            :data-bs-parent="'#accordionExample'"
+          >
+            <div
+              class="accordion-body d-flex justify-content-between align-items-center"
+            >
+              <div class="container">
+                <div class="row ">
+                  <div class="col d-flex flex-column">
+                    <div class="flex-fill">
+                      <p style="color: #01400b; display: block; margin-bottom: 0;">Vencimento:</p>
+                      <strong>{{ formatarData(aluno.vencimento) }}</strong>
+                    </div>
+                    <div class="flex-fill">
+                      <router-link
+                        to="notificacoes"
+                        class="card-link"
+                        style="color: #01400b; display: block; color: #01400b"
+                      >
+                        <strong>Mais informações</strong>
+                      </router-link>
+                    </div>
+                  </div>
+                  <div class="col-2 d-flex align-items-center justify-content-center">
+                    <i class="bi bi-trash trash" @click="removerAluno(index)"></i>
+                  </div>
+                </div>
               </div>
-              <div class="col">
-                <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum has been the industry's
-                  standard dummy text ever since the 1500s, when an unknown
-                  printer took a galley of type and scrambled it to make a type
-                  specimen book.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="row align-items-start">
-            <div class="col cartao">
-              orem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-          </div>
-          <div class="row align-items-start">
-            <div class="col cartao">
-              orem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
             </div>
           </div>
         </div>
-      </aside>
-    </div>
+      </div>
+    </aside>
   </header>
+
+  <!-- Alerta de alunos atrasados -->
+  <!-- <div v-for="(aluno, index) in alunos" :key="index">
+    <div
+      v-if="aluno.tipoAlerta === 'atrasado'"
+      class="alert alert-danger d-flex justify-content-between"
+      role="alert"
+    >
+      <span>
+        <strong>{{ aluno.nome }}</strong
+        >: {{ aluno.msgAlerta }} - Vencimento:
+        {{ aluno.vencimento.toLocaleDateString() }}
+      </span>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+  </div> -->
 </template>
 
 <style scoped>
-header {
+.nav-container {
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  background-color: #01400b;
+}
+
+.nav-link {
+  background-color: transparent; /* Sem fundo para abas inativas */
+  color: white !important;
+  transition:
+    color 0.3s,
+    background-color 0.3s; /* Suaviza a transição */
+}
+
+.nav-link.active {
+  background-color: transparent !important;
+  color: white !important;
+  border-bottom: 2px solid white;
+  box-sizing: border-box;
+}
+
+.nav-link:hover {
+  font-weight: bold;
+}
+
+.notify {
+  font-size: 1.5rem;
   color: white;
 }
 
-.header-logo {
-  height: 60px;
+.accordion-button:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
-.icon-redondo {
-  border: 1px solid #fff; /* Cor da borda */
-  border-radius: 50%; /* Borda redonda */
-  padding: 5px; /* Adiciona um pouco de espaço ao redor do ícone */
-  display: inline-block; /* Faz o elemento se comportar como um bloco para a borda funcionar */
-  margin-right: 20px;
+.accordion-button:not(.collapsed) {
+  background-color: #fcb9b9; /* Substitua pelo tom desejado */
+  color: #01400c; /* Opcional: ajuste a cor do texto */
+  border-color: #01400b; /* Opcional: ajuste a cor da borda */
+}
+
+.trash {
+  font-size: 1.5rem;
+  color: #01400b;
+  cursor: pointer;
+}
+
+.trash:hover {
+  color: red;
+  transform: scale(1.2);
+  transition: 0.2s;
 }
 
 .menuOculto {
@@ -123,41 +297,29 @@ header {
   background-color: #01400b;
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 60px;
-}
-
-.menuOculto a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  color: #dddddd;
-  display: block;
-  transition: 0.5s;
-}
-
-.menuOculto a:hover {
-  color: #ff2e2e;
+  padding-top: 50px;
 }
 
 .btnFechar {
   position: absolute;
   top: 0;
-  left: 0;
-  font-size: 36px;
-  margin: left 2%;
+  left: 10px;
+  font-size: 50px;
+  text-decoration: none;
+  color: inherit;
+  color: white;
+  font-size: 40px;
 }
 
-#principal {
-  /*padding: 16px;*/
-  transition: margin-left 0.5s;
+.accordion-item.atrasado {
+  color: red;
 }
 
-.cartao {
-  border: 1px solid #fff;
-  margin-bottom: 5%;
-  padding: 10%;
+.accordion-item.a-entregar {
+  color: orange;
 }
 
-/* @media screen and (max-height: 450px){
-    .menuOculto
-} */
+.accordion-item.entregue {
+  color: blue;
+}
 </style>
